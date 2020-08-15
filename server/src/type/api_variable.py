@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class AppInfo(BaseModel):
-    name: str = "WebApps"
+    name: str = "Nameless"
     version: str
     description: str = "R-Imai's WebApp"
 
