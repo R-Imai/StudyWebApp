@@ -4,6 +4,8 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import {logout} from '../Actions/AuthAction'
 import {getUserDetail} from '../Actions/UserAction'
 
+import UserProfile from '../Components/UserProfile'
+
 type State = {
   userInfo: {
     id: string;
@@ -61,14 +63,13 @@ class HomePage extends React.Component<RouteComponentProps, State> {
   }
 
   render() {
-    const dom = this.state.userInfo === null ? <span>読み込み中...</span> : (
+    const dom = this.state.userInfo === null ? <span>読み込み中...</span> : <UserProfile userInfo={this.state.userInfo}></UserProfile>
+    return (
       <div>
-        <img alt={this.state.userInfo?.id} src={this.state.userInfo?.image} />
-        <div> {this.state.userInfo?.name} </div>
+        {dom}
         <button onClick={this.logout}>logout</button>
       </div>
     )
-    return dom
   }
 }
 

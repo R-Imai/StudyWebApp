@@ -1,0 +1,92 @@
+#login-page {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  background-image: linear-gradient(rgba(0, 62, 44, 0.4) 65%, rgba(144, 195, 179, 0.4)), url("./image/bg_image.jpg");
+  background-size: cover;
+}
+
+#login-form {
+  margin: calc((100vh - 46rem)/2) auto;
+  width: 14rem;
+  height: 40rem;
+  padding: 3rem;
+  background-color: rgba(238, 255, 250, 0.6);
+  text-align: center;
+
+  .label {
+    display: block;
+    height: 0;
+    width: 2rem;
+    color: #fafafa;
+    padding: 0 0.5rem;
+    font-weight: bold;
+    border-bottom: 1.2rem solid #38be94;
+    border-right: 2rem solid transparent;
+    border-radius: 0.5rem 0 0 0;
+  }
+
+  .form-style{
+    width: 12rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+  }
+
+  .form-style:focus-within .label{
+    border-bottom: 1.2rem solid #24e6a9;
+  }
+
+  .input-form {
+    width: 12rem;
+    height: 1.5rem;
+    border-radius: 0 0.5rem 0.5rem 0.5rem;
+    border: solid 0.3rem #38be94;
+  }
+
+  .input-form:focus {
+    border: solid 0.3rem #24e6a9;
+  }
+
+  .input-form:focus {
+    outline: none;
+  }
+
+  .login-button {
+    margin: 0 auto;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 3.6rem;
+    width: 8rem;
+    color: #fafafa;
+    font-weight: bold;
+    background-color: #38be94;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+  }
+
+  .login-button:hover {
+    background-color: #24e6a9;
+  }
+
+  .login-button:focus {
+    outline: none;
+    background-color: #24e6a9;
+  }
+}
+
+.profile {
+  .icon {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5rem;
+  }
+  .id {
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+  .name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
