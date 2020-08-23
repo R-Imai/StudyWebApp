@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import API from './ApiBase';
 
-type LoginResponce = {
+type LoginResponse = {
   token: string,
   user_info: {
     id: string,
@@ -9,13 +9,20 @@ type LoginResponce = {
     image: string,
     email: string
   }
-  detail?: string
+}
+
+type ErrResponseValue = {
+  detail: string
+}
+
+type ErrResponse = {
+  response: AxiosResponse<ErrResponseValue>
 }
 
 export async function login(id: string, pass: string) {
-  const responce = await axios.post<LoginResponce>(`${API.UrlBase}${API.Auth.login}`, {id: id, password: pass})
-  if (responce.status !== 200) {
-    throw new Error(responce.data.detail);
+  const responce = await axios.post<LoginResponse>(`${API.UrlBase}${API.Auth.login}`, {id: id, password: pass}).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)})
+  if(!responce) {
+    return
   }
   document.cookie = `my-token=${responce.data.token};`
   return responce.data.user_info;

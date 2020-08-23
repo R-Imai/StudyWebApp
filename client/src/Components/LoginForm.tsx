@@ -6,7 +6,9 @@ import {login} from '../Actions/AuthAction'
 
 type State = {
   id: string,
-  pass: string
+  pass: string,
+  isError: boolean,
+  errMsg: string
 }
 
 class LoginForm extends React.Component<RouteComponentProps , State> {
@@ -14,7 +16,9 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
     super(props);
     this.state = {
       id: '',
-      pass: ''
+      pass: '',
+      isError: false,
+      errMsg: ''
     };
 
     this.idChange = this.idChange.bind(this);
@@ -39,6 +43,10 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
     const pass = sha256(this.state.pass);
     const userInfo = await login(id, pass).catch((e: Error) => {
       console.error(e.message);
+      this.setState({
+        isError: true,
+        errMsg: e.message
+      })
     });
     if (!userInfo) {
       return;
@@ -51,6 +59,7 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
     return (
       <form id="login-form">
         <div className="form-style">
+          {this.state.isError ? <span style={{color: '#ff0000'}}> {this.state.errMsg} </span> : ''}
           <label
             htmlFor="loginform-id"
             className="label"
