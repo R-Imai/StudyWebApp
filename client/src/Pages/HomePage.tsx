@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import {logout} from '../Actions/AuthAction'
 import {getUserDetail} from '../Actions/UserAction'
 
-import UserProfile from '../Components/UserProfile'
+import GlobalNav from '../Components/GlobalNav'
 
 type State = {
   userInfo: {
@@ -63,10 +63,11 @@ class HomePage extends React.Component<RouteComponentProps, State> {
   }
 
   render() {
-    const dom = this.state.userInfo === null ? <span>読み込み中...</span> : <UserProfile userInfo={this.state.userInfo}></UserProfile>
+    const txt = this.state.userInfo === null ? '読み込み中...' : `ようこそ ${this.state.userInfo.name} さん`
     return (
-      <div>
-        {dom}
+      <div className="global-nav-page">
+        <GlobalNav userInfo={this.state.userInfo}/>
+        <span>{txt}</span>
         <button onClick={this.logout}>logout</button>
       </div>
     )

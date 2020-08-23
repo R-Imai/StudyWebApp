@@ -76,6 +76,8 @@
 }
 
 .profile {
+  display: inline-block;
+  text-align: center;
   .icon {
     width: 10rem;
     height: 10rem;
@@ -89,4 +91,66 @@
     font-size: 1.2rem;
     font-weight: bold;
   }
+}
+
+.gloval-nav {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fafafa;
+  top: 0;
+  height: 2rem;
+  width: 100vw;
+  .to-home {
+    margin: 0 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00cc88;
+    cursor: pointer;
+  }
+  .to-home:hover {
+    color: #7efed3;
+  }
+  .link-list {
+    width: calc(100% - 12rem);
+    display: flex;
+    justify-content: space-around;
+    .link-val {
+      width: 6rem;
+      padding: 0 0.5rem;
+      text-align: center;
+      border-left: solid #adadad 0.2rem;
+      border-right: solid #adadad 0.2rem;
+      color: #585858;
+      font-size: 1.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+    .link-val:hover {
+      background-color: #eaeaea;
+    }
+  }
+  .profile-icon {
+    margin: 0 0.5rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+}
+
+.global-nav-page {
+  margin-top: 2.5rem;
+}
+
+.dialog {
+  text-align: center;
+  position: fixed;
+  min-height: 100vh;
+  min-width: 100vw;
+  z-index: 9999;
+  background-color: rgba(250, 250, 250, 0.6);
+  padding: 2rem;
 }
