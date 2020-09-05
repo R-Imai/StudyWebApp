@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
 
 import {login} from '../Actions/AuthAction'
@@ -93,6 +94,14 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
         >
           ログイン
         </button>
+        <Link to="/register">
+          <button
+            type="button"
+            className="register-button"
+          >
+            アカウント作成
+          </button>
+        </Link>
       </form>
     );
   }
