@@ -1,4 +1,5 @@
 from datetime import timedelta, datetime
+import hashlib
 
 from ..dao import auth as dao
 from ..type import api_variable as variable
@@ -22,7 +23,8 @@ class AuthService:
         return user_info["user_id"]
 
     def login(self, post_param: variable.LoginInfo) -> variable.LoginResponce:
-        login_info = self.auth_dao.login(post_param.id, post_param.password);
+        passwordHash = hashlib.sha256(post_param.password.encode()).hexdigest()
+        login_info = self.auth_dao.login(post_param.id, passwordHash)
         if login_info is None:
             raise FailureAuthenticationException("IDもしくはパスワードが正しくありません")
         user_info = variable.UserInfo(id=login_info["user_info"][0], name=login_info["user_info"][1], image=login_info["user_info"][2].tobytes(), email=login_info["user_info"][3])
@@ -33,4 +35,5 @@ class AuthService:
         self.auth_dao.logout(token)
 
     def register(self, user_info: variable.RegisterInfo):
+        user_info.password = hashlib.sha256(user_info.password.encode()).hexdigest()
         self.auth_dao.register(user_info)
