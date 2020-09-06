@@ -5,6 +5,7 @@ import defaultIcon from '../image/defaultIcon.png';
 // import { sha256 } from 'js-sha256';
 
 import AccountEdit from '../Components/AccountEdit'
+import Indicator from '../Components/Indicator'
 
 type State = {
   id: string,
@@ -15,7 +16,8 @@ type State = {
   email: string,
   imageSrc: string,
   isError: boolean,
-  errMsg: string
+  errMsg: string,
+  showIndicator: boolean
 }
 
 class RegisterPage extends React.Component<RouteComponentProps , State> {
@@ -30,7 +32,8 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
       email: '',
       imageSrc: defaultIcon,
       isError: false,
-      errMsg: ''
+      errMsg: '',
+      showIndicator: false
     };
 
     this.idChange = this.idChange.bind(this);
@@ -100,7 +103,14 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
 
   register() {
     console.log('register!');
+    this.setState(({
+      showIndicator: true
+    }));
     console.log(this.state);
+    setTimeout(() => {
+      this.setState({
+        showIndicator: false
+      })}, 10000);
   }
 
   render() {
@@ -139,14 +149,11 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
       }
     }
     return (
-      <div id="register-page">
-        <h1> アカウント作成 </h1>
+      <div id="register-page" className="indicator-parent">
+        <h1>
+          アカウント作成
+        </h1>
         <div className="main">
-          <AccountEdit
-            accountInfo={accountInfo}
-            submitText="登録する"
-            onClickSubmit={this.register}
-          />
           <Link to="/login">
             <button
               type="button"
@@ -155,7 +162,13 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
               ログインフォームへ戻る
             </button>
           </Link>
+          <AccountEdit
+            accountInfo={accountInfo}
+            submitText="登録する"
+            onClickSubmit={this.register}
+          />
         </div>
+        <Indicator show={this.state.showIndicator} />
       </div>
     );
   }
