@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
 
 import {login} from '../Actions/AuthAction'
+import Indicator from '../Components/Indicator'
 
 type State = {
   id: string,
   pass: string,
   isError: boolean,
-  errMsg: string
+  errMsg: string,
+  showIndicator: boolean
 }
 
 class LoginForm extends React.Component<RouteComponentProps , State> {
@@ -19,7 +21,8 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
       id: '',
       pass: '',
       isError: false,
-      errMsg: ''
+      errMsg: '',
+      showIndicator: false
     };
 
     this.idChange = this.idChange.bind(this);
@@ -42,6 +45,9 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
   async onClickLogin() {
     const id = this.state.id;
     const pass = sha256(this.state.pass);
+    this.setState({
+      showIndicator: true
+    })
     const userInfo = await login(id, pass).catch((e: Error) => {
       console.error(e.message);
       this.setState({
@@ -49,6 +55,9 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
         errMsg: e.message
       })
     });
+    this.setState({
+      showIndicator: false
+    })
     if (!userInfo) {
       return;
     }
@@ -58,7 +67,7 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
 
   render() {
     return (
-      <form id="login-form">
+      <form id="login-form" className="indicator-parent">
         <div className="form-style">
           {this.state.isError ? <span style={{color: '#ff0000'}}> {this.state.errMsg} </span> : ''}
           <label
@@ -102,6 +111,7 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
             アカウント作成
           </button>
         </Link>
+        <Indicator show={this.state.showIndicator} />
       </form>
     );
   }
