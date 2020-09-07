@@ -4,7 +4,7 @@ export const API = {
   Auth: {
     login: "/api/login",
     logout: "/api/logout",
-    register: "​/api​/user​/register"
+    register: "/api/user/register"
   },
   User: {
     detail: "/api/user/detail"

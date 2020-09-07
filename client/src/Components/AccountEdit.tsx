@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Message from './Message'
+
 type FormKey = 'id'|'name'|'pass1'|'pass2'|'email'|'image'
 
 type FormData = {
@@ -13,7 +15,8 @@ type FormData = {
 type Props = {
   accountInfo: {[key in FormKey]: FormData},
   submitText: string,
-  onClickSubmit: () => void
+  onClickSubmit: () => void,
+  errorMessage: string
 }
 
 type FormDetail = {
@@ -180,6 +183,7 @@ const AccountEdit: React.FC<Props> = (props: Props) => {
   const right = ['image'];
   return (
     <form id="account-form">
+      {props.errorMessage !== '' ? <Message value={props.errorMessage} type="error" /> : ''}
       <div className="main">
         <div className="form-style">
           { mkForm(props.accountInfo, left) }

@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import API from './ApiBase';
 
-type userInfo = {
+type UserInfo = {
   id: string;
   name: string;
   image: string;
@@ -9,7 +9,7 @@ type userInfo = {
   detail?: string;
 }
 
-type registerUserInfo = {
+type RegisterUserInfo = {
   id: string;
   name: string;
   image: string;
@@ -26,7 +26,7 @@ type ErrResponse = {
 }
 
 export async function getUserDetail(token: string) {
-  const responce = await axios.get<userInfo>(`${API.UrlBase}${API.User.detail}`, {
+  const responce = await axios.get<UserInfo>(`${API.UrlBase}${API.User.detail}`, {
     headers: {
       'my-token': token
     }})
@@ -38,4 +38,14 @@ export async function getUserDetail(token: string) {
     throw new Error(responce.data.detail);
   }
   return responce.data;
+}
+
+export async function userRegister(userInfo: RegisterUserInfo) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Auth.register}`, userInfo)
+    .catch((e: ErrResponse) => {
+      console.log('error');
+      console.error(e);
+      throw new Error(e.response.data.detail);
+    })
+  return responce.status
 }

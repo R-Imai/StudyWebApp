@@ -2,10 +2,11 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import defaultIcon from '../image/defaultIcon.png';
-// import { sha256 } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 
 import AccountEdit from '../Components/AccountEdit'
 import Indicator from '../Components/Indicator'
+import {userRegister} from '../Actions/UserAction'
 
 type State = {
   id: string,
@@ -17,7 +18,8 @@ type State = {
   imageSrc: string,
   isError: boolean,
   errMsg: string,
-  showIndicator: boolean
+  showIndicator: boolean,
+  errMessage: string
 }
 
 class RegisterPage extends React.Component<RouteComponentProps , State> {
@@ -33,7 +35,8 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
       imageSrc: defaultIcon,
       isError: false,
       errMsg: '',
-      showIndicator: false
+      showIndicator: false,
+      errMessage: ''
     };
 
     this.idChange = this.idChange.bind(this);
@@ -101,16 +104,32 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
     });
   }
 
-  register() {
+  async register() {
     console.log('register!');
     this.setState(({
       showIndicator: true
     }));
-    console.log(this.state);
-    setTimeout(() => {
+    const pass = sha256(this.state.pass1);
+    const userInfo = {
+      id: this.state.id,
+      name: this.state.name,
+      image: this.state.imageSrc,
+      email: this.state.email,
+      password: pass
+    }
+    try {
+      await userRegister(userInfo);
+    }
+    catch (e) {
+      this.setState({
+        errMessage: e.message
+      })
+    }
+    finally {
       this.setState({
         showIndicator: false
-      })}, 10000);
+      });
+    }
   }
 
   render() {
@@ -166,6 +185,7 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
             accountInfo={accountInfo}
             submitText="登録する"
             onClickSubmit={this.register}
+            errorMessage={this.state.errMessage}
           />
         </div>
         <Indicator show={this.state.showIndicator} />

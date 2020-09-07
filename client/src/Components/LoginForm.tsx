@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { sha256 } from 'js-sha256';
 
 import {login} from '../Actions/AuthAction'
+import Message from './Message'
 import Indicator from '../Components/Indicator'
 
 type State = {
@@ -68,8 +69,8 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
   render() {
     return (
       <form id="login-form" className="indicator-parent">
+        {this.state.isError ? <Message value={this.state.errMsg} type="error" /> : ''}
         <div className="form-style">
-          {this.state.isError ? <span style={{color: '#ff0000'}}> {this.state.errMsg} </span> : ''}
           <label
             htmlFor="loginform-id"
             className="label"
