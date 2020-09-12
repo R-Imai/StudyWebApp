@@ -43,7 +43,6 @@ export async function getUserDetail(token: string) {
 export async function userRegister(userInfo: RegisterUserInfo) {
   const responce = await axios.post<null>(`${API.UrlBase}${API.Auth.register}`, userInfo)
     .catch((e: ErrResponse) => {
-      console.log('error');
       console.error(e);
       throw new Error(e.response.data.detail);
     })

@@ -1,3 +1,39 @@
+h1 {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  height: 2rem;
+  font-size: 1.5rem;
+  color: #3d3d3d;
+  padding: 0.5rem 2rem 0.5rem 3rem;
+  background-color: rgba(250, 250, 250, 0.9);
+  border-radius: 0 0 0 0;
+  border-bottom: 0.1rem solid #00cc88;
+  border-top: 0.1rem solid #00cc88;
+}
+
+h1:before {
+  position: absolute;
+  top: 0rem;
+  left: -3rem;
+  width: 5rem;
+  height: 3rem;
+  content: '';
+  background-color: #00cc88;
+  border-radius: 1.5rem;
+}
+
+h1:after {
+  position: absolute;
+  top: 0rem;
+  right: -3rem;
+  width: 5rem;
+  height: 3rem;
+  content: '';
+  background-color: #00cc88;
+  border-radius: 1.5rem;
+}
+
 #login-page {
   overflow: hidden;
   height: 100vh;
@@ -130,41 +166,6 @@
   padding-bottom: 6rem;
   background-image: linear-gradient(rgba(108, 145, 135, 0.8) 65%, rgba(187, 200, 196, 0.8)), url("./image/bg_image.jpg");
   background-size: cover;
-  h1 {
-    margin: 0;
-    position: relative;
-    overflow: hidden;
-    height: 2rem;
-    font-size: 1.5rem;
-    color: #3d3d3d;
-    padding: 0.5rem 2rem 0.5rem 3rem;
-    background-color: rgba(250, 250, 250, 0.9);
-    border-radius: 0 0 0 0;
-    border-bottom: 0.1rem solid #00cc88;
-    border-top: 0.1rem solid #00cc88;
-  }
-
-  h1:before {
-    position: absolute;
-    top: 0rem;
-    left: -3rem;
-    width: 5rem;
-    height: 3rem;
-    content: '';
-    background-color: #00cc88;
-    border-radius: 1.5rem;
-  }
-
-  h1:after {
-    position: absolute;
-    top: 0rem;
-    right: -3rem;
-    width: 5rem;
-    height: 3rem;
-    content: '';
-    background-color: #00cc88;
-    border-radius: 1.5rem;
-  }
 
   .main {
     margin: 0.5rem;
@@ -445,4 +446,53 @@
 }
 .message-space-info {
   border-color: #82b366;
+}
+
+#register-done-page {
+  overflow: hidden;
+  height: calc(100vh - 6rem);
+  width: 100vw;
+  padding-bottom: 6rem;
+  background-image: linear-gradient(rgba(108, 145, 135, 0.8) 65%, rgba(187, 200, 196, 0.8)), url("./image/bg_image.jpg");
+  background-size: cover;
+
+  .main-space {
+    background-color: rgba(238, 255, 250, 0.8);
+    margin: 0.5rem;
+    padding: 2rem;
+    text-align: left;
+
+    .to-login-button {
+      margin: 0 auto;
+      margin-top: 1rem;
+      padding: 0.3rem 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      height: 2rem;
+      color: #fafafa;
+      font-weight: bold;
+      background-color: #00a8c6;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+    .to-login-button:hover {
+      background-color: #42cee7;
+    }
+
+    .to-login-button:focus {
+      outline: none;
+      background-color: #42cee7;
+    }
+
+    .text-line {
+      display: block;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .id-space {
+      margin-top: 0.5rem;
+    }
+  }
 }

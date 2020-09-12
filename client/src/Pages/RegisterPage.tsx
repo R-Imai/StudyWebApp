@@ -105,7 +105,6 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
   }
 
   async register() {
-    console.log('register!');
     this.setState(({
       showIndicator: true
     }));
@@ -124,12 +123,20 @@ class RegisterPage extends React.Component<RouteComponentProps , State> {
       this.setState({
         errMessage: e.message
       })
+      return;
     }
     finally {
       this.setState({
         showIndicator: false
       });
     }
+    this.props.history.push({
+      pathname: '/register/done',
+      state: {
+        id: this.state.id,
+        name: this.state.name
+      }
+    });
   }
 
   render() {
