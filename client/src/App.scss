@@ -368,16 +368,161 @@ h1:after {
   width: 100vw;
   .to-home {
     margin: 0 0.5rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #00cc88;
+    width: 2rem;
+    border: none;
+    background-color: inherit;
+    background-image: url("./image/icooon/home.svg");
     cursor: pointer;
   }
   .to-home:hover {
-    color: #7efed3;
+    background-image: url("./image/icooon/home_active.svg");
   }
-  .link-list {
-    width: calc(100% - 12rem);
+  .to-home:focus {
+    background-image: url("./image/icooon/home_active.svg");
+    outline: none;
+  }
+
+  .accodion {
+    width: 2rem;
+    .accodion-hook {
+      display: inline-block;
+      text-align: center;
+      padding: 0.5rem 0;
+      height: 1rem;
+      width: 2rem;
+      border: none;
+      background-color: inherit;
+      cursor: pointer;
+    }
+    .accodion-hook:hover::before {
+      color: #00cc88;
+    }
+    .accodion-hook::before {
+      content: "▼";
+    }
+    input {
+      display: none;
+    }
+    .accodion-hook:focus {
+      outline: none
+    }
+    .accodion-main {
+      transition: opacity 0.5s, visibility 0.5s, width 0.5s;
+      opacity: 0;
+      visibility: hidden;
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      position: relative;
+      width: 0rem;
+      left: -2.5rem;
+      .value {
+        overflow: hidden;
+        transition: height 0.5s;
+        height: 0rem;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-bottom: solid 0.1rem #888888;
+        a {
+          display: flex;
+          align-items: center;
+          color: #232323;
+          text-decoration: none;
+          padding: 0.3rem 0.5rem;
+          img {
+            height: 1.4rem;
+            width: 1.4rem;
+          }
+          span {
+            padding: 0 0.3rem;
+          }
+        }
+        a:hover {
+          color: #00cc88;
+          font-weight: bold;
+        }
+      }
+      .value:hover {
+        background-color: #ffffff;
+      }
+      // display: none;
+    }
+    input:checked + .accodion-hook::before {
+      content: "▲";
+    }
+    input:checked ~ .accodion-main {
+      opacity: 1;
+      visibility: visible;
+      width: 10rem;
+      .value {
+        height: 2rem;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+  .accodion:hover .accodion-main {
+    opacity: 1;
+    visibility: visible;
+    width: 10rem;
+    .value {
+      height: 2rem;
+    }
+  }
+
+  .sqew-button {
+    width: 4rem;
+    border: none;
+    background-color: inherit;
+    transform: skewX(-30deg);
+    border-left: solid 0.2rem #888888;
+    cursor: pointer;
+    div {
+      width: 2rem;
+      height: 100%;
+      display: inline-block;
+      transform: skewX(30deg);
+      background-repeat: no-repeat;
+      border-style:none;
+    }
+    .notice {
+      background-image: url("./image/icooon/notice.svg");
+    }
+    .setting {
+      background-image: url("./image/icooon/setting.svg");
+    }
+    .exit {
+      background-image: url("./image/icooon/exit.svg");
+    }
+  }
+  .sqew-button-end {
+    border-right: solid 0.2rem #888888;
+  }
+  .sqew-button:hover {
+    .notice {
+      background-image: url("./image/icooon/notice_active.svg");
+    }
+    .setting {
+      background-image: url("./image/icooon/setting_active.svg");
+    }
+    .exit {
+      background-image: url("./image/icooon/exit_active.svg");
+    }
+  }
+  .sqew-button:focus {
+    outline: none;
+    .notice {
+      background-image: url("./image/icooon/notice_active.svg");
+    }
+    .setting {
+      background-image: url("./image/icooon/setting_active.svg");
+    }
+    .exit {
+      background-image: url("./image/icooon/exit_active.svg");
+    }
+  }
+
+  .nav-message {
+    width: calc(100% - 18rem);
     display: flex;
     justify-content: space-around;
     .link-val {
@@ -403,6 +548,9 @@ h1:after {
     width: 2rem;
     border-radius: 1rem;
     cursor: pointer;
+  }
+  .profile-icon:hover {
+    box-shadow: 0.1rem 0.1rem 0.2rem #888888;
   }
 }
 
