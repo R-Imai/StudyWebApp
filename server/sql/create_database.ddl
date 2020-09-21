@@ -4,7 +4,8 @@ create table user_master (
   id varchar(100),
   name varchar(4000),
   image bytea,
-  email varchar(255)
+  email varchar(255),
+  PRIMARY KEY (id)
 )
 
 create table user_auth (

@@ -1,0 +1,13 @@
+\encoding UTF-8
+
+INSERT INTO pnet_master (id, name_kana, belong, self_intro) values ('test_user', 'シケン タロウ', '開発部', '自己紹介です');
+
+INSERT INTO pnet_hobby (user_id, id, title, detail) values ('test_user', '734803e2f73b', '趣味1', '趣味1の詳細文です'), ('test_user', '496a74f1f505', '趣味2', '趣味2の詳細文です');
+
+INSERT INTO pnet_tag (tag_id, user_id, title) values ('128c87ae912d', 'test_user', 'タグ1'), ('d0e6958ae6d2', 'test_user', 'タグ2');
+
+INSERT INTO pnet_tag_reaction (tag_id, tag_user_id, action_user_id, comment, reaction) values ('128c87ae912d', 'test_user', 'test_user', 'goodコメント', 'good'), ('d0e6958ae6d2', 'test_user', 'test_user', 'badコメント', 'bad');
+
+INSERT INTO pnet_career (history_id, user_id, title, year, detail, create_user_cd) values ('b25010d2129b', 'test_user', '履歴1', '2018-04-01', '履歴の詳細', 'test_user');
+
+-- INSERT INTO pnet_career_pr (history_id, user_id, title, year, detail, create_user_cd) values ();

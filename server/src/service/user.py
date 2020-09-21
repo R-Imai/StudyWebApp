@@ -1,6 +1,7 @@
 
 from ..dao import user as dao
 from ..type import api_variable as variable
+from ..type.exception import UserNotFoundException
 
 class UserService:
     def __init__(self, connection):
