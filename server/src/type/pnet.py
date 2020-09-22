@@ -8,6 +8,7 @@ class Master(BaseModel):
     name_kana: str
     belong: str
     self_intro: str
+    image: str
 
 class InsertMaster(BaseModel):
     id: str

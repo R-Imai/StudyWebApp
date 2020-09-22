@@ -6,7 +6,7 @@ from ..type.exception import UserNotFoundException
 class PnetDAO:
     def __init__(self):
         self.query = {
-            "select_user_info": "SELECT pnet_master.id, user_master.name, pnet_master.name_kana, pnet_master.belong, pnet_master.self_intro FROM user_master INNER JOIN pnet_master ON user_master.id = pnet_master.id  WHERE pnet_master.id=%s",
+            "select_user_info": "SELECT pnet_master.id, user_master.name, pnet_master.name_kana, pnet_master.belong, pnet_master.self_intro, user_master.image FROM user_master INNER JOIN pnet_master ON user_master.id = pnet_master.id  WHERE pnet_master.id=%s",
             "select_user_hobby": "SELECT id, title, detail FROM pnet_hobby WHERE user_id = %s",
             "select_tag": "SELECT tag_id, title FROM pnet_tag WHERE user_id = %s",
             "select_tag_reaction": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s",
@@ -37,7 +37,7 @@ class PnetDAO:
         res = cur.fetchone()
         if res is None:
             raise UserNotFoundException(f"ユーザID: '{user_id}'は存在しません")
-        return type.Master(id=res[0], name=res[1], name_kana=res[2], belong=res[3], self_intro=res[4])
+        return type.Master(id=res[0], name=res[1], name_kana=res[2], belong=res[3], self_intro=res[4], image=res[5].tobytes())
 
     def get_user_hobby(self, cur, user_id: str) -> [type.UserHobby]:
         query = self.query["select_user_hobby"]
