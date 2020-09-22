@@ -203,7 +203,7 @@ def pnet_user_tag(post_param: pnet_type.TagRegister, my_token: Optional[str] = H
     return __mk_responce_json(user_tag)
 
 @app.post("/api/pnet/user/tag/good", tags=["People Network"])
-def pnet_user_tag(post_param: pnet_type.UserTagReaction, my_token: Optional[str] = Header(None)):
+def pnet_user_tag_good(post_param: pnet_type.UserTagReaction, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)
     except FailureAuthenticationException as e:
@@ -228,7 +228,7 @@ def pnet_user_tag(post_param: pnet_type.UserTagReaction, my_token: Optional[str]
 
 
 @app.post("/api/pnet/user/tag/bad", tags=["People Network"])
-def pnet_user_tag(post_param: pnet_type.UserTagReaction, my_token: Optional[str] = Header(None)):
+def pnet_user_tag_bad(post_param: pnet_type.UserTagReaction, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)
     except FailureAuthenticationException as e:
@@ -252,7 +252,7 @@ def pnet_user_tag(post_param: pnet_type.UserTagReaction, my_token: Optional[str]
         )
 
 @app.post("/api/pnet/user/career", tags=["People Network"])
-def pnet_user_tag(post_param: pnet_type.InsertUserCareer, my_token: Optional[str] = Header(None)):
+def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)
     except FailureAuthenticationException as e:
