@@ -152,7 +152,7 @@ def pnet_user_register(post_param: pnet_type.InsertMaster, my_token: Optional[st
             detail=f"予期せぬエラーが発生しました。\n{e}"
         )
 
-@app.post("/api/pnet/user", tags=["People Network"])
+@app.post("/api/pnet/profile", tags=["People Network"])
 def pnet_user_update(post_param: pnet_type.InsertMaster, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)
