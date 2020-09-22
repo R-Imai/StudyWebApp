@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import UserProfileDialog from './UserProfileDialog';
 import {logout} from '../Actions/AuthAction'
 import appLinkIcon from '../image/icooon/app.svg';
+import PnetIcon from '../image/icons/pnet_icon.svg';
 
 interface Props extends RouteComponentProps {
   userInfo: {
@@ -73,37 +74,38 @@ class GlobalNav extends React.Component<Props , State> {
           />
           <ul className="accodion-main">
             <li className="value">
+              <a href="/pnet">
+                <img
+                  alt="app"
+                  src={PnetIcon}
+                />
+                <span>
+                  People Network
+                </span>
+              </a>
+            </li>
+            <li className="value">
+              <a href="/home">
+                <img
+                  alt="app"
+                  className="app-icon"
+                  src={appLinkIcon}
+                />
+                <span>
+                  メニュー2
+                </span>
+              </a>
+            </li>
+            <li className="value">
               <a href="/home">
                 <img
                   alt="app"
                   src={appLinkIcon}
                 />
                 <span>
-                  メニュー1
+                  メニュー3
                 </span>
               </a>
-            </li>
-            <li className="value">
-            <a href="/home">
-              <img
-                alt="app"
-                src={appLinkIcon}
-              />
-              <span>
-                メニュー2
-              </span>
-            </a>
-            </li>
-            <li className="value">
-            <a href="/home">
-              <img
-                alt="app"
-                src={appLinkIcon}
-              />
-              <span>
-                メニュー3
-              </span>
-            </a>
             </li>
           </ul>
         </div>

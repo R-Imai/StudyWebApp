@@ -372,6 +372,7 @@ h1:after {
     border: none;
     background-color: inherit;
     background-image: url("./image/icooon/home.svg");
+    background-repeat: no-repeat;
     cursor: pointer;
   }
   .to-home:hover {
@@ -430,8 +431,8 @@ h1:after {
           text-decoration: none;
           padding: 0.3rem 0.5rem;
           img {
-            height: 1.4rem;
-            width: 1.4rem;
+            height: 22px;
+            width: 22px;
           }
           span {
             padding: 0 0.3rem;
@@ -453,7 +454,7 @@ h1:after {
     input:checked ~ .accodion-main {
       opacity: 1;
       visibility: visible;
-      width: 10rem;
+      width: 12rem;
       .value {
         height: 2rem;
         background-color: rgba(255, 255, 255, 0.9);
@@ -463,7 +464,7 @@ h1:after {
   .accodion:hover .accodion-main {
     opacity: 1;
     visibility: visible;
-    width: 10rem;
+    width: 12rem;
     .value {
       height: 2rem;
     }
@@ -524,6 +525,10 @@ h1:after {
   .nav-message {
     width: calc(100% - 18rem);
     display: flex;
+    background-color: #f1f1f1;
+    margin: 0.1rem 2rem;
+    border-radius: 0.5rem;
+    border: inset #dedede 0.1rem;
     justify-content: space-around;
     .link-val {
       width: 6rem;

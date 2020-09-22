@@ -8,6 +8,17 @@ export const API = {
   },
   User: {
     detail: "/api/user/detail"
+  },
+  Pnet: {
+    profile: "/api/pnet/profile",
+    userDetail: "/api/pnet/user",
+    profileEdit: "/api/pnet/profile",
+    userRegister: "/api/pnet/user/new",
+    userHobby: "/api/pnet/user/hobby",
+    usertag: "/api/pnet/user/tag",
+    tagGood: "/api/pnet/user/tag/good",
+    tagBad: "/api/pnet/user/tag/bad",
+    career: "/api/pnet/user/career"
   }
 };
 

@@ -1,0 +1,131 @@
+.pnet-profile-card-mini {
+  display: flex;
+  height: 5rem;
+  width: 100%;
+  background-color: #fffafa;
+  border-radius: 1rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
+  .profile-image {
+    height: 5rem;
+    width: 5rem;
+    img {
+      border-radius: 1rem 0 0 1rem;
+      height: 5rem;
+      width: 5rem;
+    }
+  }
+  .profile-info {
+    width: calc(100% - 5rem);
+    .rows {
+      padding-left: 1rem;
+    }
+    .belong {
+      height: 1rem;
+      line-height: 1rem;
+      font-size: 0.8rem;
+    }
+    .name {
+      height: 3rem;
+      line-height: 3rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+      border-top: solid 0.1rem #ff4265;
+      border-bottom: solid 0.1rem #ff4265;
+      box-sizing: border-box;
+    }
+    .sub {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 2rem;
+      height: 1rem;
+      line-height: 1rem;
+      font-size: 0.8rem;
+      border-bottom: none;
+    }
+  }
+}
+
+.pnet-self-intro {
+  margin-top: 1.5rem;
+  border: solid 0.2rem #ff4265;
+  padding: 1rem 2rem;
+  padding-top: 0;
+  background-color: #ffeeee;
+  border-radius: 0.5rem;
+  .title {
+    position: relative;
+    padding: 0.2rem 0.5rem;
+    top: -0.8rem;
+    left: -1rem;
+    background-color: #ff4265;
+    color: #fafafa;
+    font-weight: bold;
+    border-radius: 0.3rem;
+  }
+}
+
+
+.pnet-tag-list {
+  margin-top: 1.5rem;
+  border: solid 0.2rem #ff5342;
+  padding: 1rem 2rem;
+  padding-top: 0;
+  background-color: #ffeeee;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  .title {
+    position: relative;
+    padding: 0.2rem 0.5rem;
+    top: -0.8rem;
+    left: -1rem;
+    background-color: #ff5342;
+    color: #fafafa;
+    font-weight: bold;
+    border-radius: 0.3rem;
+  }
+}
+
+.pnet-tag {
+  border-radius: 0.3rem;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  height: 1.4rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
+  .tag-title {
+    display: inline-block;
+    height: 100%;
+    padding: 0 0.3rem;
+    border-radius: 0.3rem 0 0 0.3rem;
+    // background-color: #ffa8a8;
+    background-color: #acc9ff;
+    // background-color: #a6ffcf;
+    // background-color: #f4ff95;
+    color: #333333;
+    // color: #fafafa;
+  }
+  .reaction {
+    display: inline-block;
+    background-color: #181509;
+    height: 100%;
+    cursor: pointer;
+    span {
+      font-size: 0.5rem;
+    }
+    img {
+      height: 1rem;
+    }
+  }
+  .reaction:hover {
+    background-color: #393939;
+  }
+  .good {
+    padding: 0 0.3rem;
+    color: #fafafa;
+    border-right: dotted #fafafa 0.1rem;
+  }
+  .bad {
+    padding: 0 0.3rem;
+    color: #fafafa;
+    border-radius: 0 0.3rem 0.3rem 0;
+  }
+}
