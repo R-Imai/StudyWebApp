@@ -83,6 +83,29 @@ def login_user_detail(my_token: Optional[str] = Header(None)):
 
 # == pnet ==
 
+@app.get("/api/pnet/profile", response_model=pnet_type.UserData, tags=["People Network"])
+def pnet_my_profile(my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+    try:
+        user_info = pnet_service.get_user_info(login_user_id)
+    except UserNotFoundException as e:
+        raise HTTPException(
+            status_code=500,
+            detail="【E001】: このアプリケーションへ未登録の可能性があります"
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+    return __mk_responce_json(user_info)
+
 @app.get("/api/pnet/user", response_model=pnet_type.UserData, tags=["People Network"])
 def pnet_user_detail(user_id: str, my_token: Optional[str] = Header(None)):
     try:
