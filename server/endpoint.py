@@ -97,7 +97,7 @@ def pnet_my_profile(my_token: Optional[str] = Header(None)):
     except UserNotFoundException as e:
         raise HTTPException(
             status_code=500,
-            detail="【E001】: このアプリケーションへ未登録の可能性があります"
+            detail="【Pnet-E001】: このアプリケーションへ未登録の可能性があります"
         )
     except Exception as e:
         raise HTTPException(
@@ -120,7 +120,7 @@ def pnet_user_detail(user_id: str, my_token: Optional[str] = Header(None)):
     except UserNotFoundException as e:
         raise HTTPException(
             status_code=500,
-            detail="【E001】: このアプリケーションへ未登録の可能性があります"
+            detail="【Pnet-E001】: このアプリケーションへ未登録の可能性があります"
         )
     except Exception as e:
         raise HTTPException(
