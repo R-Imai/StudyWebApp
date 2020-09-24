@@ -9,6 +9,9 @@ import Indicator from '../Components/Indicator'
 import ProfileCardMini from '../Components/Pnet/ProfileCardMini'
 import SelfIntro from '../Components/Pnet/SelfIntro'
 import TagList from '../Components/Pnet/TagList'
+import CareerList from '../Components/Pnet/CareerList'
+import HobbyList from '../Components/Pnet/HobbyList'
+import ProfileEditDialog from '../Components/Pnet/Dialog/ProfileEditDialog'
 
 
 type State = {
@@ -83,15 +86,30 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     })
   }
 
+  onClickProfileEdit() {
+
+  }
+
   mkMain() {
     if (this.state.pnetUserInfo === null) {
       return '';
     }
+    if (this.state.loginUserInfo === null) {
+      return '';
+    }
     return (
-      <div>
-        <ProfileCardMini profile={this.state.pnetUserInfo} />
+      <div className="pnet-main">
+        <ProfileCardMini
+          profile={this.state.pnetUserInfo}
+          canEdit={this.state.pnetUserInfo.id === this.state.loginUserInfo.id}
+          onClickEdit={this.onClickProfileEdit}
+        />
         <SelfIntro selfIntro={this.state.pnetUserInfo.self_intro} />
         <TagList tagList={this.state.pnetUserInfo.tag} />
+        <HobbyList hobbyList={this.state.pnetUserInfo.hobby}/>
+        <CareerList careerList={this.state.pnetUserInfo.career} />
+
+        <ProfileEditDialog profile={this.state.pnetUserInfo}/>
       </div>
     )
   }

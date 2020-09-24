@@ -8,8 +8,10 @@ type Props = {
 const TagList: React.FC<Props> = (props: Props) => {
   return (
     <div className="pnet-tag-list">
-      <span className="title">タグ一覧</span>
-      {props.tagList.map((tag) => {return <Tag key={tag.id} tag={tag} />})}
+      <span className="title">スキル・特徴</span>
+      <div className="main">
+        {props.tagList.map((tag) => {return <Tag key={tag.id} tag={tag} />})}
+      </div>
     </div>
   )
 }

@@ -1,10 +1,18 @@
 import React from 'react';
 
 type Props = {
-  profile: PnetProfile
+  profile: PnetProfileCard,
+  canEdit?: boolean,
+  onClickEdit?: () => void
 }
 
 const ProfileCardMini: React.FC<Props> = (props: Props) => {
+  const editBtn = props.canEdit && typeof props.onClickEdit !== "undefined" ? (
+    <button
+      className="edit"
+      onClick={props.onClickEdit}
+    />
+  ) : '';
   return (
     <div className="pnet-profile-card-mini">
       <div className="profile-image">
@@ -15,7 +23,10 @@ const ProfileCardMini: React.FC<Props> = (props: Props) => {
           {props.profile.belong}
         </div>
         <div className="rows name">
-          {props.profile.name}
+          <span>
+            {props.profile.name}
+          </span>
+          {editBtn}
         </div>
         <div className="rows sub">
           <span>

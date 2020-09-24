@@ -1,9 +1,13 @@
-interface PnetProfile {
+interface PnetProfileCard {
   id: string,
   name: string,
   name_kana: string,
   belong: string,
   image: string,
+}
+
+interface PnetProfile extends PnetProfileCard {
+  self_intro: string
 }
 
 interface Tag {
@@ -19,18 +23,21 @@ interface Tag {
   }[]
 }
 
+interface Career {
+  history_id: string,
+  title: string,
+  year: string,
+  detail: string
+}
+
+interface Hobby {
+  id: string,
+  title: string,
+  detail: string
+}
+
 interface PnetUserInfo extends PnetProfile {
-  self_intro: string,
-  hobby: {
-      id: string,
-      title: string,
-      detail: string
-  }[],
+  hobby: Hobby[],
   tag: Tag[],
-  career: {
-    history_id: string,
-    title: string,
-    year: Date,
-    detail: string
-  }[]
+  career: Career[]
 }
