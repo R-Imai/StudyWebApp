@@ -4,9 +4,6 @@ interface PnetProfileCard {
   name_kana: string,
   belong: string,
   image: string,
-}
-
-interface PnetProfile extends PnetProfileCard {
   self_intro: string
 }
 
@@ -36,8 +33,15 @@ interface Hobby {
   detail: string
 }
 
-interface PnetUserInfo extends PnetProfile {
+interface PnetUserInfo extends PnetProfileCard {
   hobby: Hobby[],
   tag: Tag[],
   career: Career[]
+}
+
+interface PnetProfileEditInfo {
+  id: string,
+  name_kana: string,
+  belong: string,
+  self_intro: string
 }

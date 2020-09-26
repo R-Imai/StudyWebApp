@@ -18,3 +18,15 @@ export async function getProfile(token: string) {
 
   return responce.data;
 }
+
+export async function updateProfile(token: string, profile: PnetProfileEditInfo) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.profileEdit}`, profile, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}

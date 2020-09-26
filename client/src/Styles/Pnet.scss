@@ -3,71 +3,78 @@
 }
 
 .pnet-profile-card-mini {
-  display: flex;
-  height: 5rem;
   background-color: #fff;
-  border-top: solid 0.2rem #cc0000;
-  border-bottom: solid 0.2rem #cc0000;
   border-left: solid 0.1rem #cc0000;
   border-right: solid 0.1rem #cc0000;
-  // border-radius: 1rem;
-  // box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
-  .profile-image {
+  .info {
+    display: flex;
     height: 5rem;
-    width: 5rem;
-    img {
-      // border-radius: 1rem 0 0 1rem;
+    border-top: solid 0.2rem #cc0000;
+    border-bottom: solid 0.15rem rgba(#cc0000, 0.5);
+    // border-radius: 1rem;
+    // box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
+    .profile-image {
       height: 5rem;
       width: 5rem;
+      img {
+        // border-radius: 1rem 0 0 1rem;
+        height: 5rem;
+        width: 5rem;
+      }
+    }
+    .profile-info {
+      width: calc(100% - 5rem);
+      .rows {
+        padding-left: 1rem;
+      }
+      .belong {
+        height: 1rem;
+        line-height: 1rem;
+        font-size: 0.8rem;
+      }
+      .name {
+        display: flex;
+        justify-content: space-between;
+        height: 3rem;
+        line-height: 3rem;
+        font-size: 1.6rem;
+        font-weight: bold;
+        border-top: solid 0.1rem #ac0020;
+        border-bottom: solid 0.1rem #ac0020;
+        box-sizing: border-box;
+        .edit {
+          margin: 0.5rem;
+          width: 1.8rem;
+          border: none;
+          background-color: inherit;
+          background-image: url("../image/icooon/edit.svg");
+          background-size: cover;
+          background-repeat: no-repeat;
+          cursor: pointer;
+        }
+        .edit:hover {
+          background-image: url("../image/icooon/edit_active.svg");
+        }
+        .edit:focus {
+          background-image: url("../image/icooon/edit_active.svg");
+          outline: none;
+        }
+      }
+      .sub {
+        display: flex;
+        justify-content: space-between;
+        padding-right: 2rem;
+        height: 1rem;
+        line-height: 1rem;
+        font-size: 0.8rem;
+        border-bottom: none;
+      }
     }
   }
-  .profile-info {
-    width: calc(100% - 5rem);
-    .rows {
-      padding-left: 1rem;
-    }
-    .belong {
-      height: 1rem;
-      line-height: 1rem;
-      font-size: 0.8rem;
-    }
-    .name {
-      display: flex;
-      justify-content: space-between;
-      height: 3rem;
-      line-height: 3rem;
-      font-size: 1.6rem;
-      font-weight: bold;
-      border-top: solid 0.1rem #ac0020;
-      border-bottom: solid 0.1rem #ac0020;
-      box-sizing: border-box;
-      .edit {
-        margin: 0.5rem;
-        width: 1.8rem;
-        border: none;
-        background-color: inherit;
-        background-image: url("../image/icooon/edit.svg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        cursor: pointer;
-      }
-      .edit:hover {
-        background-image: url("../image/icooon/edit_active.svg");
-      }
-      .edit:focus {
-        background-image: url("../image/icooon/edit_active.svg");
-        outline: none;
-      }
-    }
-    .sub {
-      display: flex;
-      justify-content: space-between;
-      padding-right: 2rem;
-      height: 1rem;
-      line-height: 1rem;
-      font-size: 0.8rem;
-      border-bottom: none;
-    }
+  .intro {
+    padding: 0.5rem 2.5rem;
+    border-bottom: solid 0.2rem #cc0000;
+    font-size: 0.9rem;
   }
 }
 
@@ -116,6 +123,22 @@
   .main {
     display: flex;
     flex-wrap: wrap;
+  }
+  .tag-add {
+    border-radius: 0.3rem;
+    margin: 0.5rem 0.5rem 0 0.5rem;
+    height: 1.4rem;
+    width: 6rem;
+    box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
+    background-color: #ffa8a8;
+    border: none;
+    cursor: pointer;
+  }
+  .tag-add:hover {
+    background-color: #f7c0c0;
+  }
+  .tag-add:focus {
+    outline: none;
   }
 }
 
@@ -265,6 +288,24 @@
 }
 
 .pnet-profile-edit {
+  margin: 0 auto;
+  margin-top: 3rem;
+  max-width: 40rem;
+  border: 0.2rem solid #cc0000;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.5rem;
+  h1 {
+    border-bottom: 0.1rem solid #cc0062;
+    border-top: 0.1rem solid #cc0062;
+  }
+
+  h1:before {
+    background-color: #cc0062;
+  }
+
+  h1:after {
+    background-color: #cc0062;
+  }
   .label {
     margin-top: 0.5rem;
     display: inline-block;
@@ -277,22 +318,37 @@
     color: #94003a;
   };
 
-  .tag-required {
-    margin-bottom: 0.2rem;
-    padding: 0 0.4rem;
-    display: inline-block;
-    background-color: #c21750;
-    font-size: 0.8rem;
-    border-radius: 0.5rem;
-    color: #fafafa;
-    font-weight: bold;
-    vertical-align: middle;
-  }
-
   .error-icon {
     height: 1rem;
     margin-bottom: 0.2rem;
     padding: 0 0.4rem;
+  }
+
+  .textarea-form {
+    margin-left: 1rem;
+    width: calc(100% - 5rem);
+    display: block;
+    border-radius: 0.5rem;
+    border: solid 0.2rem #6b6b6b;
+  }
+  .textarea-form:focus {
+    border: solid 0.2rem #909090;
+    outline: none;
+  }
+  .textarea-form::-webkit-scrollbar{
+    width: 0.6rem;
+  }
+
+  .textarea-form::-webkit-scrollbar-track{
+    background: #c8c8c8;
+    border: none;
+    border-radius: 2rem;
+  }
+
+  .textarea-form::-webkit-scrollbar-thumb{
+    background: rgba(255, 61, 137, 0.5);
+    border-radius: 2rem;
+    box-shadow: none;
   }
 
   .input-form {
@@ -311,25 +367,34 @@
     background-color: #ffdede;
     border-color: #be4242;
   }
-}
-
-.pnet-profile-edit {
-  padding: 0.5rem;
-  h1 {
-    border-bottom: 0.1rem solid #cc0062;
-    border-top: 0.1rem solid #cc0062;
+  .btn-space {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    button {
+      height: 2.5rem;
+      width: 5rem;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    button:focus {
+      outline: none;
+    }
+    .close {
+      border: none;
+      background-color: inherit;
+      border-bottom: #cc0062 solid 0.1rem;
+    }
+    .close:hover {
+      background-color: rgba(251, 176, 212, 0.1);
+    }
+    .save {
+      background-color: #ff8fc5;
+      border: #fafafa solid 0.1rem;
+      border-radius: 0.5rem;
+    }
+    .save:hover {
+      background-color: #fbb0d4;
+    }
   }
-
-  h1:before {
-    background-color: #cc0062;
-  }
-
-  h1:after {
-    background-color: #cc0062;
-  }
-  margin: 0 auto;
-  margin-top: 3rem;
-  max-width: 40rem;
-  border: 0.2rem solid #cc0000;
-  background-color: rgba(255, 255, 255, 0.8);
 }

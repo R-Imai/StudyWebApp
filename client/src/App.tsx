@@ -18,8 +18,12 @@ const Routes: React.FC = () => {
         <Route exact path="/register" component={RegisterPage}/>
         <Route exact path="/home" component={HomePage}/>
         <Route exact path="/pnet" component={PnetPage}/>
+        <Route exact path="/error/401-unauthorized" component={LoginPage}/>
+        <Route exact path="/error/403-forbidden" component={LoginPage}/>
+        <Route exact path="/error/404-notfound" component={LoginPage}/>
+        <Route exact path="/error/500-internal-server-error" component={HomePage}/>
         <Route exact path="">
-          <Redirect to={'/login'}/>
+          <Redirect to={'/error/404-notfound'}/>
         </Route>
       </Switch>
     </Router>

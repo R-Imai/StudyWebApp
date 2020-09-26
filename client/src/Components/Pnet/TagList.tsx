@@ -11,6 +11,7 @@ const TagList: React.FC<Props> = (props: Props) => {
       <span className="title">スキル・特徴</span>
       <div className="main">
         {props.tagList.map((tag) => {return <Tag key={tag.id} tag={tag} />})}
+        <button className="tag-add">+</button>
       </div>
     </div>
   )

@@ -4,9 +4,11 @@ import infoIcon from '../image/info.svg';
 import warnIcon from '../image/warn.svg';
 import errorIcon from '../image/error.svg';
 
+export type msgType = 'error' | 'warn' | 'info'
+
 type Props = {
   value: string,
-  type: 'error' | 'warn' | 'info'
+  type: msgType
 }
 
 const Message: React.FC<Props> = (props: Props) => {
