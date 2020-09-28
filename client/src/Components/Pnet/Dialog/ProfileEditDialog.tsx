@@ -11,14 +11,16 @@ type Props = {
 const ProfileEditDialog: React.FC<Props> = (props: Props) => {
   return (
     <div className="dialog-parent">
-      <ProfileEdit
-        profile={props.profile}
-        onSubmit={props.onSubmit}
-        cancelBtnInfo={{
-          label: '閉じる',
-          onClick: props.onClose
-        }}
-      />
+      <div className="pnet-dialog">
+        <ProfileEdit
+          profile={props.profile}
+          onSubmit={props.onSubmit}
+          cancelBtnInfo={{
+            label: '閉じる',
+            onClick: props.onClose
+          }}
+        />
+      </div>
     </div>
   )
 }

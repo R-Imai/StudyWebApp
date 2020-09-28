@@ -128,9 +128,11 @@
     border-radius: 0.3rem;
     margin: 0.5rem 0.5rem 0 0.5rem;
     height: 1.4rem;
-    width: 6rem;
+    width: 7rem;
     box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
     background-color: #ffa8a8;
+    font-size: 1.2rem;
+    font-weight: bold;
     border: none;
     cursor: pointer;
   }
@@ -287,13 +289,16 @@
   box-sizing: border-box;
 }
 
-.pnet-profile-edit {
+.pnet-dialog {
   margin: 0 auto;
   margin-top: 3rem;
   max-width: 40rem;
   border: 0.2rem solid #cc0000;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 0.5rem;
+}
+
+.pnet-form {
   h1 {
     border-bottom: 0.1rem solid #cc0062;
     border-top: 0.1rem solid #cc0062;
@@ -317,6 +322,13 @@
   .label-error {
     color: #94003a;
   };
+
+  .err-msg {
+    vertical-align: text-top;
+    margin-left: 1.5rem;
+    font-size: 0.6rem;
+    color: #94003a;
+  }
 
   .error-icon {
     height: 1rem;
@@ -371,6 +383,7 @@
     display: flex;
     justify-content: space-around;
     margin-top: 1rem;
+    align-items: flex-end;
     button {
       height: 2.5rem;
       width: 5rem;
@@ -395,6 +408,21 @@
     }
     .save:hover {
       background-color: #fbb0d4;
+    }
+    .save:disabled {
+      background-color: rgba(251, 176, 212, 0.6);
+      color: rgba(250, 250, 250, 0.6);
+      cursor: not-allowed;
+    }
+    .delete {
+      height: 2rem;
+      width: 3rem;
+      font-size: 0.8rem;
+      background-color: #fafafa;
+      border: #ff3636 solid 0.3rem;
+    }
+    .delete:hover {
+      background-color: #fbdcdc;
     }
   }
 }

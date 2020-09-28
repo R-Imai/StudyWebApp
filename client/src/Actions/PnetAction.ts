@@ -30,3 +30,62 @@ export async function updateProfile(token: string, profile: PnetProfileEditInfo)
   });
   return responce.status
 }
+
+export async function tagRegister(token: string, tag: TagRegister) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.usertag}`, tag, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}
+
+
+export async function tagGood(token: string, tag: TagReactionUpdate) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.tagGood}`, tag, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}
+
+
+export async function tagBad(token: string, tag: TagReactionUpdate) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.tagBad}`, tag, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}
+
+type DeleteTagReactionParam = {
+  tag_id: string;
+  action_user_id: string;
+}
+
+export async function tagReactionDelete(token: string, tagId: string, actionUserId: string) {
+  const responce = await axios.delete<null>(`${API.UrlBase}${API.Pnet.tagDelete}`, {
+    params: {
+      tag_id: tagId,
+      action_user_id: actionUserId
+    },
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}

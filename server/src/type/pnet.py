@@ -82,3 +82,7 @@ class InsertUserCareer(BaseModel):
     year: datetime.date
     create_user_cd: str
     detail: str
+
+class TagReactionDeleteParam(BaseModel):
+     tag_id: str
+     action_user_id: str

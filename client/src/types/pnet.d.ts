@@ -7,6 +7,34 @@ interface PnetProfileCard {
   self_intro: string
 }
 
+type tagReactionType = 'good' | 'bad';
+
+interface TagEditType {
+  id?: string,
+  comment?: string,
+  reaction: tagReactionType,
+  title?: string
+}
+
+interface TagReactionUpdate {
+  tag_id: string,
+  action_user_id: string,
+  comment: string,
+  reaction: tagReactionType
+}
+
+interface TagSet {
+  tag_id: string,
+  action_user_id: string,
+  tag_user_id: string,
+  comment: string,
+  reaction: tagReactionType
+}
+
+interface TagRegister extends TagSet {
+  title: string
+}
+
 interface Tag {
   id: string,
   title: string,

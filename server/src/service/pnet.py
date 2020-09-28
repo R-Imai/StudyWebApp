@@ -111,17 +111,38 @@ class PnetService:
         try:
             conn = connection.mk_connection()
             with conn.cursor() as cur:
-                user_id = self.pnet_dao.get_tag_user_id(cur, tag_reaction.tag_id)
-                if user_id is None:
+                tag_user_id = self.pnet_dao.get_tag_user_id(cur, tag_reaction.tag_id)
+                if tag_user_id is None:
                     raise Exception(f"tag_id: {tag_reaction.tag_id} の情報が見つかりません")
                 tag_reaction_user = pnet_type.InsertTagReaction(
                     tag_id=tag_reaction.tag_id,
-                    tag_user_id=user_id[0],
+                    tag_user_id=tag_user_id[0],
                     action_user_id=tag_reaction.action_user_id,
                     comment=tag_reaction.comment,
                     reaction=tag_reaction.reaction
                 )
-                self.pnet_dao.insert_tag_reaction(cur, tag_reaction_user)
+                if self.pnet_dao.get_tag_reaction_user(cur, tag_reaction.tag_id, tag_user_id, tag_reaction.action_user_id) is None:
+                    self.pnet_dao.insert_tag_reaction(cur, tag_reaction_user)
+                else:
+                    self.pnet_dao.update_tag_reaction(cur, tag_reaction_user)
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise Exception(e)
+        finally:
+            conn.close()
+
+    def delete_tag_reaction(self, tag_id, action_user_id):
+        try:
+            conn = connection.mk_connection()
+            with conn.cursor() as cur:
+                tag_user_id = self.pnet_dao.get_tag_user_id(cur, tag_id)
+                if tag_user_id is None:
+                    raise Exception(f"tag_id: {tag_reaction.tag_id} の情報が見つかりません")
+                self.pnet_dao.delete_tag_reaction(cur, tag_id, tag_user_id, action_user_id)
+                tag_info = self.pnet_dao.get_tag_reaction_by_tag_id(cur, tag_user_id, tag_id)
+                if len(tag_info["good"]) == 0 and len(tag_info["bad"]) == 0:
+                    self.pnet_dao.delete_tag(cur, tag_id, tag_user_id)
                 conn.commit()
         except Exception as e:
             conn.rollback()

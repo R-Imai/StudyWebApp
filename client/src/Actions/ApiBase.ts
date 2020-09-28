@@ -18,6 +18,7 @@ export const API = {
     usertag: "/api/pnet/user/tag",
     tagGood: "/api/pnet/user/tag/good",
     tagBad: "/api/pnet/user/tag/bad",
+    tagDelete: "/api/pnet/user/tag",
     career: "/api/pnet/user/career"
   }
 };

@@ -274,6 +274,29 @@ def pnet_user_tag_bad(post_param: pnet_type.UserTagReaction, my_token: Optional[
             detail=f"予期せぬエラーが発生しました。\n{e}"
         )
 
+@app.delete("/api/pnet/user/tag", tags=["People Network"])
+def pnet_delete_tag_reaction(tag_id: str, action_user_id: str, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+    if action_user_id != login_user_id:
+        raise HTTPException(
+            status_code=400,
+            detail="不正なリクエストです"
+        )
+
+    try:
+        pnet_service.delete_tag_reaction(tag_id, action_user_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+
 @app.post("/api/pnet/user/career", tags=["People Network"])
 def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[str] = Header(None)):
     try:

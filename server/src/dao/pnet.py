@@ -10,6 +10,7 @@ class PnetDAO:
             "select_user_hobby": "SELECT id, title, detail FROM pnet_hobby WHERE user_id = %s",
             "select_tag": "SELECT tag_id, title FROM pnet_tag WHERE user_id = %s",
             "select_tag_reaction": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s",
+            "select_tag_reaction_by_tag_id": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s AND tag_id=%s",
             "select_career": "SELECT history_id, title, year, detail FROM pnet_career WHERE user_id = %s",
             "select_career_pr": "SELECT history_id, title, year, detail FROM pnet_career_pr WHERE user_id = %s",
             "insert_master": "INSERT INTO pnet_master (id, name_kana, belong, self_intro) values (%s, %s, %s, %s);",
@@ -20,7 +21,11 @@ class PnetDAO:
             "insert_tag_reaction": "INSERT INTO pnet_tag_reaction (tag_id, tag_user_id, action_user_id, comment, reaction) values (%s, %s, %s, %s, %s);",
             "tagid_2_taguser": "SELECT user_id FROM pnet_tag WHERE tag_id=%s",
             "insert_pnet_career": "INSERT INTO pnet_career (history_id, user_id, title, year, detail, create_user_cd) VALUES (%s, %s, %s, %s, %s, %s)",
-            "insert_pnet_career_pr": "INSERT INTO pnet_career_pr (history_id, user_id, title, year, detail, create_user_cd) VALUES (%s, %s, %s, %s, %s, %s)"
+            "insert_pnet_career_pr": "INSERT INTO pnet_career_pr (history_id, user_id, title, year, detail, create_user_cd) VALUES (%s, %s, %s, %s, %s, %s);",
+            "get_tag_reaction_user": "SELECT tag_id, tag_user_id, action_user_id, comment, reaction FROM pnet_tag_reaction WHERE tag_id=%s AND tag_user_id=%s AND action_user_id=%s;",
+            "update_tag_reaction": "UPDATE pnet_tag_reaction SET tag_id=%s, tag_user_id=%s, action_user_id=%s, comment=%s, reaction=%s WHERE tag_id=%s AND tag_user_id=%s AND action_user_id=%s;",
+            "delete_tag_reaction": "DELETE FROM pnet_tag_reaction WHERE tag_id=%s AND tag_user_id=%s AND action_user_id=%s;",
+            "delete_tag": "DELETE FROM pnet_tag WHERE tag_id=%s AND user_id=%s;"
         }
 
     def insert_user_info(self, cur, user_info: type.InsertMaster):
@@ -68,6 +73,19 @@ class PnetDAO:
             }
         return tag_data
 
+    def get_tag_reaction_by_tag_id(self, cur, user_id: str, tag_id: str):
+        query = self.query["select_tag_reaction_by_tag_id"]
+        cur.execute(query, (user_id, tag_id))
+        rows = cur.fetchall()
+
+        good = list(map(lambda y: type.TagReaction(user_id = y[1], comment=y[2]), filter(lambda x: x[3] == "good", rows)))
+        bad = list(map(lambda y: type.TagReaction(user_id = y[1], comment=y[2]), filter(lambda x: x[3] == "bad", rows)))
+        tag_data = {
+            "good": good,
+            "bad": bad
+        }
+        return tag_data
+
     def get_career(self, cur, user_id: str) -> [type.UserCareer]:
         query = self.query["select_career"]
         cur.execute(query, (user_id,))
@@ -108,3 +126,20 @@ class PnetDAO:
     def insert_career_pr(self, cur, user_career: type.InsertUserCareer):
         query = self.query["insert_pnet_career_pr"]
         cur.execute(query, (user_career.history_id, user_career.user_id, user_career.title, user_career.year, user_career.detail, user_career.create_user_cd))
+
+    def get_tag_reaction_user(self, cur, tag_id, tag_user_id, action_user_id):
+        query = self.query["get_tag_reaction_user"]
+        cur.execute(query, (tag_id, tag_user_id, action_user_id))
+        return cur.fetchone()
+
+    def update_tag_reaction(self, cur, tag_reaction_data: type.InsertTagReaction):
+        query = self.query["update_tag_reaction"]
+        cur.execute(query, (tag_reaction_data.tag_id, tag_reaction_data.tag_user_id, tag_reaction_data.action_user_id, tag_reaction_data.comment, tag_reaction_data.reaction, tag_reaction_data.tag_id, tag_reaction_data.tag_user_id, tag_reaction_data.action_user_id))
+
+    def delete_tag_reaction(self, cur, tag_id, tag_user_id, action_user_id):
+        query = self.query["delete_tag_reaction"]
+        cur.execute(query, (tag_id, tag_user_id, action_user_id))
+
+    def delete_tag(self, cur, tag_id, tag_user_id):
+        query = self.query["delete_tag"]
+        cur.execute(query, (tag_id, tag_user_id))

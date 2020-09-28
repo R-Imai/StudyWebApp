@@ -69,7 +69,7 @@ class ProfileEdit extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="pnet-profile-edit">
+      <div className="pnet-form">
         <h1>
           People Network プロフィール
         </h1>
