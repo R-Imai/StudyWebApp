@@ -82,6 +82,18 @@ class PnetService:
             conn.close()
         return user_hobby
 
+    def delete_user_hobby(self, user_id: str, hobby_id:str):
+        try:
+            conn = connection.mk_connection()
+            with conn.cursor() as cur:
+                self.pnet_dao.delete_user_hobby(cur, user_id, hobby_id)
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise Exception(e)
+        finally:
+            conn.close()
+
     def register_tag(self, tag_data: pnet_type.TagRegister):
         try:
             conn = connection.mk_connection()

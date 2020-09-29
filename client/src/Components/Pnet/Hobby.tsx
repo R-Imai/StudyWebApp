@@ -1,12 +1,16 @@
 import React from 'react';
 
 type Props = {
-  hobby: Hobby
+  hobby: Hobby,
+  onClick: () => void
 }
 
-const Tag: React.FC<Props> = (props: Props) => {
+const Hobby: React.FC<Props> = (props: Props) => {
   return (
-    <li className="pnet-hobby">
+    <li
+      className="pnet-hobby"
+      onClick={props.onClick}
+    >
       <span className="hobby-title">
         {props.hobby.title}
       </span>
@@ -17,4 +21,4 @@ const Tag: React.FC<Props> = (props: Props) => {
   )
 }
 
-export default Tag;
+export default Hobby;

@@ -4,7 +4,7 @@ type Props = {
   career: Career
 }
 
-const Tag: React.FC<Props> = (props: Props) => {
+const Career: React.FC<Props> = (props: Props) => {
   return (
     <li className="pnet-career">
       <span className="year">
@@ -20,4 +20,4 @@ const Tag: React.FC<Props> = (props: Props) => {
   )
 }
 
-export default Tag;
+export default Career;

@@ -73,3 +73,16 @@ interface PnetProfileEditInfo {
   belong: string,
   self_intro: string
 }
+
+interface HobbyEditType {
+  id?: string,
+  title?: string,
+  detail?: string
+}
+
+interface HobbySet {
+  user_id: string,
+  id?: string,
+  title: string,
+  detail: string
+}

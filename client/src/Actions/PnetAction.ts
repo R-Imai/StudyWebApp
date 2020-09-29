@@ -89,3 +89,33 @@ export async function tagReactionDelete(token: string, tagId: string, actionUser
   });
   return responce.status
 }
+
+
+export async function userHobbySet(token: string, hobby: HobbySet) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.userHobby}`, hobby, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}
+
+
+export async function userHobbyDelete(token: string, userId: string, hobbyId:string) {
+  const responce = await axios.delete<null>(`${API.UrlBase}${API.Pnet.userHobby}`, {
+    params: {
+      user_id: userId,
+      hobby_id: hobbyId
+    },
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}

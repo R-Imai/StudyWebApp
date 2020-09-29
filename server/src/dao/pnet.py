@@ -17,6 +17,7 @@ class PnetDAO:
             "update_master": "UPDATE pnet_master SET id=%s, name_kana=%s, belong=%s, self_intro=%s WHERE id=%s;",
             "insert_user_hobby": "INSERT INTO pnet_hobby (user_id, id, title, detail) values (%s, %s, %s, %s);",
             "update_user_hobby": "UPDATE pnet_hobby SET user_id=%s, id=%s, title=%s, detail=%s WHERE user_id=%s AND id=%s;",
+            "delete_user_hobby": "DELETE FROM pnet_hobby WHERE user_id=%s AND id=%s;",
             "insert_tag": "INSERT INTO pnet_tag (tag_id, user_id, title) values (%s, %s, %s);",
             "insert_tag_reaction": "INSERT INTO pnet_tag_reaction (tag_id, tag_user_id, action_user_id, comment, reaction) values (%s, %s, %s, %s, %s);",
             "tagid_2_taguser": "SELECT user_id FROM pnet_tag WHERE tag_id=%s",
@@ -105,6 +106,10 @@ class PnetDAO:
     def update_user_hobby(self, cur, hobby: type.UserHobby):
         query = self.query["update_user_hobby"]
         cur.execute(query, (hobby.user_id, hobby.id, hobby.title, hobby.detail, hobby.user_id, hobby.id))
+
+    def delete_user_hobby(self, cur, user_id: str, hobby_id:str):
+        query = self.query["delete_user_hobby"]
+        cur.execute(query, (user_id, hobby_id))
 
     def insert_tag(self, cur, tag_data: type.InsertUserTag):
         query = self.query["insert_tag"]

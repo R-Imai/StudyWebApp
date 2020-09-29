@@ -200,6 +200,29 @@ def pnet_user_hobby(post_param: pnet_type.InsertUserHobby, my_token: Optional[st
 
     return __mk_responce_json(user_hobby)
 
+@app.delete("/api/pnet/user/hobby", tags=["People Network"])
+def delete_user_hobby(user_id: str, hobby_id:str, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+    if user_id != login_user_id:
+        raise HTTPException(
+            status_code=400,
+            detail="不正なリクエストです"
+        )
+
+    try:
+        pnet_service.delete_user_hobby(user_id, hobby_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+
 @app.post("/api/pnet/user/tag", response_model=pnet_type.InsertUserTag, tags=["People Network"])
 def pnet_user_tag(post_param: pnet_type.TagRegister, my_token: Optional[str] = Header(None)):
     try:

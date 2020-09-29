@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import {getUserDetail} from '../Actions/UserAction'
-import {getProfile, updateProfile, tagRegister, tagGood, tagBad, tagReactionDelete} from '../Actions/PnetAction'
+import {getProfile, updateProfile, tagRegister, tagGood, tagBad, tagReactionDelete, userHobbySet, userHobbyDelete} from '../Actions/PnetAction'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
@@ -12,6 +12,7 @@ import CareerList from '../Components/Pnet/CareerList'
 import HobbyList from '../Components/Pnet/HobbyList'
 import ProfileEditDialog from '../Components/Pnet/Dialog/ProfileEditDialog'
 import TagEditDialog from '../Components/Pnet/Dialog/TagEditDialog'
+import HobbyEditDialog from '../Components/Pnet/Dialog/HobbyEditDialog'
 import Message, {msgType} from '../Components/Message'
 
 type State = {
@@ -30,6 +31,7 @@ type State = {
   showProfileEdit: boolean;
   editTagData: TagEditType | null;
   isShowWarningEditTagDialog: boolean;
+  editHobbyData: HobbyEditType | null;
 }
 
 class PnetPage extends React.Component<RouteComponentProps, State> {
@@ -42,7 +44,8 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
       showIndicator: false,
       showProfileEdit: false,
       editTagData: null,
-      isShowWarningEditTagDialog: false
+      isShowWarningEditTagDialog: false,
+      editHobbyData: null
     };
     this.onClickProfileEdit = this.onClickProfileEdit.bind(this);
     this.closeProfileEditDialog = this.closeProfileEditDialog.bind(this);
@@ -53,6 +56,11 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     this.tagReactionClick = this.tagReactionClick.bind(this);
     this.updateTagReaction = this.updateTagReaction.bind(this);
     this.tagReactionDelete = this.tagReactionDelete.bind(this);
+    this.onClickAddHobby = this.onClickAddHobby.bind(this);
+    this.closeHobbyEditDialog = this.closeHobbyEditDialog.bind(this);
+    this.onHobbyClick = this.onHobbyClick.bind(this);
+    this.hobbySubmit = this.hobbySubmit.bind(this);
+    this.hobbyDelete = this.hobbyDelete.bind(this);
   }
 
   getToken() {
@@ -497,7 +505,184 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
       showIndicator: false,
       isShowWarningEditTagDialog: false
     });
+    setTimeout(() => {
+      this.setState({
+        msgInfo: null
+      })
+    }, 5000);
+  }
 
+  onClickAddHobby() {
+    const hobbyData: HobbyEditType = {};
+    this.setState({
+      editHobbyData: hobbyData
+    })
+  }
+
+  onHobbyClick(hobbyData: HobbyEditType) {
+    this.setState({
+      editHobbyData: hobbyData
+    })
+  }
+
+  closeHobbyEditDialog() {
+    this.setState({
+      editHobbyData: null
+    })
+  }
+
+  async hobbySubmit(editHobbyData: HobbyEditType) {
+    if (!editHobbyData.title) {
+      const msgType:msgType = 'error';
+      const msgInfo = {
+        type: msgType,
+        value: "タイトルが入力されていません。"
+      }
+      this.setState({
+        msgInfo: msgInfo,
+      });
+      return;
+    }
+    if (this.state.loginUserInfo === null) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+    const hobby: HobbySet = {
+      user_id: this.state.loginUserInfo.id,
+      id: editHobbyData.id,
+      title: editHobbyData.title,
+      detail: editHobbyData.detail ? editHobbyData.detail : ''
+    }
+
+    const token = this.getToken()
+    if (!token) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+
+    this.setState({
+      showIndicator: true
+    });
+
+    try {
+      await userHobbySet(token, hobby);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        const msgType:msgType = 'error';
+        const errInfo = {
+          type: msgType,
+          value: e.message
+        }
+        this.setState({
+          msgInfo: errInfo,
+          editTagData: null,
+          showIndicator: false,
+          isShowWarningEditTagDialog: false
+        });
+        return;
+      } else {
+        throw e;
+      }
+    };
+
+    let pnetProfile: PnetUserInfo
+    try {
+      pnetProfile = await getProfile(token);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        this.props.history.push('/error/500-internal-server-error');
+        return;
+      } else {
+        throw e;
+      }
+    }
+
+    const msgType:msgType = 'info';
+    const msgInfo = {
+      type: msgType,
+      value: `趣味・特技を更新しました。`
+    }
+
+    this.setState({
+      msgInfo: msgInfo,
+      pnetUserInfo: pnetProfile,
+      editHobbyData: null,
+      showIndicator: false
+    });
+    setTimeout(() => {
+      this.setState({
+        msgInfo: null
+      })
+    }, 5000);
+  }
+
+  async hobbyDelete(hobbyId: string) {
+    if (this.state.loginUserInfo === null) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+    this.setState({
+      showIndicator: true
+    });
+    const token = this.getToken()
+    if (!token) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+
+    try {
+      await userHobbyDelete(token, this.state.loginUserInfo.id, hobbyId);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        const msgType:msgType = 'error';
+        const errInfo = {
+          type: msgType,
+          value: e.message
+        }
+        this.setState({
+          msgInfo: errInfo,
+          editHobbyData: null,
+          showIndicator: false
+        });
+        return;
+      } else {
+        throw e;
+      }
+    };
+
+    let pnetProfile: PnetUserInfo
+    try {
+      pnetProfile = await getProfile(token);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        this.props.history.push('/error/500-internal-server-error');
+        return;
+      } else {
+        throw e;
+      }
+    }
+
+    const msgType:msgType = 'info';
+    const msgInfo = {
+      type: msgType,
+      value: `趣味・特技を削除しました。`
+    }
+
+    this.setState({
+      msgInfo: msgInfo,
+      pnetUserInfo: pnetProfile,
+      editHobbyData: null,
+      showIndicator: false
+    });
+    setTimeout(() => {
+      this.setState({
+        msgInfo: null
+      })
+    }, 5000);
   }
 
   mkMain() {
@@ -536,6 +721,23 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
           />)
       : '';
 
+    const hobbyEditDialog = this.state.editHobbyData !== null
+      ? !this.state.editHobbyData.id
+        ? (
+          <HobbyEditDialog
+            hobbyData={this.state.editHobbyData}
+            onClose={this.closeHobbyEditDialog}
+            onSubmit={this.hobbySubmit}
+          />)
+        : (
+          <HobbyEditDialog
+            hobbyData={this.state.editHobbyData}
+            onClose={this.closeHobbyEditDialog}
+            onSubmit={this.hobbySubmit}
+            onDelete={this.hobbyDelete}
+          />)
+      : '';
+
     return (
       <div className="pnet-main">
         {this.state.msgInfo !== null ? <Message value={this.state.msgInfo.value} type={this.state.msgInfo.type} /> : ''}
@@ -550,11 +752,17 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
           onClickNew={this.onClickTagNew}
           reactionClick={this.tagReactionClick}
         />
-        <HobbyList hobbyList={this.state.pnetUserInfo.hobby}/>
+        <HobbyList
+          hobbyList={this.state.pnetUserInfo.hobby}
+          showAddBtn={this.state.loginUserInfo.id === this.state.pnetUserInfo.id}
+          onClickNew={this.onClickAddHobby}
+          hobbyClick={this.onHobbyClick}
+        />
         <CareerList careerList={this.state.pnetUserInfo.career} />
 
         {profileEditDialog}
         {tagEditDialog}
+        {hobbyEditDialog}
       </div>
     )
   }
