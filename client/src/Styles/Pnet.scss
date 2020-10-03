@@ -209,6 +209,24 @@
   .main {
     margin: 0 1.5rem;
     padding: 0 0.5rem;
+    .add-btn {
+      width: 100%;
+      height: 1.4rem;
+      font-size: 1.2rem;
+      border: none;
+      background-color: #ffa8a8;
+      box-shadow: 0.1rem 0.1rem 0.1rem rgba(99, 0, 0, 0.5);
+      border-radius: 0.3rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .add-btn:hover {
+      background-color: #f7c0c0;
+    }
+    .add-btn:focus {
+      background-color: #f7c0c0;
+      outline: none;
+    }
   }
 }
 
@@ -216,6 +234,8 @@
   border-bottom: solid rgba(0, 0, 0, 0) 0.15rem;
   cursor: pointer;
   .year {
+    display: inline-block;
+    width: 6rem;
     font-weight: bold;
     color: #440000;
   }
@@ -223,11 +243,23 @@
     content: ":";
   }
   .career-title {
+    display: inline-block;
     font-weight: bold;
     margin-left: 0.5rem;
+    width: calc(40% - 0.5rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: text-top;
   }
   .detail {
-    margin-left: 5rem;
+    display: inline-block;
+    margin-left: 0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    width: calc(60% - 0.5rem - 6rem);
+    text-overflow: ellipsis;
+    vertical-align: text-top;
   }
   .detail::before {
     content: "[ ";
@@ -295,11 +327,11 @@
     display: inline-block;
     font-weight: bold;
     margin-left: 0.5rem;
-    // min-width: 10rem;
     width: calc(40% - 0.5rem);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    vertical-align: text-top;
   }
   .detail {
     display: inline-block;
@@ -308,6 +340,7 @@
     white-space: nowrap;
     width: calc(60% - 0.5rem);
     text-overflow: ellipsis;
+    vertical-align: text-top;
   }
   .detail::before {
     content: "[ ";

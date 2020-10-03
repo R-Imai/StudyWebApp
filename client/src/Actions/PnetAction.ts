@@ -119,3 +119,34 @@ export async function userHobbyDelete(token: string, userId: string, hobbyId:str
   });
   return responce.status
 }
+
+
+
+export async function userCareerSet(token: string, career: CareerSet) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.career}`, career, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}
+
+
+export async function userCareerDelete(token: string, userId: string, careerId:string) {
+  const responce = await axios.delete<null>(`${API.UrlBase}${API.Pnet.career}`, {
+    params: {
+      user_id: userId,
+      history_id: careerId
+    },
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}

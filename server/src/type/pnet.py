@@ -79,7 +79,7 @@ class InsertUserCareer(BaseModel):
     history_id: str = None
     user_id: str
     title: str
-    year: datetime.date
+    year: datetime.datetime
     create_user_cd: str
     detail: str
 

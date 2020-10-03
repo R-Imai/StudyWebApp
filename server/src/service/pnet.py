@@ -162,13 +162,16 @@ class PnetService:
         finally:
             conn.close()
 
-    def register_user_career(self, user_career: pnet_type.InsertUserCareer):
+    def set_user_career(self, user_career: pnet_type.InsertUserCareer):
         try:
             conn = connection.mk_connection()
             with conn.cursor() as cur:
-                id = str(uuid.uuid4())[-12:]
-                user_career.history_id = id
-                self.pnet_dao.insert_career(cur, user_career)
+                if user_career.history_id is None:
+                    id = str(uuid.uuid4())[-12:]
+                    user_career.history_id = id
+                    self.pnet_dao.insert_career(cur, user_career)
+                else:
+                    self.pnet_dao.update_pnet_career(cur, user_career)
                 conn.commit()
         except Exception as e:
             conn.rollback()
@@ -176,13 +179,40 @@ class PnetService:
         finally:
             conn.close()
 
-    def register_user_career_pr(self, user_career: pnet_type.InsertUserCareer):
+    def delete_user_career(self, history_id:str, user_id:str):
         try:
             conn = connection.mk_connection()
             with conn.cursor() as cur:
-                id = str(uuid.uuid4())[-12:]
-                user_career.history_id = id
-                self.pnet_dao.insert_career_pr(cur, user_career)
+                self.pnet_dao.delete_pnet_career(cur, history_id, user_id)
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise Exception(e)
+        finally:
+            conn.close()
+
+    def set_user_career_pr(self, user_career: pnet_type.InsertUserCareer):
+        try:
+            conn = connection.mk_connection()
+            with conn.cursor() as cur:
+                if user_career.history_id is None:
+                    id = str(uuid.uuid4())[-12:]
+                    user_career.history_id = id
+                    self.pnet_dao.insert_career_pr(cur, user_career)
+                else:
+                    self.pnet_dao.update_pnet_career_pr(cur, user_career)
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise Exception(e)
+        finally:
+            conn.close()
+
+    def delete_user_career_pr(self, history_id:str, user_id:str):
+        try:
+            conn = connection.mk_connection()
+            with conn.cursor() as cur:
+                self.pnet_dao.delete_pnet_career_pr(cur, history_id, user_id)
                 conn.commit()
         except Exception as e:
             conn.rollback()

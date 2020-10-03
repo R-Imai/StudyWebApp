@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import {getUserDetail} from '../Actions/UserAction'
-import {getProfile, updateProfile, tagRegister, tagGood, tagBad, tagReactionDelete, userHobbySet, userHobbyDelete} from '../Actions/PnetAction'
+import {getProfile, updateProfile, tagRegister, tagGood, tagBad, tagReactionDelete, userHobbySet, userHobbyDelete, userCareerSet, userCareerDelete} from '../Actions/PnetAction'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
@@ -13,6 +13,7 @@ import HobbyList from '../Components/Pnet/HobbyList'
 import ProfileEditDialog from '../Components/Pnet/Dialog/ProfileEditDialog'
 import TagEditDialog from '../Components/Pnet/Dialog/TagEditDialog'
 import HobbyEditDialog from '../Components/Pnet/Dialog/HobbyEditDialog'
+import CareerEditDialog from '../Components/Pnet/Dialog/CareerEditDialog'
 import Message, {msgType} from '../Components/Message'
 
 type State = {
@@ -32,6 +33,7 @@ type State = {
   editTagData: TagEditType | null;
   isShowWarningEditTagDialog: boolean;
   editHobbyData: HobbyEditType | null;
+  editCareerData: CareerEditType | null;
 }
 
 class PnetPage extends React.Component<RouteComponentProps, State> {
@@ -45,7 +47,8 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
       showProfileEdit: false,
       editTagData: null,
       isShowWarningEditTagDialog: false,
-      editHobbyData: null
+      editHobbyData: null,
+      editCareerData: null
     };
     this.onClickProfileEdit = this.onClickProfileEdit.bind(this);
     this.closeProfileEditDialog = this.closeProfileEditDialog.bind(this);
@@ -61,6 +64,11 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     this.onHobbyClick = this.onHobbyClick.bind(this);
     this.hobbySubmit = this.hobbySubmit.bind(this);
     this.hobbyDelete = this.hobbyDelete.bind(this);
+    this.onClickAddCareer = this.onClickAddCareer.bind(this);
+    this.onClickCareer = this.onClickCareer.bind(this);
+    this.closeCareerEditDialog = this.closeCareerEditDialog.bind(this);
+    this.careerSubmit = this.careerSubmit.bind(this);
+    this.careerDelete = this.careerDelete.bind(this);
   }
 
   getToken() {
@@ -576,7 +584,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
         }
         this.setState({
           msgInfo: errInfo,
-          editTagData: null,
+          editHobbyData: null,
           showIndicator: false,
           isShowWarningEditTagDialog: false
         });
@@ -602,7 +610,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     const msgType:msgType = 'info';
     const msgInfo = {
       type: msgType,
-      value: `趣味・特技を更新しました。`
+      value: editHobbyData.id ? '趣味・特技を更新しました。' : '趣味・特技を登録しました。'
     }
 
     this.setState({
@@ -685,6 +693,202 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     }, 5000);
   }
 
+  onClickAddCareer() {
+    const career: CareerEditType = {};
+    this.setState({
+      editCareerData: career
+    });
+  }
+
+  onClickCareer(careerData: Career) {
+    const careerEditData: CareerEditType = {
+      history_id: careerData.history_id,
+      title: careerData.title,
+      year: new Date(careerData.year),
+      detail: careerData.detail
+    }
+    this.setState({
+      editCareerData: careerEditData
+    })
+  }
+
+  closeCareerEditDialog() {
+    this.setState({
+      editCareerData: null
+    });
+  }
+
+  async careerSubmit(careerEditData: CareerEditType) {
+    if (!careerEditData.title) {
+      const msgType:msgType = 'error';
+      const msgInfo = {
+        type: msgType,
+        value: "タイトルが入力されていません。"
+      }
+      this.setState({
+        msgInfo: msgInfo,
+      });
+      return;
+    }
+    if (!careerEditData.year) {
+      const msgType:msgType = 'error';
+      const msgInfo = {
+        type: msgType,
+        value: "日時が入力されていません。"
+      }
+      this.setState({
+        msgInfo: msgInfo,
+      });
+      return;
+    }
+
+    if (this.state.loginUserInfo === null) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+    if (this.state.pnetUserInfo === null) {
+      return;
+    }
+    const career: CareerSet = {
+      user_id: this.state.pnetUserInfo.id,
+      create_user_cd: this.state.loginUserInfo.id,
+      history_id: careerEditData.history_id,
+      title: careerEditData.title,
+      year: careerEditData.year,
+      detail: careerEditData.detail ? careerEditData.detail : ''
+    }
+
+    const token = this.getToken()
+    if (!token) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+
+    this.setState({
+      showIndicator: true
+    });
+
+    try {
+      await userCareerSet(token, career);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        const msgType:msgType = 'error';
+        const errInfo = {
+          type: msgType,
+          value: e.message
+        }
+        this.setState({
+          msgInfo: errInfo,
+          editCareerData: null,
+          showIndicator: false,
+          isShowWarningEditTagDialog: false
+        });
+        return;
+      } else {
+        throw e;
+      }
+    };
+
+    let pnetProfile: PnetUserInfo
+    try {
+      pnetProfile = await getProfile(token);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        this.props.history.push('/error/500-internal-server-error');
+        return;
+      } else {
+        throw e;
+      }
+    }
+
+    const msgType:msgType = 'info';
+    const msgInfo = {
+      type: msgType,
+      value: careerEditData.history_id ? '経歴を更新しました。' : '経歴を登録しました。'
+    }
+
+    this.setState({
+      msgInfo: msgInfo,
+      pnetUserInfo: pnetProfile,
+      editCareerData: null,
+      showIndicator: false
+    });
+    setTimeout(() => {
+      this.setState({
+        msgInfo: null
+      })
+    }, 5000);
+  }
+
+  async careerDelete(historyId: string) {
+    if (this.state.loginUserInfo === null) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+    this.setState({
+      showIndicator: true
+    });
+    const token = this.getToken()
+    if (!token) {
+      this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+
+    try {
+      await userCareerDelete(token, this.state.loginUserInfo.id, historyId);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        const msgType:msgType = 'error';
+        const errInfo = {
+          type: msgType,
+          value: e.message
+        }
+        this.setState({
+          msgInfo: errInfo,
+          editCareerData: null,
+          showIndicator: false
+        });
+        return;
+      } else {
+        throw e;
+      }
+    };
+
+    let pnetProfile: PnetUserInfo
+    try {
+      pnetProfile = await getProfile(token);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+        this.props.history.push('/error/500-internal-server-error');
+        return;
+      } else {
+        throw e;
+      }
+    }
+
+    const msgType:msgType = 'info';
+    const msgInfo = {
+      type: msgType,
+      value: `経歴を削除しました。`
+    }
+
+    this.setState({
+      msgInfo: msgInfo,
+      pnetUserInfo: pnetProfile,
+      editCareerData: null,
+      showIndicator: false
+    });
+    setTimeout(() => {
+      this.setState({
+        msgInfo: null
+      })
+    }, 5000);
+  }
+
   mkMain() {
     if (this.state.pnetUserInfo === null) {
       return '';
@@ -738,6 +942,23 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
           />)
       : '';
 
+    const careerEditDialog = this.state.editCareerData !== null
+      ? !this.state.editCareerData.history_id
+        ? (
+          <CareerEditDialog
+            careerData={this.state.editCareerData}
+            onClose={this.closeCareerEditDialog}
+            onSubmit={this.careerSubmit}
+          />)
+        : (
+          <CareerEditDialog
+            careerData={this.state.editCareerData}
+            onClose={this.closeCareerEditDialog}
+            onSubmit={this.careerSubmit}
+            onDelete={this.careerDelete}
+          />)
+      : '';
+
     return (
       <div className="pnet-main">
         {this.state.msgInfo !== null ? <Message value={this.state.msgInfo.value} type={this.state.msgInfo.type} /> : ''}
@@ -758,11 +979,17 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
           onClickNew={this.onClickAddHobby}
           hobbyClick={this.onHobbyClick}
         />
-        <CareerList careerList={this.state.pnetUserInfo.career} />
+        <CareerList
+          careerList={this.state.pnetUserInfo.career}
+          showAddBtn={this.state.loginUserInfo.id === this.state.pnetUserInfo.id}
+          onClickNew={this.onClickAddCareer}
+          careerClick={this.onClickCareer}
+        />
 
         {profileEditDialog}
         {tagEditDialog}
         {hobbyEditDialog}
+        {careerEditDialog}
       </div>
     )
   }

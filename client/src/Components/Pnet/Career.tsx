@@ -1,12 +1,16 @@
 import React from 'react';
 
 type Props = {
-  career: Career
+  career: Career,
+  onClick: () => void
 }
 
 const Career: React.FC<Props> = (props: Props) => {
   return (
-    <li className="pnet-career">
+    <li
+      className="pnet-career"
+      onClick={props.onClick}
+    >
       <span className="year">
         {props.career.year}
       </span>

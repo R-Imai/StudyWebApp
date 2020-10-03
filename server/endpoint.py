@@ -320,6 +320,27 @@ def pnet_delete_tag_reaction(tag_id: str, action_user_id: str, my_token: Optiona
             detail=f"予期せぬエラーが発生しました。\n{e}"
         )
 
+@app.delete("/api/pnet/user/career", tags=["People Network"])
+def delete_user_career(history_id:str, user_id:str, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+    try:
+        if user_id == login_user_id:
+            pnet_service.delete_user_career(history_id, user_id)
+        else:
+            pnet_service.delete_user_career_pr(history_id, user_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+
 @app.post("/api/pnet/user/career", tags=["People Network"])
 def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[str] = Header(None)):
     try:
@@ -336,7 +357,7 @@ def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[
         )
     if post_param.user_id == login_user_id:
         try:
-            pnet_service.register_user_career(post_param)
+            pnet_service.set_user_career(post_param)
         except Exception as e:
             raise HTTPException(
                 status_code=500,
@@ -344,7 +365,7 @@ def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[
             )
     else:
         try:
-            pnet_service.register_user_career_pr(post_param)
+            pnet_service.set_user_career_pr(post_param)
         except Exception as e:
             raise HTTPException(
                 status_code=500,

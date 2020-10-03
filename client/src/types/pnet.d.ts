@@ -86,3 +86,19 @@ interface HobbySet {
   title: string,
   detail: string
 }
+
+interface CareerEditType {
+  history_id?: string,
+  title?: string,
+  year?: Date,
+  detail?: string
+}
+
+interface CareerSet {
+  history_id?: string,
+  user_id: string,
+  title: string,
+  year: Date,
+  create_user_cd: string,
+  detail: string
+}

@@ -1,18 +1,23 @@
 import React from 'react';
 
 type Props = {
-  hobby: HobbyEditType;
-  onSubmit: (hobby: HobbyEditType) => void;
+  career: CareerEditType;
+  onSubmit: (career: CareerEditType) => void;
   cancelBtnInfo?: {
     label: string;
-    onClick: () => void
+    onClick: () => void;
   }
-  onDelete?: (tag_id: string) => void
+  onDelete?: (career_id: string) => void
 }
 type State = {
-  hobbyLocal: HobbyEditType;
+  careerLocal: CareerEditType;
+  dateLocal: string,
   formDetail: {
     title: {
+      required: boolean;
+      maxLength: number|null;
+    },
+    date: {
       required: boolean;
       maxLength: number|null;
     }
@@ -20,20 +25,35 @@ type State = {
   isNew: boolean
 }
 
-class HobbyEdit extends React.Component<Props, State> {
+
+const zeropadding = (num: number) => {
+  return `0${num}`.slice(-2);
+}
+
+const date2str = (date: Date) => {
+  return `${date.getFullYear()}-${zeropadding(date.getMonth() + 1)}-${zeropadding(date.getDate())}`
+}
+
+class CareerEdit extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      hobbyLocal: JSON.parse(JSON.stringify(props.hobby)),
+      careerLocal: JSON.parse(JSON.stringify(props.career)),
+      dateLocal: props.career.year ? date2str(props.career.year) : '',
       formDetail: {
         title: {
           required: true,
           maxLength: 128
+        },
+        date: {
+          required: true,
+          maxLength: null
         }
       },
-      isNew: typeof props.hobby.id === 'undefined',
+      isNew: typeof props.career.history_id === 'undefined',
     }
     this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onChangeYear = this.onChangeYear.bind(this);
     this.onChangeDetail = this.onChangeDetail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -42,18 +62,24 @@ class HobbyEdit extends React.Component<Props, State> {
   }
 
   onChangeTitle(e: React.ChangeEvent<HTMLInputElement>) {
-    const hobby: HobbyEditType = JSON.parse(JSON.stringify(this.state.hobbyLocal))
-    hobby.title = e.target.value
+    const career: CareerEditType = JSON.parse(JSON.stringify(this.state.careerLocal))
+    career.title = e.target.value
     this.setState({
-      hobbyLocal: hobby
+      careerLocal: career
+    })
+  }
+
+  onChangeYear(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      dateLocal: e.target.value
     })
   }
 
   onChangeDetail(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    const hobby: HobbyEditType = JSON.parse(JSON.stringify(this.state.hobbyLocal))
-    hobby.detail = e.target.value
+    const career: CareerEditType = JSON.parse(JSON.stringify(this.state.careerLocal))
+    career.detail = e.target.value
     this.setState({
-      hobbyLocal: hobby
+      careerLocal: career
     })
   }
 
@@ -61,30 +87,39 @@ class HobbyEdit extends React.Component<Props, State> {
     if(this.isTitleFormError().some((v) => {return v})) {
       return;
     }
-    const hobby: HobbyEditType = JSON.parse(JSON.stringify(this.state.hobbyLocal))
-    if (!hobby.detail) {
-      hobby.detail = ''
+    const career: CareerEditType = JSON.parse(JSON.stringify(this.state.careerLocal))
+    career.year = new Date(this.state.dateLocal);
+    if (!career.detail) {
+      career.detail = ''
     }
-    this.props.onSubmit(hobby);
+    this.props.onSubmit(career);
   }
 
   onDelete() {
-    if (!this.props.onDelete || !this.state.hobbyLocal.id) {
+    if (!this.props.onDelete || !this.state.careerLocal.history_id) {
       return;
     }
     const result = window.confirm('削除しますか?');
     if (result) {
-      this.props.onDelete(this.state.hobbyLocal.id);
+      this.props.onDelete(this.state.careerLocal.history_id);
     }
   }
 
   isTitleFormError() {
     const formDetail = this.state.formDetail.title;
 
-    const value = this.state.hobbyLocal.title;
+    const value = this.state.careerLocal.title;
     const isRequiredError = formDetail.required && (!value || value.length === 0);
     const isMaxLengthError = formDetail.maxLength !== null && typeof value !== 'undefined' && formDetail.maxLength < value.length;
     return [isRequiredError, isMaxLengthError];
+  }
+
+  isDateFormError() {
+    const formDetail = this.state.formDetail.date;
+
+    const value = this.state.dateLocal;
+    const isRequiredError = formDetail.required && (!value);
+    return isRequiredError;
   }
 
   mkTitleForm() {
@@ -108,13 +143,48 @@ class HobbyEdit extends React.Component<Props, State> {
         </label>
         <input
           id="pnet-career-title"
-          value={this.state.hobbyLocal.title ? this.state.hobbyLocal.title : ''}
+          value={this.state.careerLocal.title ? this.state.careerLocal.title : ''}
           className={`input-form ${isError ? 'input-form-error' : ''}`}
           onChange={this.onChangeTitle}
         />
         {errMsg}
       </div>
     )
+  }
+
+  mkDateInputForm() {
+    const isRequiredError = this.isDateFormError();
+
+    const errMsg = isRequiredError
+      ? (
+        <span className="err-msg">
+          {isRequiredError ? 'この項目は必須です。' : ''}
+        </span>)
+      :'';
+
+
+    return (
+      <div>
+        <label
+          htmlFor={'pnet-tag-self_intro'}
+          className={`label ${isRequiredError ? 'label-error' : ''}`}
+        >
+          年月
+        </label>
+        <input
+          id="pnet-career-year"
+          type="date"
+          value={this.state.dateLocal}
+          className={`input-form ${isRequiredError ? 'input-form-error' : ''}`}
+          onChange={this.onChangeYear}
+        />
+        {errMsg}
+      </div>
+    )
+  }
+
+  isFormError() {
+    return this.isTitleFormError().some((v) => {return v}) || this.isDateFormError();
   }
 
   render() {
@@ -124,15 +194,16 @@ class HobbyEdit extends React.Component<Props, State> {
           趣味・特技
         </h1>
         {this.mkTitleForm()}
+        {this.mkDateInputForm()}
         <label
-          htmlFor={'pnet-career-detail'}
+          htmlFor={'pnet-carerr-detail'}
           className="label"
         >
           詳細
         </label>
         <textarea
           id="pnet-career-detail"
-          value={this.state.hobbyLocal.detail ? this.state.hobbyLocal.detail : ''}
+          value={this.state.careerLocal.detail ? this.state.careerLocal.detail : ''}
           className="textarea-form"
           rows={10}
           onChange={this.onChangeDetail}
@@ -161,7 +232,7 @@ class HobbyEdit extends React.Component<Props, State> {
           <button
             className="save"
             onClick={this.onSubmit}
-            disabled={this.isTitleFormError().some((v) => {return v})}
+            disabled={this.isFormError()}
           >
             決定
           </button>
@@ -172,4 +243,4 @@ class HobbyEdit extends React.Component<Props, State> {
 }
 
 
-export default HobbyEdit;
+export default CareerEdit;

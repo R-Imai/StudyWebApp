@@ -14,7 +14,7 @@ const HobbyList: React.FC<Props> = (props: Props) => {
       <span className="title">趣味・特技</span>
       <ul className="main">
         {props.hobbyList.map((hobby) => {return <Hobby key={hobby.id} hobby={hobby} onClick={() => {props.hobbyClick(hobby)}}/>})}
-        <li><button className="add-btn" onClick={props.onClickNew}>+</button></li>
+        {props.showAddBtn ? <li><button className="add-btn" onClick={props.onClickNew}>+</button></li> : ''}
       </ul>
     </div>
   )
