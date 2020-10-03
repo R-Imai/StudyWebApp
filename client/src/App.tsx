@@ -6,7 +6,8 @@ import './Styles/Pnet.scss'
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import RegisterPage from './Pages/RegisterPage';
-import RegisterDonePage from './Pages/RegisterDonePage';
+import RegisterDonePage from './Pages/tempPage/RegisterDonePage';
+import PnetUserEditPage from './Pages/tempPage/PnetUserEditPage';
 import PnetPage from './Pages/PnetPage';
 
 const Routes: React.FC = () => {
@@ -18,6 +19,7 @@ const Routes: React.FC = () => {
         <Route exact path="/register" component={RegisterPage}/>
         <Route exact path="/home" component={HomePage}/>
         <Route exact path="/pnet" component={PnetPage}/>
+        <Route exact path="/pnet/register" component={PnetUserEditPage}/>
         <Route exact path="/error/401-unauthorized" component={LoginPage}/>
         <Route exact path="/error/403-forbidden" component={LoginPage}/>
         <Route exact path="/error/404-notfound" component={LoginPage}/>

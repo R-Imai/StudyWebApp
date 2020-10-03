@@ -453,7 +453,7 @@
     align-items: flex-end;
     button {
       height: 2.5rem;
-      width: 5rem;
+      min-width: 5rem;
       font-size: 1.3rem;
       cursor: pointer;
     }

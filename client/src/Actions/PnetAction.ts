@@ -31,6 +31,18 @@ export async function updateProfile(token: string, profile: PnetProfileEditInfo)
   return responce.status
 }
 
+export async function registerProfile(token: string, profile: PnetProfileEditInfo) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.profileNew}`, profile, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {
+    console.error(e);
+    throw new Error(e.response.data.detail);
+  });
+  return responce.status
+}
+
 export async function tagRegister(token: string, tag: TagRegister) {
   const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.usertag}`, tag, {
     headers: {

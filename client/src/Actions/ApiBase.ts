@@ -11,6 +11,7 @@ export const API = {
   },
   Pnet: {
     profile: "/api/pnet/profile",
+    profileNew: "/api/pnet/user/new",
     userDetail: "/api/pnet/user",
     profileEdit: "/api/pnet/profile",
     userRegister: "/api/pnet/user/new",

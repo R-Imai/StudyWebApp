@@ -96,8 +96,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     catch (e) {
       if (e instanceof Error) {
         if (e.message.startsWith('【Pnet-E001】')) {
-          console.log('登録画面へ遷移')
-          this.props.history.push('/home');
+          this.props.history.push('/pnet/register');
           return;
         }
         console.error(e.message);
