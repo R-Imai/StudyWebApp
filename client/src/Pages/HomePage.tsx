@@ -44,7 +44,6 @@ class HomePage extends React.Component<RouteComponentProps, State> {
       this.props.history.push('/login');
       return;
     }
-    console.log(userInfo);
     this.setState({
       userInfo: userInfo,
       showIndicator: false
