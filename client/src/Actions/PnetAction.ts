@@ -32,6 +32,16 @@ export async function getUserInfo(token: string, userId: string) {
   return responce.data;
 }
 
+export async function getUserList(token: string) {
+  const responce = await axios.get<PnetUserListElem[]>(`${API.UrlBase}${API.Pnet.userList}`, {
+    headers: {
+      'my-token': token
+    }}
+  ).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)});
+
+  return responce.data;
+}
+
 export async function updateProfile(token: string, profile: PnetProfileEditInfo) {
   const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.profileEdit}`, profile, {
     headers: {

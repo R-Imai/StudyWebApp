@@ -7,6 +7,18 @@ interface PnetProfileCard {
   self_intro: string
 }
 
+interface PnetUserListTag {
+  tag_id: string,
+  user_id: string,
+  title: string,
+  good: number,
+  bad: number
+}
+
+interface PnetUserListElem extends PnetProfileCard {
+  tag: PnetUserListTag[]
+}
+
 type tagReactionType = 'good' | 'bad';
 
 interface TagEditType {

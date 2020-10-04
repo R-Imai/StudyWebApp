@@ -9,6 +9,7 @@ import RegisterPage from './Pages/RegisterPage';
 import RegisterDonePage from './Pages/tempPage/RegisterDonePage';
 import PnetUserEditPage from './Pages/tempPage/PnetUserEditPage';
 import PnetPage from './Pages/PnetPage';
+import PnetList from './Pages/PnetList';
 
 const Routes: React.FC = () => {
   return (
@@ -18,12 +19,13 @@ const Routes: React.FC = () => {
         <Route exact path="/register/done" component={RegisterDonePage} />
         <Route exact path="/register" component={RegisterPage}/>
         <Route exact path="/home" component={HomePage}/>
-        <Route exact path="/pnet" component={PnetPage}/>
+        <Route exact path="/pnet" component={PnetList}/>
+        <Route exact path="/pnet/profile" component={PnetPage}/>
         <Route exact path="/pnet/user/info/:id" component={PnetPage}/>
         <Route exact path="/pnet/register" component={PnetUserEditPage}/>
         <Route exact path="/error/401-unauthorized" component={LoginPage}/>
-        <Route exact path="/error/403-forbidden" component={LoginPage}/>
-        <Route exact path="/error/404-notfound" component={LoginPage}/>
+        <Route exact path="/error/403-forbidden" component={HomePage}/>
+        <Route exact path="/error/404-notfound" component={HomePage}/>
         <Route exact path="/error/500-internal-server-error" component={HomePage}/>
         <Route exact path="">
           <Redirect to={'/error/404-notfound'}/>
