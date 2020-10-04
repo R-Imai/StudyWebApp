@@ -19,6 +19,19 @@ export async function getProfile(token: string) {
   return responce.data;
 }
 
+export async function getUserInfo(token: string, userId: string) {
+  const responce = await axios.get<PnetUserInfo>(`${API.UrlBase}${API.Pnet.userDetail}`, {
+    params: {
+      user_id: userId
+    },
+    headers: {
+      'my-token': token
+    }}
+  ).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)});
+
+  return responce.data;
+}
+
 export async function updateProfile(token: string, profile: PnetProfileEditInfo) {
   const responce = await axios.post<null>(`${API.UrlBase}${API.Pnet.profileEdit}`, profile, {
     headers: {

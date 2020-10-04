@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+interface Props extends DefaultProps {
   career: CareerEditType;
   onSubmit: (career: CareerEditType) => void;
   cancelBtnInfo?: {
@@ -24,6 +24,9 @@ type State = {
   },
   isNew: boolean
 }
+interface DefaultProps {
+  isReference: boolean;
+}
 
 
 const zeropadding = (num: number) => {
@@ -35,6 +38,9 @@ const date2str = (date: Date) => {
 }
 
 class CareerEdit extends React.Component<Props, State> {
+  public static defaultProps: DefaultProps = {
+    isReference: false
+  };
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -146,6 +152,7 @@ class CareerEdit extends React.Component<Props, State> {
           value={this.state.careerLocal.title ? this.state.careerLocal.title : ''}
           className={`input-form ${isError ? 'input-form-error' : ''}`}
           onChange={this.onChangeTitle}
+          disabled={this.props.isReference}
         />
         {errMsg}
       </div>
@@ -177,6 +184,7 @@ class CareerEdit extends React.Component<Props, State> {
           value={this.state.dateLocal}
           className={`input-form ${isRequiredError ? 'input-form-error' : ''}`}
           onChange={this.onChangeYear}
+          disabled={this.props.isReference}
         />
         {errMsg}
       </div>
@@ -207,9 +215,10 @@ class CareerEdit extends React.Component<Props, State> {
           className="textarea-form"
           rows={10}
           onChange={this.onChangeDetail}
+          disabled={this.props.isReference}
         />
         <div className="btn-space">
-          { this.props.onDelete
+          { this.props.onDelete && !this.props.isReference
             ? (
               <button
                 className="delete"
@@ -219,7 +228,7 @@ class CareerEdit extends React.Component<Props, State> {
               </button>
             ):''
           }
-          {this.props.cancelBtnInfo
+          { this.props.cancelBtnInfo
             ? (
               <button
                 className="close"
@@ -229,13 +238,17 @@ class CareerEdit extends React.Component<Props, State> {
               </button>
             ):''
           }
-          <button
-            className="save"
-            onClick={this.onSubmit}
-            disabled={this.isFormError()}
-          >
-            決定
-          </button>
+          { !this.props.isReference
+            ? (
+              <button
+                className="save"
+                onClick={this.onSubmit}
+                disabled={this.isFormError()}
+              >
+                決定
+              </button>
+            ):''
+          }
         </div>
       </div>
     )

@@ -6,7 +6,8 @@ type Props = {
   hobbyData: HobbyEditType;
   onClose: () => void;
   onSubmit: (profile: HobbyEditType) => void;
-  onDelete?: (tag_id: string) => void
+  onDelete?: (tag_id: string) => void;
+  isReference: boolean;
 }
 
 const HobbyEditDialog: React.FC<Props> = (props: Props) => {
@@ -21,6 +22,7 @@ const HobbyEditDialog: React.FC<Props> = (props: Props) => {
             onClick: props.onClose
           }}
           onDelete={props.onDelete}
+          isReference={props.isReference}
         />
       </div>
     </div>

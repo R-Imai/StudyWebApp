@@ -7,6 +7,7 @@ type Props = {
   onClose: () => void;
   onSubmit: (career: CareerEditType) => void;
   onDelete?: (career_id: string) => void
+  isReference: boolean;
 }
 
 const CareerEditDialog: React.FC<Props> = (props: Props) => {
@@ -21,6 +22,7 @@ const CareerEditDialog: React.FC<Props> = (props: Props) => {
             onClick: props.onClose
           }}
           onDelete={props.onDelete}
+          isReference={props.isReference}
         />
       </div>
     </div>

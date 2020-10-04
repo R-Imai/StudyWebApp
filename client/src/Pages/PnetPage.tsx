@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import {getUserDetail} from '../Actions/UserAction'
-import {getProfile, updateProfile, tagRegister, tagGood, tagBad, tagReactionDelete, userHobbySet, userHobbyDelete, userCareerSet, userCareerDelete} from '../Actions/PnetAction'
+import {getProfile, getUserInfo, updateProfile, tagRegister, tagGood, tagBad, tagReactionDelete, userHobbySet, userHobbyDelete, userCareerSet, userCareerDelete} from '../Actions/PnetAction'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
@@ -36,7 +36,7 @@ type State = {
   editCareerData: CareerEditType | null;
 }
 
-class PnetPage extends React.Component<RouteComponentProps, State> {
+class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State> {
   constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
@@ -77,7 +77,17 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     return token;
   }
 
+  async getPnetUserInfo(token: string) {
+    const showUserId = this.props.match.params.id;
+    if (typeof showUserId === 'undefined') {
+      return await getProfile(token);
+    } else {
+      return await getUserInfo(token, showUserId);
+    }
+  }
+
   async componentDidMount() {
+    const showUserId = this.props.match.params.id
     this.setState({
       showIndicator: true
     })
@@ -90,12 +100,12 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
     try {
       responce = await Promise.all([
         getUserDetail(token),
-        getProfile(token)
+        this.getPnetUserInfo(token)
       ]);
     }
     catch (e) {
       if (e instanceof Error) {
-        if (e.message.startsWith('【Pnet-E001】')) {
+        if (e.message.startsWith('【Pnet-E001】') && typeof showUserId === 'undefined') {
           this.props.history.push('/pnet/register');
           return;
         }
@@ -175,7 +185,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -280,7 +290,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -417,7 +427,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -488,7 +498,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -595,7 +605,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -662,7 +672,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -791,7 +801,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -858,7 +868,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
 
     let pnetProfile: PnetUserInfo
     try {
-      pnetProfile = await getProfile(token);
+      pnetProfile = await this.getPnetUserInfo(token);
     } catch (e) {
       if (e instanceof Error) {
         console.error(e.message);
@@ -931,6 +941,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
             hobbyData={this.state.editHobbyData}
             onClose={this.closeHobbyEditDialog}
             onSubmit={this.hobbySubmit}
+            isReference={this.state.loginUserInfo.id !== this.state.pnetUserInfo.id}
           />)
         : (
           <HobbyEditDialog
@@ -938,6 +949,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
             onClose={this.closeHobbyEditDialog}
             onSubmit={this.hobbySubmit}
             onDelete={this.hobbyDelete}
+            isReference={this.state.loginUserInfo.id !== this.state.pnetUserInfo.id}
           />)
       : '';
 
@@ -948,6 +960,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
             careerData={this.state.editCareerData}
             onClose={this.closeCareerEditDialog}
             onSubmit={this.careerSubmit}
+            isReference={this.state.loginUserInfo.id !== this.state.pnetUserInfo.id}
           />)
         : (
           <CareerEditDialog
@@ -955,6 +968,7 @@ class PnetPage extends React.Component<RouteComponentProps, State> {
             onClose={this.closeCareerEditDialog}
             onSubmit={this.careerSubmit}
             onDelete={this.careerDelete}
+            isReference={this.state.loginUserInfo.id !== this.state.pnetUserInfo.id}
           />)
       : '';
 

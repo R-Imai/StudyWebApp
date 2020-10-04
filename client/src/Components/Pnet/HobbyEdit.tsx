@@ -1,13 +1,13 @@
 import React from 'react';
 
-type Props = {
+interface Props extends Partial<DefaultProps> {
   hobby: HobbyEditType;
   onSubmit: (hobby: HobbyEditType) => void;
   cancelBtnInfo?: {
     label: string;
     onClick: () => void
-  }
-  onDelete?: (tag_id: string) => void
+  };
+  onDelete?: (tag_id: string) => void;
 }
 type State = {
   hobbyLocal: HobbyEditType;
@@ -19,8 +19,14 @@ type State = {
   },
   isNew: boolean
 }
+interface DefaultProps {
+  isReference: boolean;
+}
 
 class HobbyEdit extends React.Component<Props, State> {
+  public static defaultProps: DefaultProps = {
+    isReference: false
+  };
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -111,6 +117,7 @@ class HobbyEdit extends React.Component<Props, State> {
           value={this.state.hobbyLocal.title ? this.state.hobbyLocal.title : ''}
           className={`input-form ${isError ? 'input-form-error' : ''}`}
           onChange={this.onChangeTitle}
+          disabled={this.props.isReference}
         />
         {errMsg}
       </div>
@@ -136,9 +143,10 @@ class HobbyEdit extends React.Component<Props, State> {
           className="textarea-form"
           rows={10}
           onChange={this.onChangeDetail}
+          disabled={this.props.isReference}
         />
         <div className="btn-space">
-          { this.props.onDelete
+          { this.props.onDelete && !this.props.isReference
             ? (
               <button
                 className="delete"
@@ -158,13 +166,17 @@ class HobbyEdit extends React.Component<Props, State> {
               </button>
             ):''
           }
-          <button
-            className="save"
-            onClick={this.onSubmit}
-            disabled={this.isTitleFormError().some((v) => {return v})}
-          >
-            決定
-          </button>
+          { !this.props.isReference
+            ? (
+              <button
+                className="save"
+                onClick={this.onSubmit}
+                disabled={this.isTitleFormError().some((v) => {return v})}
+              >
+                決定
+              </button>
+            ):''
+          }
         </div>
       </div>
     )

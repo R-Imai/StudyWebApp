@@ -19,6 +19,7 @@ const Routes: React.FC = () => {
         <Route exact path="/register" component={RegisterPage}/>
         <Route exact path="/home" component={HomePage}/>
         <Route exact path="/pnet" component={PnetPage}/>
+        <Route exact path="/pnet/user/info/:id" component={PnetPage}/>
         <Route exact path="/pnet/register" component={PnetUserEditPage}/>
         <Route exact path="/error/401-unauthorized" component={LoginPage}/>
         <Route exact path="/error/403-forbidden" component={LoginPage}/>

@@ -52,7 +52,7 @@ class GlobalNav extends React.Component<Props , State> {
       console.error(responce.statusText);
       return;
     }
-    document.cookie = "my-token=; max-age=0";
+    document.cookie = 'my-token=; max-age=0; path=/';
     this.props.history.push('/login');
   }
 

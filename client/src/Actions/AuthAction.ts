@@ -24,7 +24,7 @@ export async function login(id: string, pass: string) {
   if(!responce) {
     return
   }
-  document.cookie = `my-token=${responce.data.token};`
+  document.cookie = `my-token=${responce.data.token}; path=/`
   return responce.data.user_info;
 }
 
