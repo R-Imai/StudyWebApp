@@ -36,6 +36,10 @@ class InsertUserTag(BaseModel):
     user_id: str
     title: str
 
+class TagListElem(InsertUserTag):
+    good: int
+    bad: int
+
 class TagReaction(BaseModel):
     user_id: str
     comment: str
@@ -61,6 +65,9 @@ class UserData(Master):
     hobby: List[UserHobby]
     tag: List[UserTagData]
     career: List[UserCareer]
+
+class UserListElem(Master):
+    tag: List[TagListElem]
 
 class TagRegister(BaseModel):
     tag_id: str = None

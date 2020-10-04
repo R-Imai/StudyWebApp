@@ -1,4 +1,5 @@
 from typing import Optional
+from typing import List
 from fastapi import FastAPI, Header, HTTPException
 from starlette.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
@@ -128,6 +129,25 @@ def pnet_user_detail(user_id: str, my_token: Optional[str] = Header(None)):
             detail=f"予期せぬエラーが発生しました。\n{e}"
         )
     return __mk_responce_json(user_info)
+
+@app.get("/api/pnet/user/list", response_model=List[pnet_type.UserListElem], tags=["People Network"])
+def pnet_get_user_list(my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+    try:
+        user_list = pnet_service.get_user_list()
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+    return __mk_responce_json(user_list)
 
 @app.post("/api/pnet/user/new", tags=["People Network"])
 def pnet_user_register(post_param: pnet_type.InsertMaster, my_token: Optional[str] = Header(None)):

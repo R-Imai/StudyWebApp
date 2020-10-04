@@ -7,7 +7,9 @@ class PnetDAO:
     def __init__(self):
         self.query = {
             "select_user_info": "SELECT pnet_master.id, user_master.name, pnet_master.name_kana, pnet_master.belong, pnet_master.self_intro, user_master.image FROM user_master INNER JOIN pnet_master ON user_master.id = pnet_master.id  WHERE pnet_master.id=%s",
+            "select_user_list": "SELECT pnet_master.id, user_master.name, pnet_master.name_kana, pnet_master.belong, pnet_master.self_intro, user_master.image FROM user_master INNER JOIN pnet_master ON user_master.id = pnet_master.id",
             "select_user_hobby": "SELECT id, title, detail FROM pnet_hobby WHERE user_id = %s",
+            "select_tag_list": "select t.tag_id as tag_id, t.user_id as user_id, t.title as title, count(r.reaction='good' or NULL) as good, count(r.reaction='bad' or NULL) as bad from pnet_tag as t inner join pnet_tag_reaction as r on t.tag_id = r.tag_id group by t.tag_id, t.title, t.user_id;",
             "select_tag": "SELECT tag_id, title FROM pnet_tag WHERE user_id = %s",
             "select_tag_reaction": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s",
             "select_tag_reaction_by_tag_id": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s AND tag_id=%s",
@@ -49,6 +51,12 @@ class PnetDAO:
             raise UserNotFoundException(f"ユーザID: '{user_id}'は存在しません")
         return type.Master(id=res[0], name=res[1], name_kana=res[2], belong=res[3], self_intro=res[4], image=res[5].tobytes())
 
+    def get_user_list(self, cur) -> type.Master:
+        query = self.query["select_user_list"]
+        cur.execute(query)
+        rows = cur.fetchall()
+        return list(map(lambda x: type.Master(id=x[0], name=x[1], name_kana=x[2], belong=x[3], self_intro=x[4], image=x[5].tobytes()), rows))
+
     def get_user_hobby(self, cur, user_id: str) -> [type.UserHobby]:
         query = self.query["select_user_hobby"]
         cur.execute(query, (user_id,))
@@ -60,6 +68,12 @@ class PnetDAO:
         cur.execute(query, (user_id,))
         rows = cur.fetchall()
         return list(map(lambda x: type.UserTag(id=x[0], title=x[1]), rows))
+
+    def get_tag_list(self, cur) -> [type.TagListElem]:
+        query = self.query["select_tag_list"]
+        cur.execute(query)
+        rows = cur.fetchall()
+        return list(map(lambda x: type.TagListElem(tag_id=x[0], user_id=x[1], title=x[2], good=x[3], bad=x[4]), rows))
 
     def get_tag_reaction(self, cur, user_id: str):
         query = self.query["select_tag_reaction"]

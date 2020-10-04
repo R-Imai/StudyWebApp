@@ -40,6 +40,29 @@ class PnetService:
         user_data = pnet_type.UserData(**master.__dict__, hobby=hobby, tag=tag_data, career=career)
         return user_data
 
+    def get_user_list(self) -> [pnet_type.UserListElem]:
+        try:
+            conn = connection.mk_connection()
+            with conn.cursor() as cur:
+                master = self.pnet_dao.get_user_list(cur)
+                tags = self.pnet_dao.get_tag_list(cur)
+                conn.commit()
+        except UserNotFoundException as e:
+            conn.rollback()
+            raise UserNotFoundException(e)
+        except Exception as e:
+            conn.rollback()
+            raise Exception(e)
+        finally:
+            conn.close()
+
+        tag_user_ids = list(set(map(lambda x: x.user_id, tags)))
+        tag_data = {t_user_id: list(filter(lambda x: x.user_id == t_user_id, tags)) for t_user_id in tag_user_ids}
+        user_data = [pnet_type.UserListElem(**user.__dict__, tag=[] if user.id not in tag_data else tag_data[user.id]) for user in master]
+
+        return user_data
+
+
     def insert_user_info(self, user_info: pnet_type.InsertMaster):
         try:
             conn = connection.mk_connection()
