@@ -319,7 +319,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     }, 5000);
   }
 
-  tagReactionClick(tag: Tag, reaction: tagReactionType) {
+  tagReactionClick(tag: TagType, reaction: tagReactionType) {
     if (this.state.loginUserInfo === null) {
       this.props.history.push('/error/401-unauthorized');
       return;

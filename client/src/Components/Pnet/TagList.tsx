@@ -2,10 +2,10 @@ import React from 'react';
 import Tag from './Tag'
 
 type Props = {
-  tagList: Tag[],
+  tagList: TagType[],
   loginUserId: string,
   onClickNew: () => void
-  reactionClick: (tagInfo: Tag, reaction: tagReactionType) => void
+  reactionClick: (tagInfo: TagType, reaction: tagReactionType) => void
 }
 
 const TagList: React.FC<Props> = (props: Props) => {

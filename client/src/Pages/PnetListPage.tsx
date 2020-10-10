@@ -6,7 +6,7 @@ import {getUserList} from '../Actions/PnetAction'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
-
+import ProfileCard from '../Components/Pnet/ProfileCard'
 
 
 type State = {
@@ -20,7 +20,7 @@ type State = {
   showIndicator: boolean;
 }
 
-class PnetList extends React.Component<RouteComponentProps, State> {
+class PnetListPage extends React.Component<RouteComponentProps, State> {
   constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
@@ -34,6 +34,11 @@ class PnetList extends React.Component<RouteComponentProps, State> {
     const cookies = document.cookie;
     const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
     return token;
+  }
+
+  gotoProfile(userId: string) {
+    const url = `/pnet/user/info/${userId}`
+    this.props.history.push(url);
   }
 
   async componentDidMount() {
@@ -93,19 +98,25 @@ class PnetList extends React.Component<RouteComponentProps, State> {
       return '';
     }
 
-    return this.state.userList.map((v) => {
+    const cards = this.state.userList.map((v) => {
       return (
-        <div key={v.id}>
-          <a href={`/pnet/user/info/${v.id}`}>{v.id}</a>
-          <span>{v.name}</span>
-        </div>
+        <ProfileCard
+          profile={v}
+          onClick={() => {this.gotoProfile(v.id)}}
+          key={v.id}
+        />
       )
     })
+    return (
+      <div className="cards-area">
+        {cards}
+      </div>
+    )
   }
 
   render() {
     return (
-      <div className="global-nav-page indicator-parent">
+      <div className="pnet-list-page global-nav-page indicator-parent">
         <GlobalNav userInfo={this.state.loginUserInfo}/>
         {this.mkMain()}
         <Indicator show={this.state.showIndicator} />
@@ -114,4 +125,4 @@ class PnetList extends React.Component<RouteComponentProps, State> {
   }
 }
 
-export default withRouter(PnetList);
+export default withRouter(PnetListPage);

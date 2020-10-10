@@ -47,7 +47,7 @@ interface TagRegister extends TagSet {
   title: string
 }
 
-interface Tag {
+interface TagType {
   id: string,
   title: string,
   good: {
@@ -58,6 +58,13 @@ interface Tag {
     user_id: string,
     comment: string
   }[]
+}
+
+interface TagBadgeType {
+  id: string,
+  title: string,
+  goodCnt: number,
+  badCnt: number
 }
 
 interface Career {
@@ -75,7 +82,7 @@ interface Hobby {
 
 interface PnetUserInfo extends PnetProfileCard {
   hobby: Hobby[],
-  tag: Tag[],
+  tag: TagType[],
   career: Career[]
 }
 

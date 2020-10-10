@@ -9,7 +9,7 @@ import RegisterPage from './Pages/RegisterPage';
 import RegisterDonePage from './Pages/tempPage/RegisterDonePage';
 import PnetUserEditPage from './Pages/tempPage/PnetUserEditPage';
 import PnetPage from './Pages/PnetPage';
-import PnetList from './Pages/PnetList';
+import PnetListPage from './Pages/PnetListPage';
 
 const Routes: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const Routes: React.FC = () => {
         <Route exact path="/register/done" component={RegisterDonePage} />
         <Route exact path="/register" component={RegisterPage}/>
         <Route exact path="/home" component={HomePage}/>
-        <Route exact path="/pnet" component={PnetList}/>
+        <Route exact path="/pnet" component={PnetListPage}/>
         <Route exact path="/pnet/profile" component={PnetPage}/>
         <Route exact path="/pnet/user/info/:id" component={PnetPage}/>
         <Route exact path="/pnet/register" component={PnetUserEditPage}/>

@@ -6,31 +6,41 @@ import goodActionIcon from '../../image/icooon/good-action.svg'
 import badActionIcon from '../../image/icooon/bad-action.svg'
 
 type Props = {
-  tag: Tag;
-  loginUserId: string;
-  reactionClick: (reaction: tagReactionType) => void;
+  tag: TagType | PnetUserListTag;
+  loginUserId?: string;
+  reactionClick?: (reaction: tagReactionType) => void;
+}
+
+const isTagType = (tag: TagType | PnetUserListTag): tag is TagType => {
+  return typeof tag.good !== "number";
 }
 
 const Tag: React.FC<Props> = (props: Props) => {
-  const goodUsers = props.tag.good.map((v) => {return v.user_id});
-  const badUsers = props.tag.bad.map((v) => {return v.user_id});
-  const showGoodIcon = goodUsers.indexOf(props.loginUserId) >= 0 ? goodActionIcon : goodIcon;
-  const showBadIcon = badUsers.indexOf(props.loginUserId) >= 0 ? badActionIcon : badIcon;
+  const goodUsers = isTagType(props.tag)? props.tag.good.map((v) => {return v.user_id}) : [];
+  const badUsers = isTagType(props.tag)? props.tag.bad.map((v) => {return v.user_id}) : [];
+  const showGoodIcon = isTagType(props.tag) && props.loginUserId? goodUsers.indexOf(props.loginUserId) >= 0 ? goodActionIcon : goodIcon : goodIcon;
+  const showBadIcon = isTagType(props.tag) && props.loginUserId? badUsers.indexOf(props.loginUserId) >= 0 ? badActionIcon : badIcon : badIcon;
+
+  const goodCnt = isTagType(props.tag) ? props.tag.good.length : props.tag.good;
+  const badCnt = isTagType(props.tag) ? props.tag.bad.length : props.tag.bad;
+
+  const reactionClick = props.reactionClick ? props.reactionClick : (reaction: tagReactionType) => {};
+
   return (
     <span className="pnet-tag">
       <span className="tag-title">
         {props.tag.title}
       </span>
-      <span className="reaction good" onClick={() => {props.reactionClick('good')}}>
+      <span className={`reaction good ${props.reactionClick ? 'can-click' : ''}`} onClick={() => {reactionClick('good')}}>
         <img alt="good" src={showGoodIcon} />
         <span>
-          {props.tag.good.length}
+          {goodCnt}
         </span>
       </span>
-      <span className="reaction bad" onClick={() => {props.reactionClick('bad')}}>
+      <span className={`reaction bad ${props.reactionClick ? 'can-click' : ''}`} onClick={() => {reactionClick('bad')}}>
         <img alt="bad" src={showBadIcon} />
         <span>
-          {props.tag.bad.length}
+          {badCnt}
         </span>
       </span>
     </span>

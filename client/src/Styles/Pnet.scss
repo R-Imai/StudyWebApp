@@ -120,13 +120,14 @@
 }
 
 .pnet-tag {
+  display: inline-block;
   border-radius: 0.3rem;
   margin: 0.5rem 0.5rem 0 0.5rem;
-  height: 1.4rem;
-  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 99, 0, 0.5);
+  height: 1.6rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(142, 142, 142, 0.5);
   .tag-title {
-    display: inline-block;
     height: 100%;
+    display: inline-block;
     padding: 0 0.3rem;
     border-radius: 0.3rem 0 0 0.3rem;
     // background-color: #ffa8a8;
@@ -138,11 +139,13 @@
     color: #333333;
     // color: #fafafa;
   }
+  .can-click {
+    cursor: pointer;
+  }
   .reaction {
+    height: 100%;
     display: inline-block;
     background-color: #181509;
-    height: 100%;
-    cursor: pointer;
     span {
       font-size: 0.5rem;
     }
@@ -150,7 +153,7 @@
       height: 1rem;
     }
   }
-  .reaction:hover {
+  .can-click:hover {
     background-color: #393939;
   }
   .good {
@@ -469,4 +472,70 @@
       background-color: #fbdcdc;
     }
   }
+}
+
+.pnet-list-page {
+  .cards-area {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.pnet-profile-card {
+  display: flex;
+  margin: 1rem 1.5rem;
+  height: 12rem;
+  width: 36rem;
+  background-color: #fafafa;
+  box-shadow: 0.1rem 0.1rem 0.1rem #eaeaea;
+  border-radius: 1rem;
+  cursor: pointer;
+  .left {
+    padding: 0.2rem 0.8rem;
+    text-align: center;
+    border-right: rgba(0, 204, 136, 0.4) solid 0.2rem;
+    width: 8rem;
+    .image {
+      img {
+        height: 8rem;
+        width: 8rem;
+        border-radius: 4rem;
+      }
+    }
+    .belong {
+      height: 1rem;
+      font-size: 0.8rem;
+    }
+    .name {
+      height: 1.4rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .id {
+      height: 1rem;
+      font-size: 0.8rem;
+    }
+  }
+  .right {
+    width: calc(100% - 8rem);
+    .intro {
+      height: calc(60% - 0.4rem);
+      font-size: 0.9rem;
+      padding: 0.2rem 0.8rem;
+      border-bottom: rgba(0, 204, 136, 0.4) solid 0.2rem;
+      overflow: hidden;
+    }
+    .tags {
+      height: calc(40% - 0.2rem);
+      padding: 0.1rem 0.8rem;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.pnet-profile-card:hover {
+  background-color: #fefefe;
+  box-shadow: 0.1rem 0.1rem 0.1rem #cdcdcd;
 }
