@@ -60,13 +60,6 @@ interface TagType {
   }[]
 }
 
-interface TagBadgeType {
-  id: string,
-  title: string,
-  goodCnt: number,
-  badCnt: number
-}
-
 interface Career {
   history_id: string,
   title: string,
