@@ -10,7 +10,7 @@ type Props = {
 
 const HobbyList: React.FC<Props> = (props: Props) => {
   return (
-    <div className="pnet-hobby-list">
+    <div className="pnet-hobby-list pnet-detail-contents">
       <span className="title">趣味・特技</span>
       <ul className="main">
         {props.hobbyList.map((hobby) => {return <Hobby key={hobby.id} hobby={hobby} onClick={() => {props.hobbyClick(hobby)}}/>})}

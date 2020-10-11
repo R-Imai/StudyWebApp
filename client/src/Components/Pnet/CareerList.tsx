@@ -10,7 +10,7 @@ type Props = {
 
 const CareerList: React.FC<Props> = (props: Props) => {
   return (
-    <div className="pnet-career-list">
+    <div className="pnet-career-list pnet-detail-contents">
       <span className="title">経歴</span>
       <ul className="main">
         {props.careerList.map((career) => {return <Career key={career.history_id} career={career} onClick={() => {props.careerClick(career)}}/>})}

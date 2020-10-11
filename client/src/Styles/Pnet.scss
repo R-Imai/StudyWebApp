@@ -75,15 +75,16 @@
   }
 }
 
-
-.pnet-tag-list {
-  margin-top: 1.5rem;
-  border: solid 0.2rem #00cc99;
+.pnet-detail-contents {
+  margin-top: 3rem;
+  border-top: solid 0.2rem #00cc99;
+  border-bottom: solid 0.2rem #00cc99;
+  border-left: solid 0.1rem #e7faf6;
+  border-right: solid 0.1rem #e7faf6;
   padding: 1rem 2rem;
   padding-top: 0;
-  background-color: #f5fffd;
+  // background-color: #f5fffd;
   border-radius: 0.5rem;
-  flex-wrap: wrap;
   .title {
     position: relative;
     padding: 0.2rem 0.5rem;
@@ -94,28 +95,36 @@
     font-weight: bold;
     border-radius: 0.3rem;
   }
-  .main {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .tag-add {
+  .add-btn {
     border-radius: 0.3rem;
     margin: 0.5rem 0.5rem 0 0.5rem;
-    height: 1.4rem;
-    width: 7rem;
     box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 99, 0, 0.5);
-    background-color: #8afed5;
+    background-color: #a3d9b5;
     font-size: 1.2rem;
     font-weight: bold;
     border: none;
     cursor: pointer;
   }
-  .tag-add:hover {
-    background-color: #a8ffe0;
+  .add-btn:hover {
+    background-color: #8ed7bd;
+    box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 96, 90, 0.5);
   }
-  .tag-add:focus {
-    background-color: #a8ffe0;
+  .add-btn:focus {
+    background-color: #8ed7bd;
+    box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 96, 90, 0.5);
     outline: none;
+  }
+}
+
+.pnet-tag-list {
+  flex-wrap: wrap;
+  .main {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .add-btn {
+    height: 1.4rem;
+    width: 7rem;
   }
 }
 
@@ -169,42 +178,12 @@
 }
 
 .pnet-career-list {
-  margin-top: 1.5rem;
-  border: solid 0.2rem #00cc99;
-  padding: 1rem 2rem;
-  padding-top: 0;
-  background-color: #f5fffd;
-  border-radius: 0.5rem;
-  .title {
-    position: relative;
-    padding: 0.2rem 0.5rem;
-    top: -0.8rem;
-    left: -1rem;
-    background-color: #00cc99;
-    color: #fafafa;
-    font-weight: bold;
-    border-radius: 0.3rem;
-  }
   .main {
     margin: 0 1.5rem;
     padding: 0 0.5rem;
     .add-btn {
       width: 100%;
       height: 1.4rem;
-      font-size: 1.2rem;
-      border: none;
-      background-color: #8afed5;
-      box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 99, 0, 0.5);
-      border-radius: 0.3rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .add-btn:hover {
-      background-color: #a8ffe0;
-    }
-    .add-btn:focus {
-      background-color: #a8ffe0;
-      outline: none;
     }
   }
 }
@@ -256,43 +235,13 @@
 }
 
 .pnet-hobby-list {
-  margin-top: 1.5rem;
-  border: solid 0.2rem #00cc99;
-  padding: 1rem 2rem;
-  padding-top: 0;
-  background-color: #f5fffd;
-  border-radius: 0.5rem;
   width: calc(100% - 4rem - 0.4rem);
-  .title {
-    position: relative;
-    padding: 0.2rem 0.5rem;
-    top: -0.8rem;
-    left: -1rem;
-    background-color: #00cc99;
-    color: #fafafa;
-    font-weight: bold;
-    border-radius: 0.3rem;
-  }
   .main {
     margin: 0 1.5rem;
     padding: 0 0.5rem;
     .add-btn {
       width: 100%;
       height: 1.4rem;
-      font-size: 1.2rem;
-      border: none;
-      background-color: #8afed5;
-      box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 99, 0, 0.5);
-      border-radius: 0.3rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .add-btn:hover {
-      background-color: #a8ffe0;
-    }
-    .add-btn:focus {
-      background-color: #a8ffe0;
-      outline: none;
     }
   }
 }
@@ -443,21 +392,22 @@
     .close {
       border: none;
       background-color: inherit;
+      border-radius: 0.5rem 0.5rem 0 0;
       border-bottom: #00cca1 solid 0.1rem;
     }
     .close:hover {
-      background-color: rgba(176, 251, 226, 0.1);
+      background-color: rgba(176, 251, 226, 0.3);
     }
     .save {
-      background-color: #8fffd3;
+      background-color: #46e3a5;
       border: #fafafa solid 0.1rem;
       border-radius: 0.5rem;
     }
     .save:hover {
-      background-color: #b0fbe7;
+      background-color: #4dffb8;
     }
     .save:disabled {
-      background-color: rgba(176, 251, 231, 0.6);
+      background-color: rgba(70, 227, 165, 0.6);
       color: rgba(250, 250, 250, 0.6);
       cursor: not-allowed;
     }

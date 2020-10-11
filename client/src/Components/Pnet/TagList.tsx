@@ -10,12 +10,12 @@ type Props = {
 
 const TagList: React.FC<Props> = (props: Props) => {
   return (
-    <div className="pnet-tag-list">
+    <div className="pnet-tag-list pnet-detail-contents">
       <span className="title">スキル・特徴</span>
       <div className="main">
         {props.tagList.map((tag) => {return <Tag key={tag.id} tag={tag} loginUserId={props.loginUserId} reactionClick={(reaction: tagReactionType) => {props.reactionClick(tag, reaction)}}/>})}
         <button
-          className="tag-add"
+          className="add-btn"
           onClick={props.onClickNew}
         >
           +
