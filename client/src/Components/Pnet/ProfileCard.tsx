@@ -3,13 +3,14 @@ import Tag from './Tag'
 
 type Props = {
   profile: PnetUserListElem,
-  onClick: () => void
+  onClick: () => void,
+  cardStyle?: 'own'
 }
 
 const ProfileCard: React.FC<Props> = (props: Props) => {
   return (
     <div
-      className="pnet-profile-card"
+      className={`pnet-profile-card ${props.cardStyle}`}
       onClick={props.onClick}
     >
       <div className="left">

@@ -98,7 +98,12 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
       return '';
     }
 
-    const cards = this.state.userList.map((v) => {
+    const loginUserInfo = this.state.loginUserInfo
+
+    const myInfo = this.state.userList.find((v) => {return v.id === loginUserInfo.id});
+    const userList = this.state.userList.filter((v) => {return  v.id !== loginUserInfo.id});
+
+    const cards = userList.map((v) => {
       return (
         <ProfileCard
           profile={v}
@@ -107,6 +112,16 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
         />
       )
     })
+    if (typeof myInfo !== 'undefined') {
+      cards.unshift(
+        <ProfileCard
+          profile={myInfo}
+          onClick={() => {this.gotoProfile(myInfo.id)}}
+          key={myInfo.id}
+          cardStyle="own"
+        />
+      )
+    }
     return (
       <div className="cards-area">
         {cards}

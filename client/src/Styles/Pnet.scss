@@ -9,8 +9,8 @@
   .info {
     display: flex;
     height: 5rem;
-    border-top: solid 0.2rem #00cc99;
-    border-bottom: solid 0.15rem rgba(#00cc99, 0.4);
+    border-top: solid 0.2rem #00cc88;
+    border-bottom: solid 0.15rem rgba(#00cc88, 0.4);
     .profile-image {
       height: 5rem;
       width: 5rem;
@@ -70,15 +70,15 @@
   }
   .intro {
     padding: 0.5rem 1.5rem;
-    border-bottom: solid 0.2rem #00cc99;
+    border-bottom: solid 0.2rem #00cc88;
     font-size: 0.9rem;
   }
 }
 
 .pnet-detail-contents {
   margin-top: 3rem;
-  border-top: solid 0.2rem #00cc99;
-  border-bottom: solid 0.2rem #00cc99;
+  border-top: solid 0.2rem #8ac7b9;
+  border-bottom: solid 0.2rem #8ac7b9;
   border-left: solid 0.1rem #e7faf6;
   border-right: solid 0.1rem #e7faf6;
   padding: 1rem 2rem;
@@ -90,7 +90,7 @@
     padding: 0.2rem 0.5rem;
     top: -0.8rem;
     left: -1rem;
-    background-color: #00cc99;
+    background-color: #00cc88;
     color: #fafafa;
     font-weight: bold;
     border-radius: 0.3rem;
@@ -98,15 +98,15 @@
   .add-btn {
     border-radius: 0.3rem;
     margin: 0.5rem 0.5rem 0 0.5rem;
-    box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 99, 0, 0.5);
-    background-color: #a3d9b5;
+    box-shadow: 0.1rem 0.1rem 0.1rem rgba(36, 57, 36, 0.5);
+    background-color: #c9ebd3;
     font-size: 1.2rem;
     font-weight: bold;
     border: none;
     cursor: pointer;
   }
   .add-btn:hover {
-    background-color: #8ed7bd;
+    background-color: #ceebe1;
     box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 96, 90, 0.5);
   }
   .add-btn:focus {
@@ -289,23 +289,23 @@
   margin: 0 auto;
   margin-top: 3rem;
   max-width: 40rem;
-  border: 0.2rem solid #00cc99;
+  border: 0.2rem solid #8ac7b9;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 0.5rem;
 }
 
 .pnet-form {
   h1 {
-    border-bottom: 0.1rem solid #00cc99;
-    border-top: 0.1rem solid #00cc99;
+    border-bottom: 0.1rem solid #8ac7b9;
+    border-top: 0.1rem solid #8ac7b9;
   }
 
   h1:before {
-    background-color: #00cc99;
+    background-color: #8ac7b9;
   }
 
   h1:after {
-    background-color: #00cc99;
+    background-color: #8ac7b9;
   }
   .label {
     margin-top: 0.5rem;
@@ -488,4 +488,13 @@
 .pnet-profile-card:hover {
   background-color: #fefefe;
   box-shadow: 0.1rem 0.1rem 0.1rem #cdcdcd;
+}
+
+
+.pnet-profile-card.own {
+  background-color: #fbeff5;
+}
+
+.pnet-profile-card.own:hover {
+  background-color: #fff9fc;
 }
