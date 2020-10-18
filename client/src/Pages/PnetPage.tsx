@@ -108,6 +108,9 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         if (e.message.startsWith('【Pnet-E001】') && typeof showUserId === 'undefined') {
           this.props.history.push('/pnet/register');
           return;
+        } else if (e.message.startsWith('【Pnet-E001】') && typeof showUserId !== 'undefined') {
+          this.props.history.push('/error/404-notfound');
+          return;
         }
         console.error(e.message);
         this.props.history.push('/error/500-internal-server-error');

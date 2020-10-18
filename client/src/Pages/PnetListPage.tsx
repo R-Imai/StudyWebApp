@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import {getUserDetail} from '../Actions/UserAction'
-import {getUserList} from '../Actions/PnetAction'
+import {getUserList, getProfile} from '../Actions/PnetAction'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
@@ -54,11 +54,16 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     try {
       responce = await Promise.all([
         getUserDetail(token),
-        getUserList(token)
+        getUserList(token),
+        getProfile(token)
       ]);
     }
     catch (e) {
       if (e instanceof Error) {
+        if (e.message.startsWith('【Pnet-E001】')) {
+          this.props.history.push('/pnet/register');
+          return;
+        }
         console.error(e.message);
         this.props.history.push('/error/500-internal-server-error');
         return;
