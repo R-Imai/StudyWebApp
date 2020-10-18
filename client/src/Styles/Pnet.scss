@@ -3,14 +3,12 @@
 }
 
 .pnet-profile-card-mini {
-  background-color: #ffffff;
-  border-left: solid 0.1rem #e7faf6;
-  border-right: solid 0.1rem #e7faf6;
+  background: linear-gradient(-30deg, #32b98b 0%, #88f4cf 20%, rgba(#95ffdb, 0.3) 40%, rgba(#95ffdb, 0) 100%);
+  box-shadow: 0.1rem 0.1rem 0.1rem #9fbdb6;
   .info {
     display: flex;
     height: 5rem;
-    border-top: solid 0.2rem #00cc88;
-    border-bottom: solid 0.15rem rgba(#00cc88, 0.4);
+    border-bottom: solid 0.15rem #87f4ce;
     .profile-image {
       height: 5rem;
       width: 5rem;
@@ -36,8 +34,8 @@
         line-height: 3rem;
         font-size: 1.6rem;
         font-weight: bold;
-        border-top: solid 0.1rem #008f79;
-        border-bottom: solid 0.1rem #008f79;
+        border-top: solid 0.1rem rgba(#63deb5, 0.7);
+        border-bottom: solid 0.1rem rgba(#63deb5, 0.7);
         box-sizing: border-box;
         .edit {
           margin: 0.5rem;
@@ -65,12 +63,15 @@
         line-height: 1rem;
         font-size: 0.8rem;
         border-bottom: none;
+        .id {
+          color: #4b6358;
+        }
       }
     }
   }
   .intro {
     padding: 0.5rem 1.5rem;
-    border-bottom: solid 0.2rem #00cc88;
+    // border-bottom: solid 0.2rem #00cc88;
     font-size: 0.9rem;
   }
 }
@@ -289,24 +290,13 @@
   margin: 0 auto;
   margin-top: 3rem;
   max-width: 40rem;
-  border: 0.2rem solid #8ac7b9;
+  border: 0.2rem solid #00cc88;
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.3rem;
 }
 
 .pnet-form {
-  h1 {
-    border-bottom: 0.1rem solid #8ac7b9;
-    border-top: 0.1rem solid #8ac7b9;
-  }
-
-  h1:before {
-    background-color: #8ac7b9;
-  }
-
-  h1:after {
-    background-color: #8ac7b9;
-  }
   .label {
     margin-top: 0.5rem;
     display: inline-block;
@@ -492,9 +482,9 @@
 
 
 .pnet-profile-card.own {
-  background-color: #fbeff5;
+  background-color: #effbf7;
 }
 
 .pnet-profile-card.own:hover {
-  background-color: #fff9fc;
+  background-color: #f9fffc;
 }

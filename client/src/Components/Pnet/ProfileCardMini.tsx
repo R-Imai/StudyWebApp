@@ -30,10 +30,10 @@ const ProfileCardMini: React.FC<Props> = (props: Props) => {
             {editBtn}
           </div>
           <div className="rows sub">
-            <span>
+            <span className="kana">
               {props.profile.name_kana}
             </span>
-            <span>
+            <span className="id">
               @{props.profile.id}
             </span>
           </div>
