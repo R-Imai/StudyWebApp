@@ -6,7 +6,7 @@ create table user_master (
   image bytea,
   email varchar(255),
   PRIMARY KEY (id)
-)
+);
 
 create table user_auth (
   id varchar(100),
