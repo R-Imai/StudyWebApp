@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import UserProfileDialog from './UserProfileDialog';
 import {logout} from '../Actions/AuthAction'
 import appLinkIcon from '../image/icooon/app.svg';
-import PnetIcon from '../image/icons/pnet_icon.svg';
+import PnetIcon from '../image/icons/PnetIcon.png';
 
 interface Props extends RouteComponentProps {
   userInfo: {

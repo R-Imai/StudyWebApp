@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import {getUserDetail} from '../Actions/UserAction'
+import PnetIcon from '../image/icons/PnetIcon.png'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
@@ -56,6 +57,11 @@ class HomePage extends React.Component<RouteComponentProps, State> {
       <div className="global-nav-page indicator-parent">
         <GlobalNav userInfo={this.state.userInfo}/>
         <div>{txt}</div>
+        <div className="home-app-list">
+          <a className="icon-btn" href="/pnet">
+            <img src={PnetIcon} height={120} width={120} alt="people network"/>
+          </a>
+        </div>
         <Indicator show={this.state.showIndicator} />
       </div>
     )

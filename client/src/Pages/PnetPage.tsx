@@ -69,6 +69,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.closeCareerEditDialog = this.closeCareerEditDialog.bind(this);
     this.careerSubmit = this.careerSubmit.bind(this);
     this.careerDelete = this.careerDelete.bind(this);
+    this.gotoListPage = this.gotoListPage.bind(this);
   }
 
   getToken() {
@@ -901,6 +902,10 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     }, 5000);
   }
 
+  gotoListPage() {
+    this.props.history.push('/pnet');
+  }
+
   mkMain() {
     if (this.state.pnetUserInfo === null) {
       return '';
@@ -1014,6 +1019,11 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     return (
       <div className="global-nav-page indicator-parent">
         <GlobalNav userInfo={this.state.loginUserInfo}/>
+        <div className="menu-button-space">
+          <button onClick={this.gotoListPage}>
+            ◀ 一覧へ戻る
+          </button>
+        </div>
         {this.mkMain()}
         <Indicator show={this.state.showIndicator} />
       </div>
