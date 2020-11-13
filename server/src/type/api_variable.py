@@ -22,3 +22,8 @@ class LoginResponce(BaseModel):
 
 class RegisterInfo(UserInfo):
     password: str
+
+class PasswordUpdateInfo(BaseModel):
+    id: str
+    current_password: str
+    new_password: str

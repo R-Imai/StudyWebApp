@@ -23,9 +23,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-connection = connection.mk_connection()
-auth_service = AuthService(connection)
-user_service = UserService(connection)
+auth_service = AuthService()
+user_service = UserService()
 pnet_service = PnetService()
 
 def __mk_responce_json(model):
@@ -62,6 +61,30 @@ def user_register(user_info: variable.RegisterInfo):
             detail=str(e),
         )
 
+@app.post("/api/password/update", tags=["Auth"])
+def password_update(post_param: variable.PasswordUpdateInfo, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+    if post_param.id != login_user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="不正なリクエストです"
+        )
+
+    try:
+        auth_service.password_update(post_param)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+# == user ==
 @app.get("/api/user/detail", response_model=variable.UserInfo, tags=["User"])
 def login_user_detail(my_token: Optional[str] = Header(None)):
     try:
@@ -80,6 +103,22 @@ def login_user_detail(my_token: Optional[str] = Header(None)):
         )
     return __mk_responce_json(user_info)
 
+@app.post("/api/user/update", response_model=variable.UserInfo, tags=["User"])
+def update_user_detail(post_param: variable.UserInfo, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+    if post_param.id != login_user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="不正なリクエストです"
+        )
+
+    user_service.update_user_detail(post_param)
 
 
 # == pnet ==
@@ -160,7 +199,7 @@ def pnet_user_register(post_param: pnet_type.InsertMaster, my_token: Optional[st
         )
     if post_param.id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -183,7 +222,7 @@ def pnet_user_update(post_param: pnet_type.InsertMaster, my_token: Optional[str]
         )
     if post_param.id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -206,7 +245,7 @@ def pnet_user_hobby(post_param: pnet_type.InsertUserHobby, my_token: Optional[st
         )
     if post_param.user_id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -231,7 +270,7 @@ def delete_user_hobby(user_id: str, hobby_id:str, my_token: Optional[str] = Head
         )
     if user_id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -254,7 +293,7 @@ def pnet_user_tag(post_param: pnet_type.TagRegister, my_token: Optional[str] = H
         )
     if post_param.action_user_id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -279,7 +318,7 @@ def pnet_user_tag_good(post_param: pnet_type.UserTagReaction, my_token: Optional
         )
     if post_param.action_user_id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -304,7 +343,7 @@ def pnet_user_tag_bad(post_param: pnet_type.UserTagReaction, my_token: Optional[
         )
     if post_param.action_user_id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -328,7 +367,7 @@ def pnet_delete_tag_reaction(tag_id: str, action_user_id: str, my_token: Optiona
         )
     if action_user_id != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
 
@@ -372,7 +411,7 @@ def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[
         )
     if post_param.create_user_cd != login_user_id:
         raise HTTPException(
-            status_code=400,
+            status_code=403,
             detail="不正なリクエストです"
         )
     if post_param.user_id == login_user_id:
