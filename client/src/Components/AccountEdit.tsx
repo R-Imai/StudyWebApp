@@ -8,15 +8,16 @@ type FormData = {
   value: string;
   editable: boolean;
   imageSrc?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  imageClear?: ()=> void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  imageClear?: ()=> void;
+  imageDelete?: ()=>void;
 }
 
 type Props = {
-  accountInfo: {[key in FormKey]: FormData},
+  accountInfo: {[key in FormKey]?: FormData},
   submitText: string,
   onClickSubmit: () => void,
-  errorMessage: string
+  errorMessage?: string
 }
 
 type FormDetail = {
@@ -75,6 +76,9 @@ const formInfo: {[key in FormKey]: FormDetail} = {
 const mkImageForm = (accountInfo: Props['accountInfo'], key:FormKey) => {
   const formDetail = formInfo[key];
   const formData = accountInfo[key];
+  if (typeof formData === 'undefined' || typeof formDetail === 'undefined') {
+    return;
+  };
   return (
     <div>
       <div>
@@ -110,6 +114,16 @@ const mkImageForm = (accountInfo: Props['accountInfo'], key:FormKey) => {
         >
           クリア
         </span>
+        {
+          typeof formData.imageDelete !== 'undefined' ? (
+            <span
+              className="clear-btn"
+              onClick={formData.imageDelete}
+            >
+              削除
+            </span>
+          ): ''
+        }
       </div>
     </div>
   )
@@ -119,10 +133,14 @@ const canSubmit = (accountInfo:Props['accountInfo']) => {
   return (Object.keys(formInfo) as FormKey[]).every((key) => {
     const formData = accountInfo[key];
     const formDetail = formInfo[key];
+    if (typeof formData === 'undefined') {
+      return true;
+    };
     const isRequiredError = formDetail.required && formData.value.length === 0;
     const isMaxLengthError = formDetail.maxLength !== null && formDetail.maxLength < formData.value.length;
-    const isMatchError = formDetail.matchRef !== null && formData.value !== accountInfo[formDetail.matchRef].value;
-    const isError =isRequiredError || isMaxLengthError || isMatchError;
+    const matchRef = formDetail.matchRef !== null ? accountInfo[formDetail.matchRef] : null;
+    const isMatchError = matchRef !== null && (typeof matchRef === 'undefined' || formData.value !== matchRef.value);
+    const isError = formData.editable && (isRequiredError || isMaxLengthError || isMatchError);
     return !isError
   });
 }
@@ -136,10 +154,14 @@ const onSubmit = (accountInfo:Props['accountInfo'], callback: Props['onClickSubm
 const mkInput = (accountInfo: Props['accountInfo'], key:FormKey) => {
   const formData = accountInfo[key];
   const formDetail = formInfo[key];
+  if (typeof formData === 'undefined' || typeof formDetail === 'undefined') {
+    return;
+  };
   const isRequiredError = formDetail.required && formData.value.length === 0;
   const isMaxLengthError = formDetail.maxLength !== null && formDetail.maxLength < formData.value.length;
-  const isMatchError = formDetail.matchRef !== null && formData.value !== accountInfo[formDetail.matchRef].value;
-  const isError = isRequiredError || isMaxLengthError || isMatchError;
+  const matchRef = formDetail.matchRef !== null ? accountInfo[formDetail.matchRef] : null;
+  const isMatchError = matchRef !== null && (typeof matchRef === 'undefined' || formData.value !== matchRef.value);
+  const isError = formData.editable && (isRequiredError || isMaxLengthError || isMatchError);
   return (
     <div>
       <label
@@ -148,16 +170,17 @@ const mkInput = (accountInfo: Props['accountInfo'], key:FormKey) => {
       >
         {formDetail.label}
       </label>
-      {formDetail.required ? <div className="tag-required"> 必須 </div> : ''}
+      {formData.editable && formDetail.required ? <div className="tag-required"> 必須 </div> : ''}
       <input
         id={`account-form-${key}`}
         type={formDetail.type}
         className={`input-form ${isError ? 'input-form-error' : ''}`}
         title={formData.value}
         value={formData.value}
-        onChange={formData.onChange}
+        disabled={!formData.editable}
+        onChange={formData.editable ? formData.onChange : undefined}
       />
-      { isRequiredError || isMaxLengthError || isMatchError ? <span className="err-msg">
+      { isError ? <span className="err-msg">
         {isRequiredError ? 'この項目は必須です。' : ''}
         {isMaxLengthError ? `${formDetail.maxLength}文字以内で入力してください。` : ''}
         {isMatchError ? `${formInfo[formDetail.matchRef!].label} に入力された内容と一致しません。` : ''}
@@ -183,7 +206,7 @@ const AccountEdit: React.FC<Props> = (props: Props) => {
   const right = ['image'];
   return (
     <form id="account-form">
-      {props.errorMessage !== '' ? <Message value={props.errorMessage} type="error" /> : ''}
+      {typeof props.errorMessage !== 'undefined' && props.errorMessage !== '' ? <Message value={props.errorMessage} type="error" /> : ''}
       <div className="main">
         <div className="form-style">
           { mkForm(props.accountInfo, left) }

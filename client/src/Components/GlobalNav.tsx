@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 
 import UserProfileDialog from './UserProfileDialog';
 import {logout} from '../Actions/AuthAction'
-import appLinkIcon from '../image/icooon/app.svg';
+// import appLinkIcon from '../image/icooon/app.svg';
 import PnetIcon from '../image/icons/PnetIcon.png';
 
 interface Props extends RouteComponentProps {
@@ -84,7 +84,7 @@ class GlobalNav extends React.Component<Props , State> {
                 </span>
               </a>
             </li>
-            <li className="value">
+            { /**<li className="value">
               <a href="/home">
                 <img
                   alt="app"
@@ -106,7 +106,7 @@ class GlobalNav extends React.Component<Props , State> {
                   メニュー3
                 </span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="nav-message">

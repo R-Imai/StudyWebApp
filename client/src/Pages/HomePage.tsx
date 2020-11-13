@@ -33,16 +33,16 @@ class HomePage extends React.Component<RouteComponentProps, State> {
     const cookies = document.cookie;
     const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
     if (!token) {
-        this.props.history.push('/login');
+        this.props.history.push('/error/401-unauthorized');
       return;
     }
     const userInfo = await getUserDetail(token).catch((e: Error) => {
       console.error(e.message);
-      this.props.history.push('/login');
+      this.props.history.push('/error/401-unauthorized');
       return;
     });
     if (!userInfo) {
-      this.props.history.push('/login');
+      this.props.history.push('/error/401-unauthorized');
       return;
     }
     this.setState({

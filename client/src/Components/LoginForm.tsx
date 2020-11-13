@@ -62,7 +62,6 @@ class LoginForm extends React.Component<RouteComponentProps , State> {
     if (!userInfo) {
       return;
     }
-    console.log(userInfo);
     this.props.history.push('/home');
   }
 

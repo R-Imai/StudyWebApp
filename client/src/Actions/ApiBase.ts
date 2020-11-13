@@ -5,10 +5,12 @@ export const API = {
   Auth: {
     login: "/api/login",
     logout: "/api/logout",
-    register: "/api/user/register"
+    register: "/api/user/register",
+    passwordUpdate: "/api/password/update"
   },
   User: {
-    detail: "/api/user/detail"
+    detail: "/api/user/detail",
+    profileUpdate: "/api/user/update"
   },
   Pnet: {
     profile: "/api/pnet/profile",

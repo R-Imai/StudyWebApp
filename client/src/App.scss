@@ -186,6 +186,29 @@ button:focus {
   }
 }
 
+#profile-edit-page {
+  .main {
+    margin: 0.5rem;
+    padding: 2rem;
+    padding-top: 0.5rem;
+    text-align: left;
+    .to-login-button {
+      margin: 0 auto;
+      margin-bottom: 1rem;
+      padding: 0.3rem 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      height: 2rem;
+      color: #fafafa;
+      font-weight: bold;
+      background-color: #00a8c6;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
+
 #account-form {
   background-color: rgba(238, 255, 250, 0.8);
   padding: 1rem;
