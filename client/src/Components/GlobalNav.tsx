@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import UserProfileDialog from './UserProfileDialog';
+import SettingDialog from './SettingDialog';
 import {logout} from '../Actions/AuthAction'
 // import appLinkIcon from '../image/icooon/app.svg';
 import PnetIcon from '../image/icons/PnetIcon.png';
@@ -16,17 +17,20 @@ interface Props extends RouteComponentProps {
 }
 
 type State = {
-  isShowProfile: boolean
+  isShowProfile: boolean;
+  isShowSetting: boolean;
 }
 
 class GlobalNav extends React.Component<Props , State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isShowProfile: false
+      isShowProfile: false,
+      isShowSetting: false
     };
     this.toHome = this.toHome.bind(this);
-    this.dialogStateChange = this.dialogStateChange.bind(this);
+    this.profileDialogStateChange = this.profileDialogStateChange.bind(this);
+    this.settingDialogStateChange = this.settingDialogStateChange.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -34,9 +38,15 @@ class GlobalNav extends React.Component<Props , State> {
     this.props.history.push('/home');
   }
 
-  dialogStateChange() {
+  profileDialogStateChange() {
     this.setState({
       isShowProfile: !this.state.isShowProfile
+    })
+  }
+
+  settingDialogStateChange() {
+    this.setState({
+      isShowSetting: !this.state.isShowSetting
     })
   }
 
@@ -118,6 +128,7 @@ class GlobalNav extends React.Component<Props , State> {
         </button>
         <button
           className="sqew-button"
+          onClick={this.settingDialogStateChange}
         >
           <div className="setting" />
         </button>
@@ -132,9 +143,10 @@ class GlobalNav extends React.Component<Props , State> {
           className="profile-icon"
           src={this.props.userInfo !== null ? this.props.userInfo.image : ""}
           alt={this.props.userInfo !== null ? this.props.userInfo.name : ""}
-          onClick={this.dialogStateChange}
+          onClick={this.profileDialogStateChange}
         />
-        {this.props.userInfo !== null && this.state.isShowProfile ? <UserProfileDialog userInfo={this.props.userInfo} dialogClose={this.dialogStateChange}/>:''}
+        {this.props.userInfo !== null && this.state.isShowProfile ? <UserProfileDialog userInfo={this.props.userInfo} dialogClose={this.profileDialogStateChange}/>:''}
+        {this.state.isShowSetting ? <SettingDialog dialogClose={this.settingDialogStateChange}/>:''}
       </nav>
     );
   }

@@ -675,8 +675,41 @@ button:focus {
   min-height: 100vh;
   min-width: 100vw;
   z-index: 9999;
-  background-color: rgba(250, 250, 250, 0.6);
+  background-color: rgba(250, 250, 250, 0.8);
   padding: 2rem;
+  .close-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    color: #fafafa;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    background-color: #f367ff;
+  }
+  .close-btn:focus {
+    background-color: #e58eff;
+  }
+  .close-btn:hover {
+    background-color: #e58eff;
+  }
+}
+
+.setting-dialog {
+  .link-btn {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.5rem;
+    color: #fafafa;
+    border-radius: 0.3rem;
+    font-size: 1.2rem;
+    width: 20rem;
+    background-color: #38be94;
+  }
+  .link-btn:hover {
+    background-color: #24e6a9;
+  }
+  .link-btn:focus {
+    background-color: #24e6a9;
+  }
 }
 
 .message-space {

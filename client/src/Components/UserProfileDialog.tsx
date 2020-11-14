@@ -17,8 +17,8 @@ const UserProfileDialog: React.FC<Props> = (props: Props) => {
     <div className="dialog">
       <UserProfile userInfo={props.userInfo}/>
       <div>
-        <button onClick={props.dialogClose}>
-          close
+        <button className="close-btn" onClick={props.dialogClose}>
+          閉じる
         </button>
       </div>
     </div>
