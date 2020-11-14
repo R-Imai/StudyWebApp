@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import API from './ApiBase';
 
-type UserInfo = {
+export type UserInfo = {
   id: string;
   name: string;
   image: string;

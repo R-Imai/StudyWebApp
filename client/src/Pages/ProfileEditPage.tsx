@@ -226,7 +226,7 @@ class ProfileEditPage extends React.Component<RouteComponentProps , State> {
         <GlobalNav userInfo={this.state.userInfo}/>
         <h1>プロフィール更新</h1>
         <div className="main">
-          { this.state.msgInfo !== null ? <Message value={"プロフィールを更新しました。"} type="info" /> : ''}
+          { this.state.msgInfo !== null ? <Message value={this.state.msgInfo.value} type={this.state.msgInfo.type} /> : ''}
           <AccountEdit
             accountInfo={accountInfo}
             submitText="更新"

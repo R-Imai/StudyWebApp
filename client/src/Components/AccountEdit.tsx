@@ -76,7 +76,7 @@ const formInfo: {[key in FormKey]: FormDetail} = {
 const mkImageForm = (accountInfo: Props['accountInfo'], key:FormKey) => {
   const formDetail = formInfo[key];
   const formData = accountInfo[key];
-  if (typeof formData === 'undefined' || typeof formDetail === 'undefined') {
+  if (typeof formData === 'undefined') {
     return;
   };
   return (
@@ -154,7 +154,7 @@ const onSubmit = (accountInfo:Props['accountInfo'], callback: Props['onClickSubm
 const mkInput = (accountInfo: Props['accountInfo'], key:FormKey) => {
   const formData = accountInfo[key];
   const formDetail = formInfo[key];
-  if (typeof formData === 'undefined' || typeof formDetail === 'undefined') {
+  if (typeof formData === 'undefined') {
     return;
   };
   const isRequiredError = formDetail.required && formData.value.length === 0;

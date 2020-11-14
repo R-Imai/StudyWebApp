@@ -11,6 +11,12 @@ type LoginResponse = {
   }
 }
 
+type UpdatePasswordInfo = {
+  id: string,
+  current_password: string,
+  new_password: string
+}
+
 type ErrResponseValue = {
   detail: string
 }
@@ -33,5 +39,13 @@ export async function logout(token: string) {
     headers: {
       'my-token': token
     }});
+  return responce;
+}
+
+export async function updatePassword(token: string, passwordInfo: UpdatePasswordInfo) {
+  const responce = await axios.post<null>(`${API.UrlBase}${API.Auth.passwordUpdate}`, passwordInfo, {
+    headers: {
+      'my-token': token
+    }}).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)});
   return responce;
 }

@@ -209,6 +209,101 @@ button:focus {
   }
 }
 
+#password-update-page {
+  .main {
+    margin: 0.5rem;
+    padding: 2rem;
+    padding-top: 0.5rem;
+    text-align: left;
+    .to-login-button {
+      margin: 0 auto;
+      margin-bottom: 1rem;
+      padding: 0.3rem 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      height: 2rem;
+      color: #fafafa;
+      font-weight: bold;
+      background-color: #00a8c6;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  form {
+    background-color: rgba(238, 255, 250, 0.8);
+    padding: 1rem;
+    text-align: center;
+    .form-main {
+      text-align: left;
+      .label {
+        margin-top: 0.5rem;
+        display: inline-block;
+        height: 0;
+        color: #3d3d3d;
+        padding: 0 0.5rem;
+        font-weight: bold;
+      }
+      .label-error {
+        color: #94003a;
+      }
+      .error-icon {
+        height: 1rem;
+        margin-bottom: 0.2rem;
+        padding: 0 0.4rem;
+      }
+
+      .input-form {
+        margin-left: 1rem;
+        height:1.5rem;
+        width: calc(100% - 5rem);
+        display: block;
+        border-radius: 0.5rem;
+        border: solid 0.2rem #6b6b6b;
+      }
+      .input-form:focus {
+        border: solid 0.2rem #909090;
+        outline: none;
+      }
+      .input-form-error {
+        background-color: #ffdede;
+        border-color: #be4242;
+      }
+
+      .err-msg {
+        vertical-align: text-top;
+        margin-left: 1.5rem;
+        font-size: 0.6rem;
+        color: #94003a;
+      }
+    }
+
+    .submit-btn {
+      margin-top: 1.5rem;
+      background-color: #38be94;
+      color: #fafafa;
+      font-weight: bold;
+      font-size: 1.6rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #24e6a9;
+    }
+    .submit-btn:focus {
+      background-color: #24e6a9;
+      outline: none;
+    }
+    .submit-btn:disabled {
+      background-color: rgba(56, 190, 148, 0.6);
+      color: rgba(250, 250, 250, 0.6);
+      cursor: not-allowed;
+    }
+  }
+}
+
 #account-form {
   background-color: rgba(238, 255, 250, 0.8);
   padding: 1rem;

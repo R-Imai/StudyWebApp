@@ -11,6 +11,7 @@ import PnetUserEditPage from './Pages/tempPage/PnetUserEditPage';
 import PnetPage from './Pages/PnetPage';
 import PnetListPage from './Pages/PnetListPage';
 import ProfileEditPage from './Pages/ProfileEditPage';
+import PasswordUpdatePage from './Pages/PasswordUpdatePage';
 
 const Routes: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const Routes: React.FC = () => {
         <Route exact path="/register" component={RegisterPage}/>
         <Route exact path="/home" component={HomePage}/>
         <Route exact path="/profile/edit" component={ProfileEditPage}/>
+        <Route exact path="/password/update" component={PasswordUpdatePage}/>
         <Route exact path="/pnet" component={PnetListPage}/>
         <Route exact path="/pnet/profile" component={PnetPage}/>
         <Route exact path="/pnet/user/info/:id" component={PnetPage}/>
