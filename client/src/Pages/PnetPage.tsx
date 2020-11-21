@@ -35,6 +35,7 @@ type State = {
   isShowWarningEditTagDialog: boolean;
   editHobbyData: HobbyEditType | null;
   editCareerData: CareerEditType | null;
+  canTagReactionDelete: boolean;
 }
 
 class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State> {
@@ -49,7 +50,8 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
       editTagData: null,
       isShowWarningEditTagDialog: false,
       editHobbyData: null,
-      editCareerData: null
+      editCareerData: null,
+      canTagReactionDelete: false
     };
     this.onClickProfileEdit = this.onClickProfileEdit.bind(this);
     this.closeProfileEditDialog = this.closeProfileEditDialog.bind(this);
@@ -218,12 +220,14 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
       reaction: 'good'
     }
     this.setState({
+      canTagReactionDelete: false,
       editTagData: tagData
     })
   }
 
   closeTagEditDialog(){
     this.setState({
+      canTagReactionDelete: false,
       editTagData: null,
       isShowWarningEditTagDialog: false
     })
@@ -278,6 +282,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         }
         this.setState({
           msgInfo: errInfo,
+          canTagReactionDelete: false,
           editTagData: null,
           showIndicator: false
         });
@@ -308,6 +313,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       msgInfo: msgInfo,
       pnetUserInfo: pnetProfile,
+      canTagReactionDelete: false,
       editTagData: null,
       showIndicator: false
     });
@@ -358,6 +364,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     }
 
     this.setState({
+      canTagReactionDelete: currentState !== 'none',
       editTagData: tagData,
       isShowWarningEditTagDialog: isWarn
     })
@@ -414,6 +421,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         }
         this.setState({
           msgInfo: errInfo,
+          canTagReactionDelete: false,
           editTagData: null,
           showIndicator: false,
           isShowWarningEditTagDialog: false
@@ -445,6 +453,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       msgInfo: msgInfo,
       pnetUserInfo: pnetProfile,
+      canTagReactionDelete: false,
       editTagData: null,
       showIndicator: false,
       isShowWarningEditTagDialog: false
@@ -485,6 +494,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         }
         this.setState({
           msgInfo: errInfo,
+          canTagReactionDelete: false,
           editTagData: null,
           showIndicator: false,
           isShowWarningEditTagDialog: false
@@ -517,6 +527,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       msgInfo: msgInfo,
       pnetUserInfo: pnetProfile,
+      canTagReactionDelete: false,
       editTagData: null,
       showIndicator: false,
       isShowWarningEditTagDialog: false
@@ -933,7 +944,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
             onClose={this.closeTagEditDialog}
             onSubmit={this.updateTagReaction}
             showWarning={this.state.isShowWarningEditTagDialog}
-            onDelete={!this.state.isShowWarningEditTagDialog && this.state.editTagData.comment ? this.tagReactionDelete: undefined}
+            onDelete={!this.state.isShowWarningEditTagDialog && this.state.canTagReactionDelete ? this.tagReactionDelete: undefined}
           />)
       : '';
 
