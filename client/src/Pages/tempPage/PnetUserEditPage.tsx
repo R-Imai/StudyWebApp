@@ -8,6 +8,7 @@ import GlobalNav from '../../Components/GlobalNav'
 import Indicator from '../../Components/Indicator'
 import ProfileEdit from '../../Components/Pnet/ProfileEdit'
 import Message, {msgType} from '../../Components/Message'
+import {getToken} from '../../Utils/utils'
 
 type State = {
   loginUserInfo: {
@@ -37,17 +38,11 @@ class PnetUserEditPage extends React.Component<RouteComponentProps, State> {
     this.onClickSubmit = this.onClickSubmit.bind(this);
   }
 
-  getToken() {
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
-    return token;
-  }
-
   async componentDidMount() {
     this.setState({
       showIndicator: true
     })
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;
@@ -111,7 +106,7 @@ class PnetUserEditPage extends React.Component<RouteComponentProps, State> {
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;

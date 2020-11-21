@@ -7,6 +7,7 @@ import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
 import {profileUpdate, getUserDetail} from '../Actions/UserAction'
 import Message, {msgType} from '../Components/Message'
+import {getToken} from '../Utils/utils'
 
 type State = {
   id: string;
@@ -56,7 +57,7 @@ class ProfileEditPage extends React.Component<RouteComponentProps , State> {
     this.setState({
       showIndicator: true
     })
-    const token = this.getToken();
+    const token = getToken();
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;
@@ -78,12 +79,6 @@ class ProfileEditPage extends React.Component<RouteComponentProps , State> {
       imageSrc: userInfo.image,
       showIndicator: false
     });
-  }
-
-  getToken() {
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
-    return token;
   }
 
   idChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -146,7 +141,7 @@ class ProfileEditPage extends React.Component<RouteComponentProps , State> {
       image: this.state.imageSrc,
       email: this.state.email,
     }
-    const token = this.getToken();
+    const token = getToken();
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;

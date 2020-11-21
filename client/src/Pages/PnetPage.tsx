@@ -15,6 +15,7 @@ import TagEditDialog from '../Components/Pnet/Dialog/TagEditDialog'
 import HobbyEditDialog from '../Components/Pnet/Dialog/HobbyEditDialog'
 import CareerEditDialog from '../Components/Pnet/Dialog/CareerEditDialog'
 import Message, {msgType} from '../Components/Message'
+import {getToken} from '../Utils/utils'
 
 type State = {
   loginUserInfo: {
@@ -72,12 +73,6 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.gotoListPage = this.gotoListPage.bind(this);
   }
 
-  getToken() {
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
-    return token;
-  }
-
   async getPnetUserInfo(token: string) {
     const showUserId = this.props.match.params.id;
     if (typeof showUserId === 'undefined') {
@@ -92,7 +87,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     })
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;
@@ -160,7 +155,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -265,7 +260,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -397,7 +392,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -472,7 +467,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -575,7 +570,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
       detail: editHobbyData.detail ? editHobbyData.detail : ''
     }
 
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -647,7 +642,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -771,7 +766,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
       detail: careerEditData.detail ? careerEditData.detail : ''
     }
 
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;
@@ -843,7 +838,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.setState({
       showIndicator: true
     });
-    const token = this.getToken()
+    const token = getToken()
     if (!token) {
       this.props.history.push('/error/401-unauthorized');
       return;

@@ -8,6 +8,7 @@ import {UserInfo, getUserDetail} from '../Actions/UserAction'
 import {updatePassword} from '../Actions/AuthAction'
 import Message, {msgType} from '../Components/Message'
 import PasswordUpdateForm from '../Components/PasswordUpdateForm'
+import {getToken} from '../Utils/utils'
 
 type State = {
   showIndicator: boolean;
@@ -43,7 +44,7 @@ class PasswordUpdatePage extends React.Component<RouteComponentProps , State> {
     this.setState({
       showIndicator: true
     })
-    const token = this.getToken();
+    const token = getToken();
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;
@@ -61,12 +62,6 @@ class PasswordUpdatePage extends React.Component<RouteComponentProps , State> {
       userInfo: userInfo,
       showIndicator: false
     });
-  }
-
-  getToken() {
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
-    return token;
   }
 
   onchangeCurrentPass(e: React.ChangeEvent<HTMLInputElement>) {
@@ -100,7 +95,7 @@ class PasswordUpdatePage extends React.Component<RouteComponentProps , State> {
       current_password: sha256(this.state.currentPass),
       new_password: sha256(this.state.newPass1)
     }
-    const token = this.getToken();
+    const token = getToken();
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;

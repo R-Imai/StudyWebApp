@@ -7,6 +7,8 @@ import {logout} from '../Actions/AuthAction'
 // import appLinkIcon from '../image/icooon/app.svg';
 import PnetIcon from '../image/icons/PnetIcon.png';
 
+import {getToken} from '../Utils/utils'
+
 interface Props extends RouteComponentProps {
   userInfo: {
     id: string;
@@ -51,8 +53,7 @@ class GlobalNav extends React.Component<Props , State> {
   }
 
   async logout() {
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
+    const token = getToken();
     if (!token) {
       this.props.history.push('/login');
       return;

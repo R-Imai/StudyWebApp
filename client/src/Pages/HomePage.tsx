@@ -7,6 +7,8 @@ import PnetIcon from '../image/icons/PnetIcon.png'
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
 
+import {getToken} from '../Utils/utils'
+
 type State = {
   userInfo: {
     id: string;
@@ -30,8 +32,7 @@ class HomePage extends React.Component<RouteComponentProps, State> {
     this.setState({
       showIndicator: true
     })
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
+    const token = getToken();
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;

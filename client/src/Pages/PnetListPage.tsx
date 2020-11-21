@@ -7,6 +7,7 @@ import {getUserList, getProfile} from '../Actions/PnetAction'
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
 import ProfileCard from '../Components/Pnet/ProfileCard'
+import {getToken} from '../Utils/utils'
 
 
 type State = {
@@ -30,12 +31,6 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     };
   }
 
-  getToken() {
-    const cookies = document.cookie;
-    const token = cookies.split(';').find(row => row.startsWith('my-token'))?.split('=')[1];
-    return token;
-  }
-
   gotoProfile(userId: string) {
     const url = `/pnet/user/info/${userId}`
     this.props.history.push(url);
@@ -45,7 +40,7 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     this.setState({
       showIndicator: true
     })
-    const token = this.getToken()
+    const token = getToken();
     if (!token) {
         this.props.history.push('/error/401-unauthorized');
       return;
