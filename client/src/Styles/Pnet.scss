@@ -220,12 +220,7 @@
     width: calc(60% - 0.5rem - 6rem);
     text-overflow: ellipsis;
     vertical-align: text-top;
-  }
-  .detail::before {
-    content: "[ ";
-  }
-  .detail::after {
-    content: " ]";
+    color: #42434a;
   }
 }
 
@@ -271,12 +266,7 @@
     width: calc(60% - 0.5rem);
     text-overflow: ellipsis;
     vertical-align: text-top;
-  }
-  .detail::before {
-    content: "[ ";
-  }
-  .detail::after {
-    content: " ]";
+    color: #42434a;
   }
 }
 
