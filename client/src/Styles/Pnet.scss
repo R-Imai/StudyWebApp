@@ -449,18 +449,26 @@
   .right {
     width: calc(100% - 8rem);
     .intro {
-      height: calc(60% - 0.4rem);
+      height: calc(60% - 0.8rem);
       font-size: 0.9rem;
       padding: 0.2rem 0.8rem;
       border-bottom: rgba(0, 204, 136, 0.4) solid 0.2rem;
-      overflow: hidden;
+      scrollbar-width: none;
+      overflow: auto;
+    }
+    .intro::-webkit-scrollbar {
+      display:none;
     }
     .tags {
       height: calc(40% - 0.2rem);
       padding: 0.1rem 0.8rem;
-      overflow: hidden;
+      overflow: auto;
       display: flex;
+      scrollbar-width: none;
       flex-wrap: wrap;
+    }
+    .tags::-webkit-scrollbar {
+      display:none;
     }
   }
 }
