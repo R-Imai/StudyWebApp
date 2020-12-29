@@ -32,8 +32,12 @@ export async function getUserInfo(token: string, userId: string) {
   return responce.data;
 }
 
-export async function getUserList(token: string) {
-  const responce = await axios.get<PnetUserListElem[]>(`${API.UrlBase}${API.Pnet.userList}`, {
+export async function getUserList(token: string, limit: number, offset: number) {
+  const responce = await axios.get<PnetUserList>(`${API.UrlBase}${API.Pnet.userList}`, {
+    params: {
+      limit: limit,
+      offset: offset
+    },
     headers: {
       'my-token': token
     }}

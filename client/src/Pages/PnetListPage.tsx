@@ -19,7 +19,22 @@ type State = {
   } | null;
   userList: PnetUserListElem[];
   showIndicator: boolean;
+  pageOffset: number;
+  allDataCnt: number;
 }
+
+const checkHeight = () => {
+  const height = document.documentElement.clientHeight;
+
+  const scrollHeight = document.documentElement.scrollHeight;
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  const scrollPosition = height + scrollTop;
+  const proximity = 0;
+
+  return (scrollHeight - scrollPosition) / scrollHeight <= proximity;
+}
+
+const PAGE_UNIT = 3
 
 class PnetListPage extends React.Component<RouteComponentProps, State> {
   constructor(props: RouteComponentProps) {
@@ -27,8 +42,12 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     this.state = {
       loginUserInfo: null,
       userList: [],
-      showIndicator: false
+      showIndicator: false,
+      pageOffset: 0,
+      allDataCnt: 0
     };
+    this.scrollEvent = this.scrollEvent.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
   gotoProfile(userId: string) {
@@ -49,7 +68,7 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     try {
       responce = await Promise.all([
         getUserDetail(token),
-        getUserList(token),
+        getUserList(token, PAGE_UNIT, this.state.pageOffset),
         getProfile(token)
       ]);
     }
@@ -83,11 +102,47 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
       return;
     }
 
+    // スクロールイベントを定義
+    window.addEventListener('scroll', this.scrollEvent)
+
     this.setState({
       loginUserInfo: loginUserInfo,
-      userList: userList,
-      showIndicator: false
+      userList: userList.data,
+      allDataCnt: userList.cnt,
+      showIndicator: false,
+      pageOffset: this.state.pageOffset + PAGE_UNIT
     })
+
+    // 初期表示時にまだ取得する場合
+    this.scrollEvent();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.scrollEvent);
+  }
+
+  async getData() {
+    if (this.state.pageOffset > this.state.allDataCnt){
+      return;
+    }
+    const token = getToken();
+    if (!token) {
+        this.props.history.push('/error/401-unauthorized');
+      return;
+    }
+    const getData = await getUserList(token, PAGE_UNIT, this.state.pageOffset);
+    const userList = this.state.userList.concat(getData.data);
+    this.setState({
+      userList: userList,
+      allDataCnt: getData.cnt,
+      pageOffset: this.state.pageOffset + PAGE_UNIT
+    })
+  }
+
+  scrollEvent() {
+    if (checkHeight()) {
+      this.getData();
+    }
   }
 
   mkMain() {

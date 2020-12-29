@@ -169,8 +169,8 @@ def pnet_user_detail(user_id: str, my_token: Optional[str] = Header(None)):
         )
     return __mk_responce_json(user_info)
 
-@app.get("/api/pnet/user/list", response_model=List[pnet_type.UserListElem], tags=["People Network"])
-def pnet_get_user_list(my_token: Optional[str] = Header(None)):
+@app.get("/api/pnet/user/list", response_model=pnet_type.UserList, tags=["People Network"])
+def pnet_get_user_list(limit: int, offset: int, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)
     except FailureAuthenticationException as e:
@@ -180,7 +180,7 @@ def pnet_get_user_list(my_token: Optional[str] = Header(None)):
         )
 
     try:
-        user_list = pnet_service.get_user_list()
+        user_list = pnet_service.get_user_list(login_user_id, limit, offset)
     except Exception as e:
         raise HTTPException(
             status_code=500,

@@ -69,6 +69,10 @@ class UserData(Master):
 class UserListElem(Master):
     tag: List[TagListElem]
 
+class UserList(Master):
+    data: List[UserListElem]
+    cnt: int
+
 class TagRegister(BaseModel):
     tag_id: str = None
     tag_user_id: str

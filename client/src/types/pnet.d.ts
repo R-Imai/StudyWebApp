@@ -19,6 +19,11 @@ interface PnetUserListElem extends PnetProfileCard {
   tag: PnetUserListTag[]
 }
 
+interface PnetUserList {
+  data: PnetUserListElem[],
+  cnt: number
+}
+
 type tagReactionType = 'good' | 'bad';
 
 interface TagEditType {
