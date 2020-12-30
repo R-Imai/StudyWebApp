@@ -21,6 +21,7 @@ type State = {
   showIndicator: boolean;
   pageOffset: number;
   allDataCnt: number;
+  isDataLoading: boolean;
 }
 
 const checkHeight = () => {
@@ -29,12 +30,12 @@ const checkHeight = () => {
   const scrollHeight = document.documentElement.scrollHeight;
   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   const scrollPosition = height + scrollTop;
-  const proximity = 0;
+  const proximity = 0.2;
 
   return (scrollHeight - scrollPosition) / scrollHeight <= proximity;
 }
 
-const PAGE_UNIT = 3
+const PAGE_UNIT = 8
 
 class PnetListPage extends React.Component<RouteComponentProps, State> {
   constructor(props: RouteComponentProps) {
@@ -44,7 +45,8 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
       userList: [],
       showIndicator: false,
       pageOffset: 0,
-      allDataCnt: 0
+      allDataCnt: 0,
+      isDataLoading: false
     };
     this.scrollEvent = this.scrollEvent.bind(this);
     this.getData = this.getData.bind(this);
@@ -130,13 +132,19 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
         this.props.history.push('/error/401-unauthorized');
       return;
     }
+    if (this.state.isDataLoading) {
+      return;
+    }
+    this.setState({isDataLoading: true});
     const getData = await getUserList(token, PAGE_UNIT, this.state.pageOffset);
     const userList = this.state.userList.concat(getData.data);
     this.setState({
       userList: userList,
       allDataCnt: getData.cnt,
-      pageOffset: this.state.pageOffset + PAGE_UNIT
+      pageOffset: this.state.pageOffset + PAGE_UNIT,
+      isDataLoading: false
     })
+    this.scrollEvent();
   }
 
   scrollEvent() {

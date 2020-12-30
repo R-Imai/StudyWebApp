@@ -181,6 +181,11 @@ def pnet_get_user_list(limit: int, offset: int, my_token: Optional[str] = Header
 
     try:
         user_list = pnet_service.get_user_list(login_user_id, limit, offset)
+    except UserNotFoundException as e:
+        raise HTTPException(
+            status_code=500,
+            detail="【Pnet-E001】: このアプリケーションへ未登録の可能性があります"
+        )
     except Exception as e:
         raise HTTPException(
             status_code=500,
