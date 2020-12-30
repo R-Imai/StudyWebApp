@@ -59,9 +59,12 @@ class HomePage extends React.Component<RouteComponentProps, State> {
         <GlobalNav userInfo={this.state.userInfo}/>
         <div>{txt}</div>
         <div className="home-app-list">
-          <a className="icon-btn" href="/pnet">
-            <img src={PnetIcon} height={120} width={120} alt="people network"/>
-          </a>
+          <div className="tooltip-parent">
+            <a className="icon-btn" href="/pnet">
+              <img src={PnetIcon} height={120} width={120} alt="people network"/>
+            </a>
+            <span className="tooltip"> ユーザのスキル・経歴を確認できるアプリケーションです。 </span>
+          </div>
         </div>
         <Indicator show={this.state.showIndicator} />
       </div>
