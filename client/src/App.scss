@@ -37,6 +37,7 @@ button:focus {
 
 .indicator-parent {
   position: relative;
+  min-height: 10rem;
   .indicator {
     position: absolute;
     display: flex;
@@ -513,6 +514,7 @@ button:focus {
   top: 0;
   height: 2rem;
   width: 100vw;
+  z-index: 99999;
   .to-home {
     margin: 0 0.5rem;
     width: 2rem;
