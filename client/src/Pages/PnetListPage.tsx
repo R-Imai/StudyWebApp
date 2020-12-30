@@ -196,7 +196,7 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     return (
       <div className="pnet-list-page global-nav-page indicator-parent">
         <GlobalNav userInfo={this.state.loginUserInfo}/>
-        <h1> ユーザ一覧 </h1>
+        <h1 className="fixed-label"> ユーザ一覧 </h1>
         {this.mkMain()}
         <Indicator show={this.state.showIndicator} />
       </div>
