@@ -33,7 +33,52 @@ class PnetDAO:
             "get_tag_reaction_user": "SELECT tag_id, tag_user_id, action_user_id, comment, reaction FROM pnet_tag_reaction WHERE tag_id=%s AND tag_user_id=%s AND action_user_id=%s;",
             "update_tag_reaction": "UPDATE pnet_tag_reaction SET tag_id=%s, tag_user_id=%s, action_user_id=%s, comment=%s, reaction=%s WHERE tag_id=%s AND tag_user_id=%s AND action_user_id=%s;",
             "delete_tag_reaction": "DELETE FROM pnet_tag_reaction WHERE tag_id=%s AND tag_user_id=%s AND action_user_id=%s;",
-            "delete_tag": "DELETE FROM pnet_tag WHERE tag_id=%s AND user_id=%s;"
+            "delete_tag": "DELETE FROM pnet_tag WHERE tag_id=%s AND user_id=%s;",
+            "search_user": """
+                SELECT pnet_master.id, user_master.name, pnet_master.name_kana, pnet_master.belong, pnet_master.self_intro, user_master.image
+                FROM user_master INNER JOIN pnet_master ON user_master.id = pnet_master.id
+                WHERE pnet_master.id!=%(ignore_id)s
+                  AND user_master.name LIKE %(name)s
+                  AND pnet_master.name_kana LIKE %(kana)s
+                  AND pnet_master.belong LIKE %(belong)s
+                  AND pnet_master.id IN (
+                    SELECT Distinct(pnet_master.id)
+                    FROM pnet_master LEFT OUTER JOIN pnet_tag ON pnet_master.id = pnet_tag.user_id
+                    WHERE (CASE WHEN title IS NULL THEN '' ELSE title END) LIKE %(tag)s
+                  )
+                  AND pnet_master.id IN (
+                    SELECT Distinct(pnet_master.id)
+                    FROM pnet_master LEFT OUTER JOIN pnet_career ON pnet_career.user_id = pnet_master.id LEFT OUTER JOIN pnet_hobby ON pnet_hobby.user_id = pnet_master.id
+                    WHERE pnet_master.self_intro LIKE %(detail)s
+                      OR pnet_career.title LIKE %(detail)s
+                      OR pnet_career.detail LIKE %(detail)s
+                      OR pnet_hobby.title LIKE %(detail)s
+                      OR pnet_hobby.detail LIKE %(detail)s
+                  )
+                LIMIT %(limit)s OFFSET %(offset)s
+            """,
+            "search_user_cnt": """
+                SELECT count(pnet_master.id)
+                FROM user_master INNER JOIN pnet_master ON user_master.id = pnet_master.id
+                WHERE pnet_master.id!=%(ignore_id)s
+                  AND user_master.name LIKE %(name)s
+                  AND pnet_master.name_kana LIKE %(kana)s
+                  AND pnet_master.belong LIKE %(belong)s
+                  AND pnet_master.id IN (
+                    SELECT Distinct(pnet_master.id)
+                    FROM pnet_master LEFT OUTER JOIN pnet_tag ON pnet_master.id = pnet_tag.user_id
+                    WHERE (CASE WHEN title IS NULL THEN '' ELSE title END) LIKE %(tag)s
+                  )
+                  AND pnet_master.id IN (
+                    SELECT Distinct(pnet_master.id)
+                    FROM pnet_master LEFT OUTER JOIN pnet_career ON pnet_career.user_id = pnet_master.id LEFT OUTER JOIN pnet_hobby ON pnet_hobby.user_id = pnet_master.id
+                    WHERE pnet_master.self_intro LIKE %(detail)s
+                      OR pnet_career.title LIKE %(detail)s
+                      OR pnet_career.detail LIKE %(detail)s
+                      OR pnet_hobby.title LIKE %(detail)s
+                      OR pnet_hobby.detail LIKE %(detail)s
+                  )
+            """
         }
 
     def insert_user_info(self, cur, user_info: type.InsertMaster):
@@ -189,3 +234,35 @@ class PnetDAO:
     def delete_tag(self, cur, tag_id, tag_user_id):
         query = self.query["delete_tag"]
         cur.execute(query, (tag_id, tag_user_id))
+
+    def search_user(self, cur, ignore_user_id, limit, offset, search_param:type.PnetUserSearchParam):
+        query = self.query["search_user"]
+        query_param = dict(
+          ignore_id = ignore_user_id,
+          name = f"%{search_param.name}%",
+          kana = f"%{search_param.kana}%",
+          belong = f"%{search_param.belong}%",
+          user_id = f"%{search_param.user_id}%",
+          tag = f"%{search_param.tag}%",
+          detail = f"%{search_param.detail}%",
+          limit = limit,
+          offset = offset
+        )
+        cur.execute(query, query_param)
+        rows = cur.fetchall()
+        return list(map(lambda x: type.Master(id=x[0], name=x[1], name_kana=x[2], belong=x[3], self_intro=x[4], image=x[5].tobytes()), rows))
+
+    def search_user_cnt(self, cur, ignore_user_id, search_param:type.PnetUserSearchParam) -> int:
+        query = self.query["search_user_cnt"]
+        query_param = dict(
+          ignore_id = ignore_user_id,
+          name = f"%{search_param.name}%",
+          kana = f"%{search_param.kana}%",
+          belong = f"%{search_param.belong}%",
+          user_id = f"%{search_param.user_id}%",
+          tag = f"%{search_param.tag}%",
+          detail = f"%{search_param.detail}%"
+        )
+        cur.execute(query, query_param)
+        res = cur.fetchone()
+        return res[0]

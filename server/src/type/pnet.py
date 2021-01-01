@@ -95,5 +95,19 @@ class InsertUserCareer(BaseModel):
     detail: str
 
 class TagReactionDeleteParam(BaseModel):
-     tag_id: str
-     action_user_id: str
+    tag_id: str
+    action_user_id: str
+
+
+class PnetUserSearchParam(BaseModel):
+    name: str
+    kana: str
+    belong: str
+    user_id: str
+    tag: str
+    detail: str
+
+class PnetUserSearchPostParam(BaseModel):
+    search_param: PnetUserSearchParam
+    limit: int
+    offset: int

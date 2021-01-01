@@ -435,3 +435,27 @@ def pnet_user_career(post_param: pnet_type.InsertUserCareer, my_token: Optional[
                 status_code=500,
                 detail=f"予期せぬエラーが発生しました。\n{e}"
             )
+
+@app.post("/api/pnet/user/search", response_model=pnet_type.UserList, tags=["People Network"])
+def pnet_user_search(post_param: pnet_type.PnetUserSearchPostParam, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+    try:
+        user_list = pnet_service.user_search(login_user_id, post_param.limit, post_param.offset, post_param.search_param)
+    except UserNotFoundException as e:
+        raise HTTPException(
+            status_code=500,
+            detail="【Pnet-E001】: このアプリケーションへ未登録の可能性があります"
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+    return __mk_responce_json(user_list)
