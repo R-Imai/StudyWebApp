@@ -103,7 +103,6 @@ class PnetUserSearchParam(BaseModel):
     name: str
     kana: str
     belong: str
-    user_id: str
     tag: str
     detail: str
 

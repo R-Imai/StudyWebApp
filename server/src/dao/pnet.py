@@ -242,7 +242,6 @@ class PnetDAO:
           name = f"%{search_param.name}%",
           kana = f"%{search_param.kana}%",
           belong = f"%{search_param.belong}%",
-          user_id = f"%{search_param.user_id}%",
           tag = f"%{search_param.tag}%",
           detail = f"%{search_param.detail}%",
           limit = limit,
@@ -259,7 +258,6 @@ class PnetDAO:
           name = f"%{search_param.name}%",
           kana = f"%{search_param.kana}%",
           belong = f"%{search_param.belong}%",
-          user_id = f"%{search_param.user_id}%",
           tag = f"%{search_param.tag}%",
           detail = f"%{search_param.detail}%"
         )
