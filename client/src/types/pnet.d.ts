@@ -119,3 +119,17 @@ interface CareerSet {
   create_user_cd: string,
   detail: string
 }
+
+interface UserSearchParam {
+  name: string,
+  kana: string,
+  belong: string,
+  tag: string,
+  detail: string
+}
+
+interface UserSearchRequestParam {
+  search_param: UserSearchParam,
+  limit: number,
+  offset: number
+}

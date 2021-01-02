@@ -405,11 +405,59 @@
 }
 
 .pnet-list-page {
-  min-height: 10rem;
-  .cards-area {
-    padding-top: 2rem;
-    display: flex;
-    flex-wrap: wrap;
+  .main-area {
+    padding-top: 3rem;
+    .cards-area {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.pnet-user-search-form {
+  margin: 0 2rem;
+  background-color: #f3fff3;
+  .trigger-btn {
+    width: 100%;
+    height: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 2rem;
+    background-color: #ccffcc;
+    color: #004633;
+  }
+  .trigger-btn:hover {
+    background-color: rgba(#ccffcc, 0.6);
+  }
+  .trigger-btn-open::before {
+    content: "△";
+    margin-right: 0.5rem;
+  }
+  .trigger-btn-close::before {
+    content: "▽";
+    margin-right: 0.5rem;
+  }
+  form {
+    padding: 0 2rem;
+    padding-bottom: 1rem;
+    transition: opacity 1s, visibility 1s, height 1s;
+    overflow: hidden;
+  }
+  .open {
+    height: 15rem;
+    opacity: 1;
+    visibility: visible;
+  }
+  .close {
+    height: 0rem;
+    opacity: 0;
+    visibility: hidden;
+    padding-bottom: 0rem;
+  }
+  .form-half {
+    width: 50%;
+    display: inline-block;
   }
 }
 

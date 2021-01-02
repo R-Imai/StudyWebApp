@@ -7,6 +7,7 @@ import {getUserList, getProfile} from '../Actions/PnetAction'
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
 import ProfileCard from '../Components/Pnet/ProfileCard'
+import UserSearchForm from '../Components/Pnet/UserSearchForm'
 import {getToken} from '../Utils/utils'
 
 
@@ -22,6 +23,7 @@ type State = {
   pageOffset: number;
   allDataCnt: number;
   isDataLoading: boolean;
+  userSearchParam: UserSearchParam;
 }
 
 const checkHeight = () => {
@@ -46,10 +48,18 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
       showIndicator: false,
       pageOffset: 0,
       allDataCnt: 0,
-      isDataLoading: false
+      isDataLoading: false,
+      userSearchParam: {
+        name: "",
+        kana: "",
+        belong: "",
+        tag: "",
+        detail: ""
+      }
     };
     this.scrollEvent = this.scrollEvent.bind(this);
     this.getData = this.getData.bind(this);
+    this.onSubmitSearch = this.onSubmitSearch.bind(this);
   }
 
   gotoProfile(userId: string) {
@@ -153,6 +163,10 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     }
   }
 
+  onSubmitSearch(param: UserSearchParam) {
+    console.log(param);
+  }
+
   mkMain() {
     if (this.state.userList === null) {
       return '';
@@ -197,7 +211,10 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
       <div className="pnet-list-page global-nav-page indicator-parent">
         <GlobalNav userInfo={this.state.loginUserInfo}/>
         <h1 className="fixed-label"> ユーザ一覧 </h1>
-        {this.mkMain()}
+        <div className="main-area">
+          <UserSearchForm param={this.state.userSearchParam} onSubmit={this.onSubmitSearch} />
+          {this.mkMain()}
+        </div>
         <Indicator show={this.state.showIndicator} />
       </div>
     )
