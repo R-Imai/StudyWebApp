@@ -21,6 +21,7 @@ export const API = {
     userRegister: "/api/pnet/user/new",
     userHobby: "/api/pnet/user/hobby",
     usertag: "/api/pnet/user/tag",
+    userSearch: "/api/pnet/user/search",
     tagGood: "/api/pnet/user/tag/good",
     tagBad: "/api/pnet/user/tag/bad",
     tagDelete: "/api/pnet/user/tag",

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 
 import {getUserDetail} from '../Actions/UserAction'
-import {getUserList, getProfile} from '../Actions/PnetAction'
+import {userSearch, getProfile} from '../Actions/PnetAction'
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
@@ -80,7 +80,7 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
     try {
       responce = await Promise.all([
         getUserDetail(token),
-        getUserList(token, PAGE_UNIT, this.state.pageOffset),
+        userSearch(token, this.state.userSearchParam, PAGE_UNIT, this.state.pageOffset),
         getProfile(token)
       ]);
     }
@@ -146,7 +146,7 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
       return;
     }
     this.setState({isDataLoading: true});
-    const getData = await getUserList(token, PAGE_UNIT, this.state.pageOffset);
+    const getData = await userSearch(token, this.state.userSearchParam, PAGE_UNIT, this.state.pageOffset);
     const userList = this.state.userList.concat(getData.data);
     this.setState({
       userList: userList,
@@ -164,7 +164,28 @@ class PnetListPage extends React.Component<RouteComponentProps, State> {
   }
 
   onSubmitSearch(param: UserSearchParam) {
-    console.log(param);
+    this.setState({
+      pageOffset: 0,
+      userSearchParam: param,
+      isDataLoading: true,
+      showIndicator: true
+    }, async () => {
+      const token = getToken();
+      if (!token) {
+          this.props.history.push('/error/401-unauthorized');
+        return;
+      }
+      const getData = await userSearch(token, this.state.userSearchParam, PAGE_UNIT, this.state.pageOffset);
+      const userList = getData.data;
+      this.setState({
+        userList: userList,
+        allDataCnt: getData.cnt,
+        pageOffset: this.state.pageOffset + PAGE_UNIT,
+        isDataLoading: false,
+        showIndicator: false
+      })
+      this.scrollEvent();
+    });
   }
 
   mkMain() {

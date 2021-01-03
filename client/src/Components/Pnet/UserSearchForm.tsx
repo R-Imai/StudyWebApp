@@ -23,6 +23,7 @@ class UserSearchForm extends React.Component<Props, State> {
     this.onChangeDetail = this.onChangeDetail.bind(this);
     this.onClickTriggerBtn = this.onClickTriggerBtn.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClickClear = this.onClickClear.bind(this);
   }
 
   onChangeName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -73,6 +74,18 @@ class UserSearchForm extends React.Component<Props, State> {
 
   onSubmit() {
     this.props.onSubmit(this.state.paramLocal);
+  }
+
+  onClickClear() {
+    this.setState({
+      paramLocal: {
+        name: "",
+        kana: "",
+        belong: "",
+        tag: "",
+        detail: ""
+      }
+    })
   }
 
   render() {
@@ -153,6 +166,9 @@ class UserSearchForm extends React.Component<Props, State> {
             onChange={this.onChangeDetail}
           />
           <div className="btn-space">
+            <button type="button" className="cancel" onClick={this.onClickClear}>
+              入力クリア
+            </button>
             <button type="button" className="save" onClick={this.onSubmit}>
               検索
             </button>

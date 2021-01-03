@@ -189,3 +189,18 @@ export async function userCareerDelete(token: string, userId: string, careerId:s
   });
   return responce.status
 }
+
+export async function userSearch(token: string, searchParam: UserSearchParam, limit: number, offset: number) {
+  const param: UserSearchRequestParam = {
+    search_param: searchParam,
+    limit: limit,
+    offset: offset
+  }
+  const responce = await axios.post<PnetUserList>(`${API.UrlBase}${API.Pnet.userSearch}`, param, {
+    headers: {
+      'my-token': token
+    }
+  }).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)});
+
+  return responce.data;
+}
