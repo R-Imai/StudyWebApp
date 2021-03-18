@@ -274,3 +274,16 @@ class PnetService:
         list_data = {"data": user_data, "cnt": count}
 
         return list_data
+
+    def get_network(self, user_list=None) -> [pnet_type.PnetUserNetworkInfo]:
+        try:
+            conn = connection.mk_connection()
+            with conn.cursor() as cur:
+                network_list = self.pnet_dao.get_network(cur) if user_list is None else self.pnet_dao.get_network_by_user(cur, user_list)
+                conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise Exception(e)
+        finally:
+            conn.close()
+        return network_list

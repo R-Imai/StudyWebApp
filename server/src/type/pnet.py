@@ -110,3 +110,8 @@ class PnetUserSearchPostParam(BaseModel):
     search_param: PnetUserSearchParam
     limit: int
     offset: int
+
+class PnetUserNetworkInfo(BaseModel):
+    from_id: str
+    to_str: str
+    cnt: str

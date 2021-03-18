@@ -78,7 +78,9 @@ class PnetDAO:
                       OR pnet_hobby.title LIKE %(detail)s
                       OR pnet_hobby.detail LIKE %(detail)s
                   )
-            """
+            """,
+            "get_network": "SELECT tag_user_id, action_user_id, COUNT(*) FROM pnet_tag_reaction where tag_user_id != action_user_id GROUP BY (tag_user_id, action_user_id);",
+            "get_network_by_user": "SELECT tag_user_id, action_user_id, COUNT(*) FROM pnet_tag_reaction where tag_user_id != action_user_id AND (tag_user_id IN %(user_cds)s OR action_user_id IN %(user_cds)s)  GROUP BY (tag_user_id, action_user_id);"
         }
 
     def insert_user_info(self, cur, user_info: type.InsertMaster):
@@ -264,3 +266,18 @@ class PnetDAO:
         cur.execute(query, query_param)
         res = cur.fetchone()
         return res[0]
+
+    def get_network(self, cur) -> [type.PnetUserNetworkInfo]:
+        query = self.query["get_network"]
+        cur.execute(query)
+        rows = cur.fetchall()
+        return list(map(lambda x: type.PnetUserNetworkInfo(from_id=x[1], to_str=x[0], cnt=x[2]), rows))
+
+    def get_network_by_user(self, cur, user_cd_list) -> [type.PnetUserNetworkInfo]:
+        query = self.query["get_network_by_user"]
+        query_param = dict(
+            user_cds = tuple(user_cd_list)
+        )
+        cur.execute(query, query_param)
+        rows = cur.fetchall()
+        return list(map(lambda x: type.PnetUserNetworkInfo(from_id=x[1], to_str=x[0], cnt=x[2]), rows))

@@ -459,3 +459,43 @@ def pnet_user_search(post_param: pnet_type.PnetUserSearchPostParam, my_token: Op
             detail=f"予期せぬエラーが発生しました。\n{e}"
         )
     return __mk_responce_json(user_list)
+
+@app.get("/api/pnet/user/network", response_model=List[pnet_type.PnetUserNetworkInfo], tags=["People Network"])
+def pnet_get_user_network(user_cd: Optional[str] = None, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+    try:
+        user_list = [user_cd] if user_cd is not None else None
+        network_list = pnet_service.get_network(user_list)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+    return __mk_responce_json(network_list)
+
+@app.get("/api/pnet/user/network/relation", response_model=List[pnet_type.PnetUserNetworkInfo], tags=["People Network"])
+def pnet_get_user_network(user_cd: Optional[str] = None, my_token: Optional[str] = Header(None)):
+    try:
+        login_user_id = auth_service.authentication_token(my_token)
+    except FailureAuthenticationException as e:
+        raise HTTPException(
+            status_code=401,
+            detail=str(e)
+        )
+
+    try:
+        user_list = [login_user_id, user_cd] if user_cd is not None else [login_user_id]
+        network_list = pnet_service.get_network(user_list)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"予期せぬエラーが発生しました。\n{e}"
+        )
+    return __mk_responce_json(network_list)
