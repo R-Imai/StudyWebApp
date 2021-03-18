@@ -199,7 +199,7 @@ class CareerEdit extends React.Component<Props, State> {
     return (
       <div className="pnet-form">
         <h1>
-          趣味・特技
+          経歴
         </h1>
         {this.mkTitleForm()}
         {this.mkDateInputForm()}
