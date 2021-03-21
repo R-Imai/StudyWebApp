@@ -460,7 +460,7 @@ def pnet_user_search(post_param: pnet_type.PnetUserSearchPostParam, my_token: Op
         )
     return __mk_responce_json(user_list)
 
-@app.get("/api/pnet/user/network", response_model=List[pnet_type.PnetUserNetworkInfo], tags=["People Network"])
+@app.get("/api/pnet/user/network", response_model=pnet_type.PnetUserNetworkResponce, tags=["People Network"])
 def pnet_get_user_network(user_cd: Optional[str] = None, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)
@@ -480,7 +480,7 @@ def pnet_get_user_network(user_cd: Optional[str] = None, my_token: Optional[str]
         )
     return __mk_responce_json(network_list)
 
-@app.get("/api/pnet/user/network/relation", response_model=List[pnet_type.PnetUserNetworkInfo], tags=["People Network"])
+@app.get("/api/pnet/user/network/relation", response_model=pnet_type.PnetUserNetworkResponce, tags=["People Network"])
 def pnet_get_user_network(user_cd: Optional[str] = None, my_token: Optional[str] = Header(None)):
     try:
         login_user_id = auth_service.authentication_token(my_token)

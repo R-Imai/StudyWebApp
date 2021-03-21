@@ -271,7 +271,7 @@ class PnetDAO:
         query = self.query["get_network"]
         cur.execute(query)
         rows = cur.fetchall()
-        return list(map(lambda x: type.PnetUserNetworkInfo(from_id=x[1], to_str=x[0], cnt=x[2]), rows))
+        return list(map(lambda x: type.PnetUserNetworkInfo(from_id=x[1], to_id=x[0], cnt=x[2]), rows))
 
     def get_network_by_user(self, cur, user_cd_list) -> [type.PnetUserNetworkInfo]:
         query = self.query["get_network_by_user"]
@@ -280,4 +280,4 @@ class PnetDAO:
         )
         cur.execute(query, query_param)
         rows = cur.fetchall()
-        return list(map(lambda x: type.PnetUserNetworkInfo(from_id=x[1], to_str=x[0], cnt=x[2]), rows))
+        return list(map(lambda x: type.PnetUserNetworkInfo(from_id=x[1], to_id=x[0], cnt=x[2]), rows))

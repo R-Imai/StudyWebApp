@@ -1,6 +1,7 @@
 import datetime
 from pydantic import BaseModel
 from typing import List
+from src.type.base import SimpleUserInfo
 
 class Master(BaseModel):
     id: str
@@ -113,5 +114,9 @@ class PnetUserSearchPostParam(BaseModel):
 
 class PnetUserNetworkInfo(BaseModel):
     from_id: str
-    to_str: str
-    cnt: str
+    to_id: str
+    cnt: int
+
+class PnetUserNetworkResponce(BaseModel):
+    data: List[PnetUserNetworkInfo]
+    user_info: List[SimpleUserInfo]

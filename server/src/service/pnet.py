@@ -1,6 +1,7 @@
 import uuid
 
 from ..dao import pnet as dao
+from ..dao import user as user_dao
 from ..dao import connection
 from ..type import api_variable as variable
 from ..type import pnet as pnet_type
@@ -9,6 +10,7 @@ from ..type.exception import UserNotFoundException
 class PnetService:
     def __init__(self):
         self.pnet_dao = dao.PnetDAO()
+        self.user_dao = user_dao.UserDAO()
 
     def get_user_info(self, user_id):
         try:
@@ -280,10 +282,12 @@ class PnetService:
             conn = connection.mk_connection()
             with conn.cursor() as cur:
                 network_list = self.pnet_dao.get_network(cur) if user_list is None else self.pnet_dao.get_network_by_user(cur, user_list)
+                ids = list(map(lambda x: [x.from_id, x.to_id], network_list))
+                user_info = self.user_dao.get_simple_user_info(cur, list(set(sum(ids, []))))
                 conn.commit()
         except Exception as e:
             conn.rollback()
             raise Exception(e)
         finally:
             conn.close()
-        return network_list
+        return pnet_type.PnetUserNetworkResponce(data=network_list, user_info=user_info)

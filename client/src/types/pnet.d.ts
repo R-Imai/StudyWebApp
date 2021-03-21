@@ -133,3 +133,16 @@ interface UserSearchRequestParam {
   limit: number,
   offset: number
 }
+
+interface PnetUserNetworkInfo {
+  data: {
+    from_id: string,
+    to_id: string,
+    cnt: number
+  }[],
+  user_info: {
+    id: string,
+    name: string,
+    icon: string
+  }[]
+}

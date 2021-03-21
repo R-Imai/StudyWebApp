@@ -1,6 +1,5 @@
 export const API = {
   // UrlBase: "http://127.0.0.1:5555",
-  // UrlBase: "http://192.168.1.20:5555",
   UrlBase: "",
   Auth: {
     login: "/api/login",
@@ -25,7 +24,9 @@ export const API = {
     tagGood: "/api/pnet/user/tag/good",
     tagBad: "/api/pnet/user/tag/bad",
     tagDelete: "/api/pnet/user/tag",
-    career: "/api/pnet/user/career"
+    career: "/api/pnet/user/career",
+    network: "/api/pnet/user/network",
+    networkRelation: "/api/pnet/user/network/relation",
   }
 };
 

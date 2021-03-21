@@ -204,3 +204,29 @@ export async function userSearch(token: string, searchParam: UserSearchParam, li
 
   return responce.data;
 }
+
+export async function getNetwork(token: string, userCd: string) {
+  const responce = await axios.get<PnetUserNetworkInfo>(`${API.UrlBase}${API.Pnet.network}`, {
+    params: {
+      user_cd: userCd,
+    },
+    headers: {
+      'my-token': token
+    }}
+  ).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)});
+
+  return responce.data;
+}
+
+export async function getNetworkRelation(token: string, userCd: string) {
+  const responce = await axios.get<PnetUserNetworkInfo>(`${API.UrlBase}${API.Pnet.networkRelation}`, {
+    params: {
+      user_cd: userCd,
+    },
+    headers: {
+      'my-token': token
+    }}
+  ).catch((e: ErrResponse) => {throw new Error(e.response.data.detail)});
+
+  return responce.data;
+}
