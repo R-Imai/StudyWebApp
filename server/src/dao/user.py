@@ -20,7 +20,6 @@ class UserDAO:
         cur.execute(query, (user_info.id, user_info.name, user_info.image, user_info.email, user_info.id))
 
     def get_simple_user_info(self, cur, ids):
-        print(ids)
         query = self.query["get_simple_user_info"]
         query_param = dict(
             ids = tuple(ids)
