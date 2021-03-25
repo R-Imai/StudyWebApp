@@ -284,6 +284,70 @@
   background-color: rgba(255, 255, 255, 0.8);
   padding-bottom: 0.5rem;
   padding-top: 0.3rem;
+  .btn-space {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    align-items: flex-end;
+    button {
+      height: 2.5rem;
+      min-width: 5rem;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    button:focus {
+      outline: none;
+    }
+    .close {
+      border: none;
+      background-color: inherit;
+      border-radius: 0.5rem 0.5rem 0 0;
+      border-bottom: #00cca1 solid 0.1rem;
+    }
+    .close:hover {
+      background-color: rgba(176, 251, 226, 0.3);
+    }
+    .save {
+      background-color: #46e3a5;
+      border: #fafafa solid 0.1rem;
+      border-radius: 0.5rem;
+    }
+    .save:hover, .save:focus {
+      background-color: #4dffb8;
+    }
+    .save:disabled {
+      background-color: rgba(70, 227, 165, 0.6);
+      color: rgba(250, 250, 250, 0.6);
+      cursor: not-allowed;
+    }
+    .cancel {
+      background-color: #fafafa;
+      border: #e3467a solid 0.2rem;
+      font-size: 1.2rem;
+      border-radius: 0.5rem;
+    }
+    .cancel:hover, .cancel:focus {
+      background-color: #ffedf8;
+    }
+    .cancel:disabled {
+      border: rgba(#e3467a, 0.6) solid 0.2rem;
+      color: rgba(79, 79, 79, 0.6);
+      cursor: not-allowed;
+    }
+    .cancel:disabled:hover {
+      background-color: #fafafa;
+    }
+    .delete {
+      height: 2rem;
+      width: 3rem;
+      font-size: 0.8rem;
+      background-color: #fafafa;
+      border: #ff3636 solid 0.3rem;
+    }
+    .delete:hover {
+      background-color: #fbdcdc;
+    }
+  }
 }
 
 .pnet-form {
@@ -354,70 +418,6 @@
   .input-form-error {
     background-color: #ffdede;
     border-color: #be4242;
-  }
-  .btn-space {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-    align-items: flex-end;
-    button {
-      height: 2.5rem;
-      min-width: 5rem;
-      font-size: 1.3rem;
-      cursor: pointer;
-    }
-    button:focus {
-      outline: none;
-    }
-    .close {
-      border: none;
-      background-color: inherit;
-      border-radius: 0.5rem 0.5rem 0 0;
-      border-bottom: #00cca1 solid 0.1rem;
-    }
-    .close:hover {
-      background-color: rgba(176, 251, 226, 0.3);
-    }
-    .save {
-      background-color: #46e3a5;
-      border: #fafafa solid 0.1rem;
-      border-radius: 0.5rem;
-    }
-    .save:hover, .save:focus {
-      background-color: #4dffb8;
-    }
-    .save:disabled {
-      background-color: rgba(70, 227, 165, 0.6);
-      color: rgba(250, 250, 250, 0.6);
-      cursor: not-allowed;
-    }
-    .cancel {
-      background-color: #fafafa;
-      border: #e3467a solid 0.2rem;
-      font-size: 1.2rem;
-      border-radius: 0.5rem;
-    }
-    .cancel:hover, .cancel:focus {
-      background-color: #ffedf8;
-    }
-    .cancel:disabled {
-      border: rgba(#e3467a, 0.6) solid 0.2rem;
-      color: rgba(79, 79, 79, 0.6);
-      cursor: not-allowed;
-    }
-    .cancel:disabled:hover {
-      background-color: #fafafa;
-    }
-    .delete {
-      height: 2rem;
-      width: 3rem;
-      font-size: 0.8rem;
-      background-color: #fafafa;
-      border: #ff3636 solid 0.3rem;
-    }
-    .delete:hover {
-      background-color: #fbdcdc;
-    }
   }
 }
 
@@ -547,11 +547,208 @@
   box-shadow: 0.1rem 0.1rem 0.1rem #cdcdcd;
 }
 
-
 .pnet-profile-card.own {
   background-color: #effbf7;
 }
 
 .pnet-profile-card.own:hover {
   background-color: #f9fffc;
+}
+
+.pnet-profile-card-simple {
+  display: flex;
+  margin: 1rem 1.5rem;
+  height: 12rem;
+  width: 90%;
+  overflow-x: hidden;
+  background-color: #fafafa;
+  box-shadow: 0.1rem 0.1rem 0.1rem #eaeaea;
+  border-radius: 1rem;
+  .left {
+    padding: 0.2rem 0.8rem;
+    text-align: center;
+    border-right: rgba(0, 204, 136, 0.4) solid 0.2rem;
+    width: 8rem;
+    .image {
+      img {
+        height: 8rem;
+        width: 8rem;
+        border-radius: 4rem;
+      }
+    }
+    .belong {
+      height: 1rem;
+      font-size: 0.8rem;
+    }
+    .name {
+      height: 1.4rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .id {
+      height: 1rem;
+      font-size: 0.8rem;
+    }
+  }
+  .right {
+    width: calc(100% - 8rem);
+    .intro {
+      height: calc(80% - 0.8rem);
+      font-size: 0.9rem;
+      padding: 0.2rem 0.8rem;
+      border-bottom: rgba(0, 204, 136, 0.4) solid 0.2rem;
+      scrollbar-width: none;
+      overflow: auto;
+    }
+    .intro::-webkit-scrollbar {
+      display:none;
+    }
+    .buttons {
+      height: calc(20% - 0.6rem);
+      padding: 0.3rem 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      button {
+        height: 100%;
+        min-width: 5rem;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      button:focus {
+        outline: none;
+      }
+      .to-profile {
+        background-color: #46e3a5;
+        color: #fafafa;
+        border: #fafafa solid 0.1rem;
+        border-radius: 0.5rem;
+      }
+      .to-profile:hover, .to-profile:focus {
+        background-color: #4dffb8;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.pnet-profile-card-shadow {
+  display: flex;
+  position: relative;
+  margin: 1rem 1.5rem;
+  height: 12rem;
+  width: 90%;
+  overflow-x: hidden;
+  background-color: #d6d6d6;
+  box-shadow: 0.1rem 0.1rem 0.1rem #eaeaea;
+  border-radius: 1rem;
+  .left {
+    padding: 0.2rem 0.8rem;
+    text-align: center;
+    border-right: rgba(87, 87, 87, 0.4) solid 0.2rem;
+    width: 8rem;
+    .image {
+      .img {
+        height: 8rem;
+        width: 8rem;
+        border-radius: 4rem;
+        background-color: #b1b1b1;
+      }
+    }
+    .belong {
+      height: 1rem;
+      font-size: 0.8rem;
+      .shadow {
+        display: inline-block;
+        background-color: #b1b1b1;
+        height: 0.8rem;
+        width: 30%
+      }
+    }
+    .name {
+      height: 1.4rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      .shadow {
+        display: inline-block;
+        background-color: #b1b1b1;
+        height: 1.2rem;
+        width: 70%
+      }
+    }
+    .id {
+      height: 1rem;
+      font-size: 0.8rem;
+      .shadow {
+        display: inline-block;
+        background-color: #b1b1b1;
+        height: 0.8rem;
+        width: 50%
+      }
+    }
+  }
+  .right {
+    width: calc(100% - 8rem);
+    .intro {
+      height: calc(60% - 0.8rem);
+      font-size: 0.9rem;
+      padding: 0.2rem 0.8rem;
+      border-bottom: rgba(87, 87, 87, 0.4) solid 0.2rem;
+      scrollbar-width: none;
+      overflow: auto;
+    }
+    .intro::-webkit-scrollbar {
+      display:none;
+    }
+    .tags {
+      height: calc(40% - 0.2rem);
+      padding: 0.1rem 0.8rem;
+      overflow: auto;
+      display: flex;
+      scrollbar-width: none;
+      flex-wrap: wrap;
+    }
+    .tags::-webkit-scrollbar {
+      display:none;
+    }
+  }
+  .msg {
+    position: absolute;
+    top: 45%;
+    left: 5%;
+    background-color: rgba(120, 120, 120, 0.7);
+    width: 90%;
+    font-size: 1.2rem;
+    padding: 0.2rem 0.5rem;
+    color: #fafafa;
+  }
+}
+
+.pnet-network-btn {
+  background-color: #f0ffee !important;
+}
+
+.pnet-network-btn:hover {
+  background-color: #f0ffff !important;
+}
+
+.pnet-network-dialog {
+  width: 80%;
+  max-width: initial;
+  .profile-card {
+    display: flex;
+    justify-content: center;
+  }
+  .pnet-network-space-dialog {
+    width: calc(100% - 2rem);
+    height: 25rem;
+    margin: 0.5rem 1rem;
+    box-shadow: 0rem 0.1rem 0.4rem  #999999;
+  }
+}
+
+.pnet-network {
+  width: 100%;
+  height: 100%;
+  background-color: #fcfffc;
 }

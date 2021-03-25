@@ -12,13 +12,11 @@ import PnetPage from './Pages/PnetPage';
 import PnetListPage from './Pages/PnetListPage';
 import ProfileEditPage from './Pages/ProfileEditPage';
 import PasswordUpdatePage from './Pages/PasswordUpdatePage';
-import Test from './Pages/Test';
 
 const Routes: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/test" component={Test}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/register/done" component={RegisterDonePage} />
         <Route exact path="/register" component={RegisterPage}/>

@@ -20,6 +20,7 @@ type Props = {
   id: string;
   nodes: Node[];
   edges: Edge[];
+  onDblclick?: (userCd: string) => void
 }
 
 
@@ -44,8 +45,11 @@ const Network: React.FC<Props> = (props: Props) => {
       .append("circle")
       .attr("r", 15)
       .attr("fill", (d: Node) => {return d.color})
-    const dblclick = (d) => {
-      alert(d.id);
+    const dblclick = (d: Node) => {
+      if (!props.onDblclick) {
+        return;
+      }
+      props.onDblclick(d.id);
     }
     node.on("dblclick ", dblclick)
     node.call(
@@ -131,7 +135,7 @@ const Network: React.FC<Props> = (props: Props) => {
   },[props.id, props.nodes, props.edges]);
 
   return (
-    <svg id={props.id} width="600" height="400" />
+    <svg className="pnet-network" id={props.id} />
   )
 }
 

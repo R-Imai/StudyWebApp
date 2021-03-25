@@ -6,7 +6,7 @@ import {getProfile, getUserInfo, updateProfile, tagRegister, tagGood, tagBad, ta
 
 import GlobalNav from '../Components/GlobalNav'
 import Indicator from '../Components/Indicator'
-import ProfileCardMini from '../Components/Pnet/ProfileCardMini'
+import ProfileElement from '../Components/Pnet/ProfileElement'
 import TagList from '../Components/Pnet/TagList'
 import CareerList from '../Components/Pnet/CareerList'
 import HobbyList from '../Components/Pnet/HobbyList'
@@ -14,6 +14,7 @@ import ProfileEditDialog from '../Components/Pnet/Dialog/ProfileEditDialog'
 import TagEditDialog from '../Components/Pnet/Dialog/TagEditDialog'
 import HobbyEditDialog from '../Components/Pnet/Dialog/HobbyEditDialog'
 import CareerEditDialog from '../Components/Pnet/Dialog/CareerEditDialog'
+import NetworkDialog from '../Components/Pnet/Dialog/NetworkDialog'
 import Message, {msgType} from '../Components/Message'
 import {getToken} from '../Utils/utils'
 
@@ -36,6 +37,7 @@ type State = {
   editHobbyData: HobbyEditType | null;
   editCareerData: CareerEditType | null;
   canTagReactionDelete: boolean;
+  showNetwork: boolean;
 }
 
 class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State> {
@@ -51,7 +53,8 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
       isShowWarningEditTagDialog: false,
       editHobbyData: null,
       editCareerData: null,
-      canTagReactionDelete: false
+      canTagReactionDelete: false,
+      showNetwork: false,
     };
     this.onClickProfileEdit = this.onClickProfileEdit.bind(this);
     this.closeProfileEditDialog = this.closeProfileEditDialog.bind(this);
@@ -73,6 +76,8 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.careerSubmit = this.careerSubmit.bind(this);
     this.careerDelete = this.careerDelete.bind(this);
     this.gotoListPage = this.gotoListPage.bind(this);
+    this.openNetwork = this.openNetwork.bind(this);
+    this.onCloseNetwork = this.onCloseNetwork.bind(this);
   }
 
   async getPnetUserInfo(token: string) {
@@ -912,6 +917,18 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.props.history.push('/pnet');
   }
 
+  openNetwork() {
+    this.setState({
+      showNetwork: true,
+    })
+  }
+
+  onCloseNetwork() {
+    this.setState({
+      showNetwork: false,
+    })
+  }
+
   mkMain() {
     if (this.state.pnetUserInfo === null) {
       return '';
@@ -985,11 +1002,19 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
             isReference={this.state.loginUserInfo.id !== this.state.pnetUserInfo.id}
           />)
       : '';
+    
+    const networkDialog = this.state.showNetwork ? (
+      <NetworkDialog
+        userCd1={this.state.loginUserInfo.id}
+        userCd2={this.state.pnetUserInfo.id}
+        onClose={this.onCloseNetwork}
+      />
+    ) : '';
 
     return (
       <div className="pnet-main">
         {this.state.msgInfo !== null ? <Message value={this.state.msgInfo.value} type={this.state.msgInfo.type} /> : ''}
-        <ProfileCardMini
+        <ProfileElement
           profile={this.state.pnetUserInfo}
           canEdit={this.state.pnetUserInfo.id === this.state.loginUserInfo.id}
           onClickEdit={this.onClickProfileEdit}
@@ -1017,6 +1042,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         {tagEditDialog}
         {hobbyEditDialog}
         {careerEditDialog}
+        {networkDialog}
       </div>
     )
   }
@@ -1028,6 +1054,9 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         <div className="menu-button-space">
           <button onClick={this.gotoListPage}>
             ◀ 一覧へ戻る
+          </button>
+          <button className="pnet-network-btn" onClick={this.openNetwork}>
+            ネットワーク
           </button>
         </div>
         {this.mkMain()}

@@ -28,7 +28,7 @@ const mkSelfIntroRow = (row: string) => {
   return perseElements;
 }
 
-const ProfileCardMini: React.FC<Props> = (props: Props) => {
+const ProfileElement: React.FC<Props> = (props: Props) => {
   const editBtn = props.canEdit && typeof props.onClickEdit !== "undefined" ? (
     <button
       className="edit"
@@ -68,4 +68,4 @@ const ProfileCardMini: React.FC<Props> = (props: Props) => {
   )
 }
 
-export default ProfileCardMini
+export default ProfileElement
