@@ -744,6 +744,18 @@
     height: 25rem;
     margin: 0.5rem 1rem;
     box-shadow: 0rem 0.1rem 0.4rem  #999999;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .empty-network {
+      font-size: 1.6rem;
+      padding: 1rem 2rem;
+      width: 60%;
+      border-radius: 1rem;
+      text-align: center;
+      background-color: #c6dbd6;
+    }
   }
 }
 

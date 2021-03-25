@@ -283,7 +283,7 @@ class PnetService:
             with conn.cursor() as cur:
                 network_list = self.pnet_dao.get_network(cur) if user_list is None else self.pnet_dao.get_network_by_user(cur, user_list)
                 ids = list(map(lambda x: [x.from_id, x.to_id], network_list))
-                user_info = self.user_dao.get_simple_user_info(cur, list(set(sum(ids, []))))
+                user_info = self.user_dao.get_simple_user_info(cur, list(set(sum(ids, [])))) if len(ids) != 0 else []
                 conn.commit()
         except Exception as e:
             conn.rollback()

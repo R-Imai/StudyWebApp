@@ -14,6 +14,7 @@ type State = {
   clickUserInfo: PnetUserInfo | null,
   showProfileIndicator: boolean,
   showNetworkIndicator: boolean,
+  isInit: boolean,
 }
 
 interface Props extends RouteComponentProps {
@@ -31,6 +32,7 @@ class NetworkDialog extends React.Component<Props, State> {
       clickUserInfo: null,
       showProfileIndicator: false,
       showNetworkIndicator: false,
+      isInit: false,
     };
     this.onDblclick = this.onDblclick.bind(this);
     this.onClickToProfile = this.onClickToProfile.bind(this);
@@ -47,7 +49,6 @@ class NetworkDialog extends React.Component<Props, State> {
     }
     let responce;
     try {
-      console.log(this.props.userCd2);
       responce = await getNetworkRelation(token, this.props.userCd2)
     }
     catch (e) {
@@ -85,6 +86,7 @@ class NetworkDialog extends React.Component<Props, State> {
     this.setState({
       nodes,
       edges,
+      isInit: true,
       showNetworkIndicator: false,
     })
   }
@@ -136,12 +138,15 @@ class NetworkDialog extends React.Component<Props, State> {
             <Indicator show={this.state.showProfileIndicator} />
           </div>
           <div className="pnet-network-space-dialog indicator-parent">
-            <Network
-              id="network-graph-id"
-              nodes={this.state.nodes}
-              edges={this.state.edges}
-              onDblclick={this.onDblclick}
-            />
+            {this.state.isInit && this.state.nodes.length === 0 ? <div className="empty-network">関連のあるユーザが存在しません。</div>
+            : (
+              <Network
+                id="network-graph-id"
+                nodes={this.state.nodes}
+                edges={this.state.edges}
+                onDblclick={this.onDblclick}
+              />
+            )}
             <Indicator show={this.state.showNetworkIndicator} />
           </div>
           <div className="btn-space">

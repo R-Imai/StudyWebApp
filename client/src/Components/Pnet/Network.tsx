@@ -45,6 +45,7 @@ const Network: React.FC<Props> = (props: Props) => {
       .append("circle")
       .attr("r", 15)
       .attr("fill", (d: Node) => { return d.color })
+      .style('cursor', 'pointer');
     const dblclick = (d: Node) => {
       if (!props.onDblclick) {
         return;
@@ -66,7 +67,8 @@ const Network: React.FC<Props> = (props: Props) => {
       .attr('xlink:href', d => d.icon)
       .attr('clip-path', d => `url(#node-${d.id})`)
       .style('width', 20)
-      .style('height', 20);
+      .style('height', 20)
+      .style('cursor', 'pointer');
     image.on("dblclick ", dblclick)
     image.call(
       d3.drag()
@@ -85,11 +87,13 @@ const Network: React.FC<Props> = (props: Props) => {
       .style("font-size", 12)
       .style("pointer-events", "none");
 
+    const xCenter = svg.node().getBoundingClientRect().width / 2;
+    const yCenter = svg.node().getBoundingClientRect().height / 2;
     // 3. forceSimulation設定
     const simulation = d3.forceSimulation()
       .force("link", d3.forceLink().id(d => d.id).distance(100))
       .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(200, 150));
+      .force("center", d3.forceCenter(xCenter, yCenter));
 
     function ticked() {
       link
