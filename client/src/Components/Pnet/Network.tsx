@@ -25,7 +25,7 @@ type Props = {
 
 
 const Network: React.FC<Props> = (props: Props) => {
-  useEffect(()=>{
+  useEffect(() => {
     const nodesData = props.nodes;
     const linksData = props.edges;
     const svg = d3.select(`#${props.id}`)
@@ -44,7 +44,7 @@ const Network: React.FC<Props> = (props: Props) => {
       .enter()
       .append("circle")
       .attr("r", 15)
-      .attr("fill", (d: Node) => {return d.color})
+      .attr("fill", (d: Node) => { return d.color })
     const dblclick = (d: Node) => {
       if (!props.onDblclick) {
         return;
@@ -53,10 +53,10 @@ const Network: React.FC<Props> = (props: Props) => {
     }
     node.on("dblclick ", dblclick)
     node.call(
-        d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended)
+      d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)
     );
     const image = container.append("g").attr("class", "imageNodes")
       .selectAll("image")
@@ -70,16 +70,16 @@ const Network: React.FC<Props> = (props: Props) => {
     image.on("dblclick ", dblclick)
     image.call(
       d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended)
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)
     );
     const label = container.append("g").attr("class", "labelNodes")
       .selectAll("text")
       .data(nodesData)
       .enter()
       .append("text")
-      .text(function(d, i) { return d.label; })
+      .text(function (d, i) { return d.label; })
       .style("fill", "#555")
       .style("font-family", "Arial")
       .style("font-size", 12)
@@ -93,19 +93,19 @@ const Network: React.FC<Props> = (props: Props) => {
 
     function ticked() {
       link
-        .attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
+        .attr("x1", function (d) { return d.source.x; })
+        .attr("y1", function (d) { return d.source.y; })
+        .attr("x2", function (d) { return d.target.x; })
+        .attr("y2", function (d) { return d.target.y; });
       node
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+        .attr("cx", function (d) { return d.x; })
+        .attr("cy", function (d) { return d.y; });
       label
-        .attr("x", function(d) { return d.x - 15; })
-        .attr("y", function(d) { return d.y + 25; });
+        .attr("x", function (d) { return d.x - 15; })
+        .attr("y", function (d) { return d.y + 25; });
       image
-        .attr("x", function(d) { return d.x - 10; })
-        .attr("y", function(d) { return d.y - 15; });
+        .attr("x", function (d) { return d.x - 10; })
+        .attr("y", function (d) { return d.y - 15; });
     }
 
     simulation
@@ -114,9 +114,9 @@ const Network: React.FC<Props> = (props: Props) => {
 
     simulation.force("link")
       .links(linksData);
-    
+
     function dragstarted(d: d3.SimulationNodeDatum) {
-      if(!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -127,12 +127,12 @@ const Network: React.FC<Props> = (props: Props) => {
     }
 
     function dragended(d) {
-      if(!d3.event.active) simulation.alphaTarget(0);
+      if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
     }
-    
-  },[props.id, props.nodes, props.edges]);
+
+  }, [props]);
 
   return (
     <svg className="pnet-network" id={props.id} />
