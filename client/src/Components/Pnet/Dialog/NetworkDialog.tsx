@@ -149,7 +149,7 @@ class NetworkDialog extends React.Component<Props, State> {
             )}
             <Indicator show={this.state.showNetworkIndicator} />
           </div>
-          <div className="btn-space">
+          <div className="pnet-btn-space">
             <button className="close" onClick={this.props.onClose}>閉じる</button>
           </div>
         </div>

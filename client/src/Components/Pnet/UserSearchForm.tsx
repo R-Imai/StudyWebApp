@@ -165,7 +165,7 @@ class UserSearchForm extends React.Component<Props, State> {
             className="input-form"
             onChange={this.onChangeDetail}
           />
-          <div className="btn-space">
+          <div className="pnet-btn-space">
             <button type="button" className="cancel" onClick={this.onClickClear}>
               入力クリア
             </button>

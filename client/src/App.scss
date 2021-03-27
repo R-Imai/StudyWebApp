@@ -883,3 +883,60 @@ button:focus {
     background-color: #ffffff;
   }
 }
+
+.error-page {
+  .not-found {
+    background-image: url("./image/error/404.png");
+  }
+  .unauthorized {
+    background-image: url("./image/error/401.png");
+  }
+  .forbidden {
+    background-image: url("./image/error/403.png");
+  }
+  .server-error {
+    background-image: url("./image/error/500.png");
+  }
+  .image {
+    margin-top: 1rem;
+    height: 10rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  .message-area {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    color: #114411;
+    .message {
+      display: inline-block;
+      margin: 0 auto;
+      padding: 1.5rem 10rem;
+      background-color: #e0f0e7;
+      border-radius: 1rem;
+      span {
+        display: block;
+      }
+    }
+  }
+  .btn-space {
+    margin: 0 5rem;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-around;
+    a {
+      text-decoration: none;
+    }
+    .btn {
+      color: #fafafa;
+      background-color: #888888;
+      border: #fafafa solid 0.1rem;
+      border-radius: 0.5rem;
+      padding: 0.3rem 1rem;
+      &:hover, &:focus {
+        background-color: #aaaaaa;
+      }
+    }
+  }
+}

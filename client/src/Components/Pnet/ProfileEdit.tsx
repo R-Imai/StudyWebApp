@@ -122,7 +122,7 @@ class ProfileEdit extends React.Component<Props, State> {
           onChange={this.onChangeSelfIntro}
           rows={10}
         />
-        <div className="btn-space">
+        <div className="pnet-btn-space">
           {this.props.cancelBtnInfo ? (
               <button
                 className="close"

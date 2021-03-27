@@ -145,7 +145,7 @@ class HobbyEdit extends React.Component<Props, State> {
           onChange={this.onChangeDetail}
           disabled={this.props.isReference}
         />
-        <div className="btn-space">
+        <div className="pnet-btn-space">
           { this.props.onDelete && !this.props.isReference
             ? (
               <button

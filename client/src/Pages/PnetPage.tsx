@@ -112,7 +112,13 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
           this.props.history.push('/pnet/register');
           return;
         } else if (e.message.startsWith('【Pnet-E001】') && typeof showUserId !== 'undefined') {
-          this.props.history.push('/error/404-notfound');
+          this.props.history.push({
+            pathname: '/error/404-notfound',
+            state: { linkInfo: {
+              to: '/pnet',
+              label: 'ユーザ一覧へ戻る',
+            }}
+          });
           return;
         }
         console.error(e.message);

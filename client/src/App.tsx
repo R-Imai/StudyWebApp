@@ -12,6 +12,11 @@ import PnetPage from './Pages/PnetPage';
 import PnetListPage from './Pages/PnetListPage';
 import ProfileEditPage from './Pages/ProfileEditPage';
 import PasswordUpdatePage from './Pages/PasswordUpdatePage';
+import NotFound from './Pages/errorPage/NotFound';
+import Unauthorized from './Pages/errorPage/Unauthorized';
+import InternalServerError from './Pages/errorPage/InternalServerError';
+import Forbidden from './Pages/errorPage/Forbidden';
+
 
 const Routes: React.FC = () => {
   return (
@@ -27,10 +32,10 @@ const Routes: React.FC = () => {
         <Route exact path="/pnet/profile" component={PnetPage}/>
         <Route exact path="/pnet/user/info/:id" component={PnetPage}/>
         <Route exact path="/pnet/register" component={PnetUserEditPage}/>
-        <Route exact path="/error/401-unauthorized" component={LoginPage}/>
-        <Route exact path="/error/403-forbidden" component={HomePage}/>
-        <Route exact path="/error/404-notfound" component={HomePage}/>
-        <Route exact path="/error/500-internal-server-error" component={HomePage}/>
+        <Route exact path="/error/401-unauthorized" component={Unauthorized}/>
+        <Route exact path="/error/403-forbidden" component={Forbidden}/>
+        <Route exact path="/error/404-notfound" component={NotFound}/>
+        <Route exact path="/error/500-internal-server-error" component={InternalServerError}/>
         <Route exact path="">
           <Redirect to={'/error/404-notfound'}/>
         </Route>

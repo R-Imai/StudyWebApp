@@ -150,7 +150,7 @@ class TagEdit extends React.Component<Props, State> {
           rows={10}
           onChange={this.onChangeComment}
         />
-        <div className="btn-space">
+        <div className="pnet-btn-space">
           { this.props.onDelete
             ? (
               <button
