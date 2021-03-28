@@ -505,15 +505,24 @@
     .belong {
       height: 1rem;
       font-size: 0.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .name {
       height: 1.4rem;
       font-size: 1.2rem;
       font-weight: bold;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .id {
       height: 1rem;
       font-size: 0.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
   .right {
@@ -580,15 +589,24 @@
     .belong {
       height: 1rem;
       font-size: 0.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .name {
       height: 1.4rem;
       font-size: 1.2rem;
       font-weight: bold;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .id {
       height: 1rem;
       font-size: 0.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
   .right {
