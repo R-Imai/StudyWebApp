@@ -12,7 +12,7 @@ class PnetDAO:
             "select_user_hobby": "SELECT id, title, detail FROM pnet_hobby WHERE user_id = %s",
             "select_tag_list": "select t.tag_id as tag_id, t.user_id as user_id, t.title as title, count(r.reaction='good' or NULL) as good, count(r.reaction='bad' or NULL) as bad from pnet_tag as t inner join pnet_tag_reaction as r on t.tag_id = r.tag_id group by t.tag_id, t.title, t.user_id;",
             "select_tag": "SELECT tag_id, title FROM pnet_tag WHERE user_id = %s",
-            "select_tag_reaction": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s",
+            "select_tag_reaction": "SELECT tag.tag_id, tag.action_user_id, tag.comment, tag.reaction, m.name from pnet_tag_reaction as tag  INNER JOIN user_master as m ON tag.action_user_id = m.id WHERE tag_user_id = %s",
             "select_tag_reaction_by_tag_id": "SELECT tag_id, action_user_id, comment, reaction from pnet_tag_reaction WHERE tag_user_id = %s AND tag_id=%s",
             "select_career": "SELECT history_id, title, year, detail FROM pnet_career WHERE user_id = %s ORDER BY year ASC",
             "select_career_pr": "SELECT history_id, title, year, detail FROM pnet_career_pr WHERE user_id = %s",
@@ -138,8 +138,8 @@ class PnetDAO:
         tag_data = {}
         for tag_id in tag_list:
             target = list(filter(lambda x: x[0] == tag_id, rows))
-            good = list(map(lambda y: type.TagReaction(user_id = y[1], comment=y[2]), filter(lambda x: x[3] == "good", target)))
-            bad = list(map(lambda y: type.TagReaction(user_id = y[1], comment=y[2]), filter(lambda x: x[3] == "bad", target)))
+            good = list(map(lambda y: type.TagReaction(user_id = y[1], comment=y[2], user_name=y[4]), filter(lambda x: x[3] == "good", target)))
+            bad = list(map(lambda y: type.TagReaction(user_id = y[1], comment=y[2], user_name=y[4]), filter(lambda x: x[3] == "bad", target)))
             tag_data[tag_id] = {
                 "good": good,
                 "bad": bad

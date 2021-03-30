@@ -43,6 +43,7 @@ class TagListElem(InsertUserTag):
 
 class TagReaction(BaseModel):
     user_id: str
+    user_name: str
     comment: str
 
 class InsertTagReaction(BaseModel):
