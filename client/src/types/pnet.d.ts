@@ -57,10 +57,12 @@ interface TagType {
   title: string,
   good: {
     user_id: string,
+    user_name: string,
     comment: string
   }[],
   bad: {
     user_id: string,
+    user_name: string,
     comment: string
   }[]
 }

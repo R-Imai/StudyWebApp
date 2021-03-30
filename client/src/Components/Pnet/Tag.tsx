@@ -9,6 +9,7 @@ type Props = {
   tag: TagType | PnetUserListTag;
   loginUserId?: string;
   reactionClick?: (reaction: tagReactionType) => void;
+  onClick?: () => void;
 }
 
 const isTagType = (tag: TagType | PnetUserListTag): tag is TagType => {
@@ -25,19 +26,20 @@ const Tag: React.FC<Props> = (props: Props) => {
   const badCnt = isTagType(props.tag) ? props.tag.bad.length : props.tag.bad;
 
   const reactionClick = props.reactionClick ? props.reactionClick : (reaction: tagReactionType) => {};
+  const tagClick = props.onClick ? props.onClick : () => {};
 
   return (
     <span className="pnet-tag">
-      <span className="tag-title">
+      <span className={`tag-title ${props.onClick ? 'tag-title-can-click can-click' : ''}`} onClick={() => {tagClick()}}>
         {props.tag.title}
       </span>
-      <span className={`reaction good ${props.reactionClick ? 'can-click' : ''}`} onClick={() => {reactionClick('good')}}>
+      <span className={`reaction good ${props.reactionClick ? 'reaction-can-click can-click' : ''}`} onClick={() => {reactionClick('good')}}>
         <img alt="good" src={showGoodIcon} />
         <span>
           {goodCnt}
         </span>
       </span>
-      <span className={`reaction bad ${props.reactionClick ? 'can-click' : ''}`} onClick={() => {reactionClick('bad')}}>
+      <span className={`reaction bad ${props.reactionClick ? 'reaction-can-click can-click' : ''}`} onClick={() => {reactionClick('bad')}}>
         <img alt="bad" src={showBadIcon} />
         <span>
           {badCnt}

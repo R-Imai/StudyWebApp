@@ -19,6 +19,26 @@ h1.fixed-label {
   width: 100%;
 }
 
+h2 {
+  border-bottom: 0rem;
+  overflow: hidden;
+  position: relative;
+  font-size: 1.4rem;
+  border-left: solid #4db592 0.5rem;
+  padding-left: 0.3rem;
+  color: #343434;
+}
+h2::after {
+  position: absolute;
+  content: "";
+  display: block;
+  height: 0.2rem;
+  width: 100%;
+  bottom: 0rem;
+  left: -0.3rem;
+  background: linear-gradient(90deg, #4db592 0%, rgba(#4db592, 0.3) 70%, rgba(#4db592, 0) 100%);
+}
+
 button {
   border: none;
   cursor: pointer;

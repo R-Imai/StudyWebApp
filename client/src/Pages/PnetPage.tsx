@@ -12,6 +12,7 @@ import CareerList from '../Components/Pnet/CareerList'
 import HobbyList from '../Components/Pnet/HobbyList'
 import ProfileEditDialog from '../Components/Pnet/Dialog/ProfileEditDialog'
 import TagEditDialog from '../Components/Pnet/Dialog/TagEditDialog'
+import TagDetailDialog from '../Components/Pnet/Dialog/TagDetailDialog'
 import HobbyEditDialog from '../Components/Pnet/Dialog/HobbyEditDialog'
 import CareerEditDialog from '../Components/Pnet/Dialog/CareerEditDialog'
 import NetworkDialog from '../Components/Pnet/Dialog/NetworkDialog'
@@ -38,6 +39,7 @@ type State = {
   editCareerData: CareerEditType | null;
   canTagReactionDelete: boolean;
   showNetwork: boolean;
+  tagDetail: TagType | null;
 }
 
 class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State> {
@@ -55,6 +57,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
       editCareerData: null,
       canTagReactionDelete: false,
       showNetwork: false,
+      tagDetail: null,
     };
     this.onClickProfileEdit = this.onClickProfileEdit.bind(this);
     this.closeProfileEditDialog = this.closeProfileEditDialog.bind(this);
@@ -78,6 +81,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     this.gotoListPage = this.gotoListPage.bind(this);
     this.openNetwork = this.openNetwork.bind(this);
     this.onCloseNetwork = this.onCloseNetwork.bind(this);
+    this.setTagDetail = this.setTagDetail.bind(this);
   }
 
   async getPnetUserInfo(token: string) {
@@ -935,6 +939,10 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
     })
   }
 
+  setTagDetail(tag: TagType | null) {
+    this.setState({tagDetail: tag});
+  }
+
   mkMain() {
     if (this.state.pnetUserInfo === null) {
       return '';
@@ -1009,6 +1017,13 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
           />)
       : '';
     
+    const tagDetailDialog = this.state.tagDetail ? (
+      <TagDetailDialog
+        tagData={this.state.tagDetail}
+        onClose={() => {this.setTagDetail(null)}}
+      />
+    ): '';
+    
     const networkDialog = this.state.showNetwork ? (
       <NetworkDialog
         userCd1={this.state.loginUserInfo.id}
@@ -1030,6 +1045,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
           tagList={this.state.pnetUserInfo.tag}
           onClickNew={this.onClickTagNew}
           reactionClick={this.tagReactionClick}
+          tagClick={(tag: TagType) => {this.setTagDetail(tag)}}
         />
         <HobbyList
           hobbyList={this.state.pnetUserInfo.hobby}
@@ -1048,6 +1064,7 @@ class PnetPage extends React.Component<RouteComponentProps<{id?: string}>, State
         {tagEditDialog}
         {hobbyEditDialog}
         {careerEditDialog}
+        {tagDetailDialog}
         {networkDialog}
       </div>
     )
